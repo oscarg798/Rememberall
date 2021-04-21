@@ -4,20 +4,46 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
+apply plugin: 'kotlin-android'
+apply from: "../ktlint.gradle"
+apply from: "../signin.gradle"
+apply from: "../config.gradle"
 
 android {
+
     compileSdk = 30
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.oscarg798.remembrall"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField "String", "GoogleClientId", "\"$googleCLientId\""
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation": "$projectDir/schemas".toString(),
+                        "room.incremental"   : "true"]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.locker
+        }
+        release {
+            signingConfig signingConfigs.locker
+        }
     }
 
     compileOptions {
@@ -43,26 +69,47 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding false
         dataBinding false
         compose true
     }
 
     composeOptions {
         kotlinCompilerVersion "1.4.32"
-        kotlinCompilerExtensionVersion '1.0.0-beta03'
+        kotlinCompilerExtensionVersion '1.0.0-beta05'
+    }
+
+    repositories {
+        google()
+        jcenter {
+            content {
+                includeModule("org.jetbrains.kotlinx", "kotlinx-collections-immutable-jvm")
+            }
+        }
     }
 }
 
 dependencies {
 
-
     implementation("androidx.core:core-ktx:1.3.2")
     implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.2.1")
-    testImplementation("junit:junit:4.+")
+    implementation("com.google.android.material:material:1.3.0")
+    testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+
+    implementation daggerHilt.android
+    implementation daggerHilt.compose
+    implementation daggerHilt.work
+    implementation daggerHilt.compiler
+    kapt daggerHilt.daggerCompiler
+    kaptAndroidTest daggerHilt.compiler
+
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
+    implementation androidXlifecycle.savedState
+    implementation androidXlifecycle.core
+    implementation androidXlifecycle.viewModel
 
     implementation compose.liveData
     implementation compose.ui
@@ -75,4 +122,39 @@ dependencies {
     implementation compose.constraintLayout
     implementation compose.compiler
     implementation compose.activities
+
+    implementation navigationComponent.fragment
+    implementation navigationComponent.ui
+    implementation navigationComponent.fragmentKtx
+    implementation navigationComponent.uiKtx
+    implementation navigationComponent.compose
+
+    implementation retrofit.gsonConverter
+    implementation retrofit.okhttpLoggingInterceptor
+    implementation retrofit.okhttp3
+    implementation retrofit.gson
+
+    implementation lottie.main
+    implementation lottie.compose
+
+    implementation room.runtime
+    implementation room.ktx
+    kapt room.compiler
+
+    implementation arrow.core
+
+    implementation workManager.ktx
+
+    implementation "io.github.vanpra.compose-material-dialogs:datetime:0.3.3"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.0"
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation platform('com.google.firebase:firebase-bom:27.0.0')
+
+    testImplementation "io.mockk:mockk:1.11.0"
+    testImplementation kotlinCoroutinesTest
+
+}
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }

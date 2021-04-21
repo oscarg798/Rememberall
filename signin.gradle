@@ -1,0 +1,20 @@
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def keystoreAlias = properties.getProperty('keystoreAlias')
+def keystorePassword = properties.getProperty('keystorePassword')
+def password = properties.getProperty('keyPassword')
+def keystorePath = properties.getProperty('keyPath')
+
+android {
+
+    signingConfigs {
+        locker {
+            keyAlias keystoreAlias
+            keyPassword password
+            storePassword keystorePassword
+            storeFile file(keystorePath)
+        }
+    }
+}
