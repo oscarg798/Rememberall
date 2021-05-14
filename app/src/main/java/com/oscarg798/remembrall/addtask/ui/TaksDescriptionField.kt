@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.stringResource
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.SingleLine
+import com.oscarg798.remembrall.common.extensions.SingleLine
 
 @Composable
 internal fun TaskDescriptionField(

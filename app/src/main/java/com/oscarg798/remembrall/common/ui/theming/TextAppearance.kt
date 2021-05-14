@@ -18,7 +18,7 @@ private val Subtitle1FontSize = 14.sp
 private val Subtitle2FontSize = 12.sp
 
 private val AveriaSans = FontFamily(
-    Font(resId = R.font.catamaran, weight = FontWeight.Light),
+    Font(resId = R.font.catamaran_regular, weight = FontWeight.Light),
     Font(resId = R.font.catamaran_medium, weight = FontWeight.Normal),
     Font(resId = R.font.catamaran_bold, weight = FontWeight.Bold)
 )

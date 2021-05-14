@@ -45,7 +45,6 @@ fun NavGraphBuilder.listScreen(
                 viewModel.removeTask(it)
             }
         }
-
     }
 
     LaunchedEffect(key1 = viewModel) {

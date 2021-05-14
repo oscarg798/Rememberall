@@ -17,7 +17,7 @@ import com.oscarg798.remembrall.common.ui.theming.Dimensions
 @Composable
 fun TaskListLoading() {
     LazyColumn {
-        items((1..3).toList()) { items ->
+        items(Examples.toList()) { items ->
             Card(
                 backgroundColor = MaterialTheme.colors.surface,
                 shape = RoundedCornerShape(Dimensions.CornerRadius.Medium),
@@ -36,3 +36,5 @@ fun TaskListLoading() {
         }
     }
 }
+
+private val Examples = 1..3

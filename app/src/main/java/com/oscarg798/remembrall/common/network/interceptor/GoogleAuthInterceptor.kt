@@ -43,14 +43,14 @@ class GoogleAuthInterceptor @Inject constructor(
         val accessToken =
             gson.fromJson(authResponse.body!!.string(), OAuthResponseDto::class.java).accessToken
 
-        val second = chain.proceed(
+        val response = chain.proceed(
             originalRequest.newBuilder().url(
                 originalRequest.url.newBuilder()
                     .addEncodedQueryParameter(AuthQueryParamName, accessToken).build()
             ).build()
         )
 
-        return second
+        return response
     }
 
     private class AuthRequestBody(@SerializedName("accessToken") val accessToken: String)

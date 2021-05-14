@@ -13,7 +13,9 @@ import com.oscarg798.remembrall.common.ui.theming.Dimensions
 internal fun LoadingProfileButton() {
     CircularProgressIndicator(
         modifier = Modifier.padding(Dimensions.Spacing.ExtraSmall)
-            .size(30.dp),
+            .size(ProfileButtonSize),
         color = MaterialTheme.colors.onSecondary
     )
 }
+
+private val ProfileButtonSize = 30.dp

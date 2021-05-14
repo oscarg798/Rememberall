@@ -4,11 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Date
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Date
-import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
@@ -29,7 +29,6 @@ class SplashViewModel @Inject constructor(
                     verifyUserSectionUseCase.execute()
                 }
                 validateElapsedTime(launchTime)
-
             }
 
             _event.tryEmit(NavigateToHome)

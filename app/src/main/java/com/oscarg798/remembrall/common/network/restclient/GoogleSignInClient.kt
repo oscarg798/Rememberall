@@ -27,8 +27,8 @@ class GoogleSignInClient @Inject constructor(
 
     override fun getSignedInUser(): Either<AuthException, SignInDto> {
         return GoogleSignIn.getLastSignedInAccount(context)?.let { account ->
-            Either.right(SignInDto(User(account.getUserName()), account.serverAuthCode))
-        } ?: Either.left(AuthException.AuthRequired())
+            Either.Right(SignInDto(User(account.getUserName()), account.serverAuthCode))
+        } ?: Either.Left(AuthException.AuthRequired())
     }
 
     override suspend fun silentSignIn(): Either<AuthException, SignInDto> =
@@ -43,7 +43,7 @@ class GoogleSignInClient @Inject constructor(
                     val account = it.result
                     if (account != null) {
                         continuation.resume(
-                            Either.right(
+                            Either.Right(
                                 SignInDto(
                                     User(account.getUserName()),
                                     account.serverAuthCode
@@ -51,7 +51,7 @@ class GoogleSignInClient @Inject constructor(
                             )
                         )
                     } else {
-                        continuation.resume(Either.left(AuthException.AuthRequired()))
+                        continuation.resume(Either.Left(AuthException.AuthRequired()))
                     }
                 }.onFailure { error ->
                     onSilentSignInFailure(continuation, error)
@@ -89,7 +89,7 @@ class GoogleSignInClient @Inject constructor(
         }
 
         continuation.resume(
-            Either.left(
+            Either.Left(
                 when (error) {
                     !is Exception -> throw error
                     is RuntimeExecutionException,

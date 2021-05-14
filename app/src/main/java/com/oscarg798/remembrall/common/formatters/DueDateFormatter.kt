@@ -46,4 +46,4 @@ class DueDateFormatter @Inject constructor() {
 }
 
 private const val CalendarDatePattern = "yyyy-MM-dd'T'HH:mm:ssXXX"
-private const val DatePattern = "EEE, MMM dd HH:mm"
+private const val DatePattern = "EEE, MMM dd yyyy HH:mm"

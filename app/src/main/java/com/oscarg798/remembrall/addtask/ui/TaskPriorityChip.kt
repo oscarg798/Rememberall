@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.oscarg798.remembrall.AlignToStart
 import com.oscarg798.remembrall.R
+import com.oscarg798.remembrall.common.extensions.AlignToStart
 import com.oscarg798.remembrall.common.extensions.getBackgroundColor
 import com.oscarg798.remembrall.common.extensions.getColor
 import com.oscarg798.remembrall.common.extensions.getLabel

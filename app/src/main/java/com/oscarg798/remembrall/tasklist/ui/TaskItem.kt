@@ -30,18 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import com.oscarg798.remembrall.AlignToStart
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.SingleLine
+import com.oscarg798.remembrall.common.extensions.AlignToStart
+import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.extensions.getColor
 import com.oscarg798.remembrall.common.extensions.getLabel
+import com.oscarg798.remembrall.common.extensions.horizontalToParent
+import com.oscarg798.remembrall.common.extensions.toParentEnd
+import com.oscarg798.remembrall.common.extensions.toParentStart
+import com.oscarg798.remembrall.common.extensions.toParentTop
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
 import com.oscarg798.remembrall.common.ui.theming.SecondaryTextColor
-import com.oscarg798.remembrall.horizontalToParent
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTask
-import com.oscarg798.remembrall.toParentEnd
-import com.oscarg798.remembrall.toParentStart
-import com.oscarg798.remembrall.toParentTop
 
 @Composable
 internal fun TaskItem(

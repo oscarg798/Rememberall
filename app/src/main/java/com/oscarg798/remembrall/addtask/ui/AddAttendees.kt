@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
 import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.buttons
+import com.vanpra.composematerialdialogs.input
+import com.vanpra.composematerialdialogs.title
 
 @Composable
 fun AddAttendees(
@@ -58,7 +61,7 @@ fun AddAttendees(
                 modifier = Modifier.size(AddAttendeesSize)
                     .weight(.2f)
                     .clickable {
-                        if(enabled){
+                        if (enabled) {
                             dialog.show()
                         }
                     }
@@ -90,9 +93,9 @@ fun AddAttendees(
                         modifier = Modifier
                             .weight(.2f)
                             .clickable {
-                               if(enabled){
-                                   onAttendeeRemoved(attendee)
-                               }
+                                if (enabled) {
+                                    onAttendeeRemoved(attendee)
+                                }
                             },
                         colorFilter = ColorFilter.tint(MaterialTheme.colors.primaryVariant)
                     )
@@ -107,6 +110,7 @@ private fun getAddAttendeesDialog(onAttendeeAdded: (String) -> Unit): MaterialDi
     val dialog = remember { MaterialDialog() }
 
     dialog.build {
+
         title(stringResource(R.string.add_attendees_dialog_title))
 
         input(

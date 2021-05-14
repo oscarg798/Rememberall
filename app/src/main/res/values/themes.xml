@@ -14,8 +14,17 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="m" parent="TextAppearance.AppCompat" >
+    <style name="m" parent="TextAppearance.AppCompat">
         <item name="android:gravity">center</item>
         <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="Theme.Remembrall.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Remembrall.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Remembrall.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

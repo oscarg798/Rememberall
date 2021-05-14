@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.TextStyle
-import com.oscarg798.remembrall.SingleLine
+import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.model.Calendar
 
 @Composable

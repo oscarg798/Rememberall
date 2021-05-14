@@ -4,8 +4,8 @@ import com.oscarg798.remembrall.addtask.usecase.GetDisplayableDueDate
 import com.oscarg798.remembrall.common.formatters.DueDateFormatter
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
 import java.time.LocalDateTime
+import org.junit.Test
 
 class GetDisplayableDueDateUseCase {
 

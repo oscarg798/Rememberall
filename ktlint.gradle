@@ -6,6 +6,8 @@ ktlint {
     outputToConsole.set(true)
     filter {
         exclude("**/generated/**")
+        //This tests includes long names so lets ignore it to favor readability
+        exclude("**/AddTaskUseCaseTest.kt")
         include("**/kotlin/**")
     }
 }

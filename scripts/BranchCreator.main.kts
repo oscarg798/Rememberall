@@ -1,48 +1,44 @@
 #!/usr/bin/env kotlin
 
 @file:Import("Hermes.main.kts")
+@file:Import("Hades.kts")
 
 import java.util.concurrent.TimeUnit
+import java.nio.file.Paths
+
+val ParentPath = Paths.get(System.getProperty("user.dir")).parent.toAbsolutePath().toString()
+val TimeOutInMinutes = 1L
 
 fun createBranch(branchName: String, source: String, repository: String) {
-    var output = ""
 
     Hermes.display("checking out $source")
 
-    output += exec("git checkout $source")
+    Hades.exec(getCommand("git checkout $source"))
 
     Hermes.display("pulling source branch")
 
-    output += exec("git pull $repository")
+    Hades.exec(getCommand("git pull $repository"))
 
     Hermes.display("creating release branch: $branchName")
 
-    output += exec("git checkout -b $branchName")
+    Hades.exec(getCommand("git checkout -b $branchName\""))
 
     Hermes.display("branch created")
 
     Hermes.display("pushing branch $repository")
 
-    output += exec("git push $repository -u")
+    Hades.exec(getCommand("git push $repository -u"))
 
     Hermes.display("branch pushed")
-
-    Hermes.display(output)
 }
 
-fun exec(command: String) {
-    val arguments = command.split(' ').toTypedArray()
-    return execute(*arguments)
-}
+fun getCommand(command: String) = Hades.Command(
+    command = command,
+    path = ParentPath,
+    commandOutputListener = object : Hades.CommandOutputListener {
+        override fun onOutput(output: String) {
+            Hermes.display(output)
+        }
+    }, timeOut = TimeOutInMinutes
+)
 
-fun execute(vararg arguments: String) {
-    val process = ProcessBuilder(*arguments)
-        .start()
-        .also { it.waitFor(5, TimeUnit.MINUTES) }
-
-    if (process.exitValue() != 0) {
-        throw IllegalStateException(process.errorStream.bufferedReader().readText())
-    }
-
-    process.inputStream.bufferedReader().forEachLine { println(it) }
-}

@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall
+package com.oscarg798.remembrall.common.extensions
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp

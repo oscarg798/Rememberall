@@ -24,14 +24,14 @@ import androidx.navigation.navDeepLink
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.oscarg798.remembrall.R
+import com.oscarg798.remembrall.common.extensions.horizontalToParent
+import com.oscarg798.remembrall.common.extensions.toParentTop
+import com.oscarg798.remembrall.common.extensions.verticalToParent
 import com.oscarg798.remembrall.common.navigation.Router
 import com.oscarg798.remembrall.common.ui.PageConfigurator
 import com.oscarg798.remembrall.common.ui.RemembrallPage
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.horizontalToParent
 import com.oscarg798.remembrall.profile.ProfileViewModel
-import com.oscarg798.remembrall.toParentTop
-import com.oscarg798.remembrall.verticalToParent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -147,15 +147,15 @@ private fun getConstraints(state: ProfileViewModel.ViewState) = ConstraintSet {
 @Composable
 private fun getAuthObserverLauncher(viewModel: ProfileViewModel) =
     registerForActivityResult(object :
-        ActivityResultContract<GoogleSignInOptions, ActivityResult>() {
-        override fun createIntent(context: Context, input: GoogleSignInOptions): Intent {
-            return GoogleSignIn.getClient(context, input).signInIntent
-        }
+            ActivityResultContract<GoogleSignInOptions, ActivityResult>() {
+            override fun createIntent(context: Context, input: GoogleSignInOptions): Intent {
+                return GoogleSignIn.getClient(context, input).signInIntent
+            }
 
-        override fun parseResult(resultCode: Int, intent: Intent?): ActivityResult {
-            return ActivityResult(resultCode, intent)
-        }
-    }) {
+            override fun parseResult(resultCode: Int, intent: Intent?): ActivityResult {
+                return ActivityResult(resultCode, intent)
+            }
+        }) {
         viewModel.onAuth()
     }
 

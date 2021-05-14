@@ -19,12 +19,12 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
-import org.junit.Test
 import java.time.LocalDateTime
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Before
+import org.junit.Test
 
 class AddTaskUseCaseTest {
 
@@ -358,8 +358,8 @@ class AddTaskUseCaseTest {
             calendarRepository.addTaskToCalendar(
                 calendarId = "1",
                 calendarTask = match {
-                    it.summary == "name" && it.description == "desc" && it.id == "1"
-                        && it.startTimeDate == "ffe" && it.endTimeDate == "ffe"
+                    it.summary == "name" && it.description == "desc" && it.id == "1" &&
+                        it.startTimeDate == "ffe" && it.endTimeDate == "ffe"
                 },
                 attendees = setOf("12312")
             )

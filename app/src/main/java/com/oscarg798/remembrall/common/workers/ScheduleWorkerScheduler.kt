@@ -9,7 +9,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
 
-class ScheduleWorkerScheduler @Inject constructor(@ApplicationContext private val context: Context) {
+class ScheduleWorkerScheduler @Inject constructor(
+    @ApplicationContext
+    private val context: Context
+) {
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

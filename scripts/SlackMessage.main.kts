@@ -108,6 +108,5 @@ object SlackMessage {
             private fun parseButtons() = buttons.map { it.toString() }.joinToString(",")
         }
     }
-
 }
 

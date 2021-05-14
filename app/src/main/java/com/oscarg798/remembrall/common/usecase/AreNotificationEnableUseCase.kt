@@ -3,7 +3,9 @@ package com.oscarg798.remembrall.common.usecase
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
 import javax.inject.Inject
 
-class AreNotificationEnableUseCase @Inject constructor(private val preferenceRepository: PreferenceRepository) {
+class AreNotificationEnableUseCase @Inject constructor(
+    private val preferenceRepository: PreferenceRepository
+) {
 
     fun execute(): Boolean = preferenceRepository.getNotificationValue()
 }

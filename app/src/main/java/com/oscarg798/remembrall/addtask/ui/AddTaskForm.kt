@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.oscarg798.remembrall.AlignToStart
 import com.oscarg798.remembrall.addtask.AddTaskViewModel
+import com.oscarg798.remembrall.common.extensions.AlignToStart
+import com.oscarg798.remembrall.common.extensions.horizontalToParent
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.horizontalToParent
 
 @Composable
 internal fun AddTaskForm(
