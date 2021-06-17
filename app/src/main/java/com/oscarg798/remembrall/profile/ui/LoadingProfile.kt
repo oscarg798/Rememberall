@@ -17,15 +17,12 @@ import com.oscarg798.remembrall.common.ui.theming.Dimensions
 
 @Composable
 internal fun LoadingProfile() {
-
-    LoadingItem(UserNameId)
-
     Column(
         Modifier
             .padding(horizontal = Dimensions.Spacing.Medium)
-            .layoutId(CalendarSelectorId)
     ) {
-        LoadingItem(UserNameId)
+        LoadingItem()
+        LoadingItem()
 
         Card(
             modifier = Modifier.padding(
@@ -43,17 +40,16 @@ internal fun LoadingProfile() {
                 }
             }
         }
-    }
 
-    LoadingItem(NotificationCardId)
-    LoadingItem(LogOutButtonId)
+        LoadingItem()
+        LoadingItem()
+    }
 }
 
 @Composable
-private fun LoadingItem(layoutId: String) = Shimmer(
+private fun LoadingItem() = Shimmer(
     Modifier
         .padding(Dimensions.Spacing.Medium)
-        .layoutId(layoutId)
         .fillMaxWidth()
         .height(LoadingTextHeight)
 )

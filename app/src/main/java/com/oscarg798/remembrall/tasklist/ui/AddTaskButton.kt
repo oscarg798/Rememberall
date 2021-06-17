@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
 
 @Composable
-internal fun AddButton(onClick: () -> Unit) =
+internal fun AddButton(onClick: () -> Unit) {
     FloatingActionButton(onClick = onClick) {
         Image(
             painter = painterResource(id = R.drawable.ic_baseline_add_24),
@@ -18,3 +18,4 @@ internal fun AddButton(onClick: () -> Unit) =
             modifier = Modifier.size(30.dp)
         )
     }
+}

@@ -10,7 +10,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.oscarg798.remembrall.R
@@ -25,7 +24,6 @@ internal fun CalendarSelector(
     Column(
         Modifier
             .padding(horizontal = Dimensions.Spacing.Medium)
-            .layoutId(CalendarSelectorId)
     ) {
         Text(
             text = stringResource(R.string.profile_calendar_label),

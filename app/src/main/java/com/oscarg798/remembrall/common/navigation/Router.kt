@@ -8,35 +8,14 @@ import androidx.navigation.navOptions
 
 sealed class Router(val route: String, val uriPattern: String) {
 
-    object TaskList : Router(TaskListRoute, TaskListUriPattern) {
+    object TaskList : Router(TaskListRoute, TaskListUriPattern)
+    object AddTask : Router(AddTaskRoute, AddTaskUriPattern)
+    object Profile : Router(ProfileRoute, ProfileUriPattern)
+    object Splash : Router(SplashRoute, SplashUriPattern)
 
-        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
-            return uriPattern.toUri()
-        }
+    fun getDeeplinkNavigationRoute(arguments: Bundle? = null): Uri {
+        return uriPattern.toUri()
     }
-
-    object AddTask : Router(AddTaskRoute, AddTaskUriPattern) {
-
-        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
-            return uriPattern.toUri()
-        }
-    }
-
-    object Profile : Router(ProfileRoute, ProfileUriPattern) {
-
-        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
-            return uriPattern.toUri()
-        }
-    }
-
-    object Splash : Router(SplashRoute, SplashUriPattern) {
-
-        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
-            return uriPattern.toUri()
-        }
-    }
-
-    protected abstract fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri
 
     fun navigate(navController: NavController, arguments: Bundle? = null) {
         navController.navigate(

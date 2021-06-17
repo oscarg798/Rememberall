@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.TextStyle
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
 
@@ -18,11 +17,8 @@ internal fun NotificationCard(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-
     Card(
-        modifier = Modifier
-            .padding(Dimensions.Spacing.Medium)
-            .layoutId(NotificationCardId)
+        modifier = Modifier.padding(Dimensions.Spacing.Medium)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
