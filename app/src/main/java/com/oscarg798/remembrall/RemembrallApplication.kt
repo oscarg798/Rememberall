@@ -6,7 +6,7 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
-@HiltAndroidApp
+@HiltAndroidApp()
 class RemembrallApplication : Application(), Configuration.Provider {
 
     @Inject

@@ -10,6 +10,8 @@ interface TaskRepository {
 
     suspend fun getTasks(): Collection<Task>
 
+    suspend fun getTask(id: String): Task
+
     suspend fun removeTask(id: String)
 
     suspend fun updateWithCalendarInformation(

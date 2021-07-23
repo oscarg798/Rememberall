@@ -5,7 +5,7 @@ import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.usecase.GetSignedUserUseCase
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTask
-import com.oscarg798.remembrall.tasklist.ui.model.TaskListScreenConfiguration
+import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTaskGroup
 import com.oscarg798.remembrall.tasklist.ui.util.GetDisplayableTasks
 import com.oscarg798.remembrall.tasklist.usecase.GetTaskUseCase
 import com.oscarg798.remembrall.tasklist.usecase.RemoveTaskUseCase
@@ -51,12 +51,12 @@ class TaskListViewModel @Inject constructor(
 
             update { it.copy(loading = true, error = null) }
 
-            val screenConfiguration = withContext(coroutineContextProvider.io) {
+            val tasks = withContext(coroutineContextProvider.io) {
                 getDisplayableTasks.execute(getTasksUseCase.execute())
             }
 
             update { currentState ->
-                currentState.copy(loading = false, screenConfiguration = screenConfiguration)
+                currentState.copy(loading = false, tasks = tasks)
             }
         }
     }
@@ -76,7 +76,7 @@ class TaskListViewModel @Inject constructor(
 
     data class ViewState(
         val loading: Boolean = true,
-        val screenConfiguration: TaskListScreenConfiguration? = null,
+        val tasks: List<DisplayableTaskGroup> = emptyList(),
         val userSessionStatus: UserSessionStatus = UserSessionStatus.Loading,
         val error: Exception? = null
     ) {

@@ -7,7 +7,6 @@ import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTask
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTaskGroup
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTasksGroups
-import com.oscarg798.remembrall.tasklist.ui.model.TaskListScreenConfiguration
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -20,7 +19,7 @@ class GetDisplayableTasks @Inject constructor(
     private val todayCalendar = Calendar.getInstance()
     private val utilCalendar = Calendar.getInstance()
 
-    fun execute(tasks: Collection<Task>): TaskListScreenConfiguration {
+    fun execute(tasks: Collection<Task>): List<DisplayableTaskGroup> {
         var displayableTaskGroups = DisplayableTasksGroups()
 
         tasks.forEach { task ->
@@ -34,42 +33,40 @@ class GetDisplayableTasks @Inject constructor(
 
         displayableTaskGroups = sortTasks(displayableTaskGroups)
 
-        return TaskListScreenConfiguration(
-            arrayListOf<DisplayableTaskGroup>().apply {
-                if (displayableTaskGroups.nonExpirable != null) {
-                    add(
-                        DisplayableTaskGroup(
-                            stringProvider.get(R.string.non_expirable_label),
-                            displayableTaskGroups.nonExpirable!!.toList()
-                        )
+        return arrayListOf<DisplayableTaskGroup>().apply {
+            if (displayableTaskGroups.nonExpirable != null) {
+                add(
+                    DisplayableTaskGroup(
+                        stringProvider.get(R.string.non_expirable_label),
+                        displayableTaskGroups.nonExpirable!!.toList()
                     )
-                }
-                if (displayableTaskGroups.todayTasks != null) {
-                    add(
-                        DisplayableTaskGroup(
-                            stringProvider.get(R.string.today_due_date_label),
-                            displayableTaskGroups.todayTasks!!.toList()
-                        )
-                    )
-                }
-                if (displayableTaskGroups.upComingTasks != null) {
-                    add(
-                        DisplayableTaskGroup(
-                            stringProvider.get(R.string.comming_label),
-                            displayableTaskGroups.upComingTasks!!.toList()
-                        )
-                    )
-                }
-                if (displayableTaskGroups.expiredTasks != null) {
-                    add(
-                        DisplayableTaskGroup(
-                            stringProvider.get(R.string.expired_label),
-                            displayableTaskGroups.expiredTasks!!.toList()
-                        )
-                    )
-                }
+                )
             }
-        )
+            if (displayableTaskGroups.todayTasks != null) {
+                add(
+                    DisplayableTaskGroup(
+                        stringProvider.get(R.string.today_due_date_label),
+                        displayableTaskGroups.todayTasks!!.toList()
+                    )
+                )
+            }
+            if (displayableTaskGroups.upComingTasks != null) {
+                add(
+                    DisplayableTaskGroup(
+                        stringProvider.get(R.string.comming_label),
+                        displayableTaskGroups.upComingTasks!!.toList()
+                    )
+                )
+            }
+            if (displayableTaskGroups.expiredTasks != null) {
+                add(
+                    DisplayableTaskGroup(
+                        stringProvider.get(R.string.expired_label),
+                        displayableTaskGroups.expiredTasks!!.toList()
+                    )
+                )
+            }
+        }
     }
 
     private fun sortTasks(displayableTasksGroups: DisplayableTasksGroups) =

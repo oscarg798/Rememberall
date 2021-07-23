@@ -76,12 +76,8 @@ internal fun AddTaskForm(
                 }
             }
 
-            if (state.loading) {
-                LoadingDoneButton()
-            } else {
-                DoneButton {
-                    viewModel.onDonePressed()
-                }
+            DoneButton(loading = state.loading) {
+                viewModel.onDonePressed()
             }
         }
     }

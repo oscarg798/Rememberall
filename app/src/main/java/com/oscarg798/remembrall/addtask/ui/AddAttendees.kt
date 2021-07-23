@@ -14,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.layoutId
@@ -105,6 +106,7 @@ fun AddAttendees(
     }
 }
 
+@ExperimentalComposeUiApi
 @Composable
 private fun getAddAttendeesDialog(onAttendeeAdded: (String) -> Unit): MaterialDialog {
     val dialog = remember { MaterialDialog() }

@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.stringResource
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.common.extensions.SingleLine
 
 @Composable
 internal fun TaskDescriptionField(
@@ -24,10 +23,12 @@ internal fun TaskDescriptionField(
         label = {
             Text(text = stringResource(R.string.task_description_label))
         },
-        maxLines = SingleLine,
+        maxLines = DescriptionMaxLines,
         modifier = Modifier
             .fillMaxWidth()
             .layoutId(TaskDescriptionId),
         colors = addTaskFieldColorConfiguration()
     )
 }
+
+private const val DescriptionMaxLines = 6

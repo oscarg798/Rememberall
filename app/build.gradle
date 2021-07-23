@@ -55,10 +55,10 @@ android {
         freeCompilerArgs = ["-Xallow-result-return-type",
                             "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                             "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                             "-Xopt-in=kotlinx.coroutines.FlowPreview",
                             "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
         jvmTarget = "1.8"
-        useIR = true
     }
 
     testOptions {
@@ -75,8 +75,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.4.32"
-        kotlinCompilerExtensionVersion '1.0.0-beta07'
+        kotlinCompilerExtensionVersion '1.0.0-rc02'
     }
 
     repositories {
@@ -91,10 +90,9 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     implementation androidX.coreKtx
     implementation androidX.appCompat
+    implementation androidX.activityx
     implementation material.material
 
     implementation androidX.constraintLayout
@@ -150,7 +148,8 @@ dependencies {
     implementation workManager.ktx
 
     implementation utils.composeDialogs
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.4.32'
+
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.10'
     implementation androidGms.auth
     implementation platform(firebase.boom)
 

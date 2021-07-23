@@ -1,5 +1,6 @@
 package com.oscarg798.remembrall.tasklist.ui
 
+import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -54,10 +55,19 @@ fun NavGraphBuilder.listScreen(
     ) {
         RemembrallPage {
             when {
-                state.loading -> TaskListLoading()
-                state.screenConfiguration != null &&
-                    state.screenConfiguration!!.isEmpty() -> EmptyTaskList()
-                state.screenConfiguration != null -> TaskList(state.screenConfiguration!!) {
+                state.tasks.isEmpty() && !state.loading -> EmptyTaskList()
+                else -> TaskList(
+                    tasks = state.tasks,
+                    loading = state.loading,
+                    onClick = {
+                        Router.TaskDetail.navigate(
+                            navController,
+                            Bundle().apply {
+                                putString(Router.TaskDetail.TaskIdArgument, it)
+                            }
+                        )
+                    }
+                ) {
                     viewModel.removeTask(it)
                 }
             }

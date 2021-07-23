@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.navOptions
+import com.oscarg798.remembrall.common.navigation.Router.TaskDetail.TaskIdArgument
 
 sealed class Router(val route: String, val uriPattern: String) {
 
@@ -13,7 +14,22 @@ sealed class Router(val route: String, val uriPattern: String) {
     object Profile : Router(ProfileRoute, ProfileUriPattern)
     object Splash : Router(SplashRoute, SplashUriPattern)
 
-    fun getDeeplinkNavigationRoute(arguments: Bundle? = null): Uri {
+    object TaskDetail : Router(TaskDetailRoute, TaskDetailUriPattern) {
+
+        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
+            require(arguments != null && arguments.containsKey(TaskIdArgument))
+            return uriPattern.replace(
+                "{$TaskIdArgument}",
+                arguments.getString(
+                    TaskIdArgument
+                )!!
+            ).toUri()
+        }
+
+        const val TaskIdArgument = "TaskId"
+    }
+
+    open fun getDeeplinkNavigationRoute(arguments: Bundle? = null): Uri {
         return uriPattern.toUri()
     }
 
@@ -27,16 +43,19 @@ sealed class Router(val route: String, val uriPattern: String) {
     }
 }
 
-private val DeepLinkUri = "https://remembrall"
+private const val DeepLinkUri = "https://remembrall"
 
 private val TaskListRoute = "taskList"
 private val TaskListUriPattern = "$DeepLinkUri/$TaskListRoute"
 
-private val AddTaskRoute = "addTask"
-private val AddTaskUriPattern = "$DeepLinkUri/$AddTaskRoute"
+private const val TaskDetailRoute = "taskDetail"
+private const val TaskDetailUriPattern = "$DeepLinkUri/$TaskDetailRoute/{$TaskIdArgument}"
 
-private val ProfileRoute = "profile"
-private val ProfileUriPattern = "$DeepLinkUri/$ProfileRoute"
+private const val AddTaskRoute = "addTask"
+private const val AddTaskUriPattern = "$DeepLinkUri/$AddTaskRoute"
 
-private val SplashRoute = "splash"
-private val SplashUriPattern = "$DeepLinkUri/$SplashRoute"
+private const val ProfileRoute = "profile"
+private const val ProfileUriPattern = "$DeepLinkUri/$ProfileRoute"
+
+private const val SplashRoute = "splash"
+private const val SplashUriPattern = "$DeepLinkUri/$SplashRoute"

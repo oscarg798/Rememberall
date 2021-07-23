@@ -37,4 +37,6 @@ class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepos
 
     override suspend fun getTasks(): Collection<Task> =
         taskDataSource.getTasks().map { it.toTask() }
+
+    override suspend fun getTask(id: String): Task = taskDataSource.getTask(id).toTask()
 }

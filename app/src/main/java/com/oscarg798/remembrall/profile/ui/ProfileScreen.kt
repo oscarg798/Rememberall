@@ -2,7 +2,6 @@ package com.oscarg798.remembrall.profile.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.compose.registerForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -26,13 +25,14 @@ import com.oscarg798.remembrall.common.ui.RemembrallPage
 import com.oscarg798.remembrall.common.ui.RemembrallScaffold
 import com.oscarg798.remembrall.common.ui.RemembrallTopBar
 import com.oscarg798.remembrall.common.ui.RemembrallTopBarTitle
+import com.oscarg798.remembrall.common.ui.registerActivityResultCallback
 import com.oscarg798.remembrall.profile.ProfileViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.profileScreen() =
-    composable(Router.Profile.route, deepLinks = getDeepLinks()) { backStackEntry ->
+    composable(route = Router.Profile.route, deepLinks = getDeepLinks()) { backStackEntry ->
 
         val viewModel: ProfileViewModel = hiltNavGraphViewModel(backStackEntry)
         val state by viewModel.state.collectAsState(ProfileViewModel.ViewState())
@@ -95,7 +95,7 @@ private fun observeEvents(
 
 @Composable
 private fun getAuthObserverLauncher(viewModel: ProfileViewModel) =
-    registerForActivityResult(object :
+    registerActivityResultCallback(object :
             ActivityResultContract<GoogleSignInOptions, ActivityResult>() {
             override fun createIntent(context: Context, input: GoogleSignInOptions): Intent {
                 return GoogleSignIn.getClient(context, input).signInIntent
@@ -114,9 +114,5 @@ private fun getDeepLinks() = listOf(
     }
 )
 
-const val LogOutButtonId = "LogOutButton"
 const val UserNameId = "UserGivenName"
 const val SignInButtonId = "SignIn"
-const val CalendarSelectorId = "CalendarSelector"
-const val NotificationCardId = "NotificationCard"
-private const val AlignToBottom = 1f
