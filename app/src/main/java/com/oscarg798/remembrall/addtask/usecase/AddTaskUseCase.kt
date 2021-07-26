@@ -4,8 +4,8 @@ import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.common.formatters.DueDateFormatter
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common.repository.domain.AuthRepository
-import com.oscarg798.remembrall.common.repository.domain.CalendarRepository
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
+import com.oscarg798.remembrall.common.usecase.AddTaskToCalendarUseCase
 import dagger.Reusable
 import java.time.LocalDateTime
 import java.util.regex.Pattern
@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 @Reusable
 class AddTaskUseCase @Inject constructor(
+    private val addTaskToCalendarUseCase: AddTaskToCalendarUseCase,
     private val dueDateFormatter: DueDateFormatter,
     private val taskRepository: TaskRepository,
-    private val calendarRepository: CalendarRepository,
     private val authRepository: AuthRepository,
     private val emailPattern: Pattern
 ) {
@@ -54,32 +54,7 @@ class AddTaskUseCase @Inject constructor(
 
         require(addTaskParam.dueDate != null)
 
-        /**
-         * Considering adding this to the WorkManager for async synchronization
-         */
-        runCatching {
-            calendarRepository.getSelectedCalendar()
-        }.onSuccess { selectedCalendar ->
-            val startDate = dueDateFormatter.toCalendarTaskDate(addTaskParam.dueDate)
-            val endDate = dueDateFormatter.toCalendarTaskDate(addTaskParam.dueDate.plusHours(1))
-            val calendarEventId = task.id.replace("-", "")
-            val calendarSyncInformation = calendarRepository.addTaskToCalendar(
-                calendarId = selectedCalendar.id,
-                calendarTask = CalendarRepository.CalendarTask(
-                    id = calendarEventId,
-                    summary = addTaskParam.name,
-                    startTimeDate = startDate,
-                    endTimeDate = endDate,
-                    description = addTaskParam.description
-                ),
-                attendees = addTaskParam.attendees
-            )
-
-            taskRepository.updateWithCalendarInformation(
-                tasksCalendarSyncInformation = calendarSyncInformation,
-                task = task
-            )
-        }
+        addTaskToCalendarUseCase.execute(task, addTaskParam.dueDate, addTaskParam.attendees)
     }
 
     private fun shouldTaskBeSynced(addTaskParam: AddTaskParam): Boolean {

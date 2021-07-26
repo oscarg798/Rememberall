@@ -1,18 +1,11 @@
 package com.oscarg798.remembrall.addtask.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.oscarg798.remembrall.addtask.AddTaskViewModel
 import com.oscarg798.remembrall.common.extensions.AlignToStart
 import com.oscarg798.remembrall.common.extensions.horizontalToParent
+import com.oscarg798.remembrall.common.ui.AddEditTaskForm
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
 
 @Composable
@@ -21,66 +14,39 @@ internal fun AddTaskForm(
     viewModel: AddTaskViewModel
 ) {
 
-    Box(
-        modifier = Modifier
-            .padding(Dimensions.Spacing.Medium)
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
-    ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxHeight(),
-            constraintSet = getConstraints(state.isUserLoggedIn)
-        ) {
-
-            TaskNameField(
-                name = state.name ?: MissingFieldValuePlaceholder,
-                enabled = !state.loading,
-            ) { viewModel.onNameUpdated(it) }
-
-            TaskDescriptionField(
-                description = state.description ?: MissingFieldValuePlaceholder,
-                enabled = !state.loading
-
-            ) { viewModel.onDescriptionUpdated(it) }
-
-            TaskDueDateField(
-                formattedDueDate = state.formattedDueDate ?: DueDatePlaceholder,
-                enabled = !state.loading,
-                isUserLoggedIn = state.isUserLoggedIn,
-            ) { viewModel.onDueDateSelected(it) }
-
-            if (state.isUserLoggedIn) {
-                AddAttendees(
-                    enabled = !state.loading,
-                    attendees = state.attendees,
-                    onAttendeeRemoved = {
-                        viewModel.onAttendeeRemoved(it)
-                    },
-                    onAttendeeAdded = { value ->
-                        viewModel.onAttendeeAdded(value)
-                    }
-                )
-            }
-
-            if (state.addTaskScreenConfiguration != null) {
-                TaskPriorityField(
-                    availablePriorities = state.addTaskScreenConfiguration.availablePriorities,
-                    enabled = !state.loading,
-                    selectedPriority = state.priority
-                        ?: state.addTaskScreenConfiguration.selectedPriority
-                ) {
-                    viewModel.onPrioritySelected(
-                        it
-                    )
-                }
-            }
-
-            DoneButton(loading = state.loading) {
-                viewModel.onDonePressed()
-            }
+    AddEditTaskForm(
+        taskName = state.name ?: MissingFieldValuePlaceholder,
+        taskDescription = state.description ?: MissingFieldValuePlaceholder,
+        availablePriorities = state.addtaskScreenConfiguration?.availablePriorities,
+        selectedPriority = state.addtaskScreenConfiguration?.selectedPriority,
+        dueDate = when (state.dueDate) {
+            null -> null
+            else -> state.formattedDueDate
+        },
+        loading = state.loading,
+        isUserLoggedIn = state.isUserLoggedIn,
+        onNameUpdated = {
+            viewModel.onNameUpdated(it)
+        },
+        onDescriptionUpdated = {
+            viewModel.onDescriptionUpdated(it)
+        },
+        onDueDateSelected = {
+            viewModel.onDueDateSelected(it)
+        },
+        onAttendeeAdded = {
+            viewModel.onAttendeeAdded(it)
+        },
+        onAttendeeRemoved = {
+            viewModel.onAttendeeRemoved(it)
+        },
+        onPrioritySelected = {
+            viewModel.onPrioritySelected(it)
+        },
+        onDonePressed = {
+            viewModel.onDonePressed()
         }
-    }
+    )
 }
 
 private fun getConstraints(isUserLoggedIn: Boolean) = ConstraintSet {

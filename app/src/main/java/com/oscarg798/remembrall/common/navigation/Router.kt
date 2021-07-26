@@ -14,6 +14,20 @@ sealed class Router(val route: String, val uriPattern: String) {
     object Profile : Router(ProfileRoute, ProfileUriPattern)
     object Splash : Router(SplashRoute, SplashUriPattern)
 
+    object Edit : Router(EditRoute, EditUriPattern) {
+        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
+            require(arguments != null && arguments.containsKey(TaskIdArgument))
+            return uriPattern.replace(
+                "{$TaskIdArgument}",
+                arguments.getString(
+                    TaskIdArgument
+                )!!
+            ).toUri()
+        }
+
+        const val TaskIdArgument = "TaskId"
+    }
+
     object TaskDetail : Router(TaskDetailRoute, TaskDetailUriPattern) {
 
         override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
@@ -59,3 +73,6 @@ private const val ProfileUriPattern = "$DeepLinkUri/$ProfileRoute"
 
 private const val SplashRoute = "splash"
 private const val SplashUriPattern = "$DeepLinkUri/$SplashRoute"
+
+private const val EditRoute = "edit"
+private const val EditUriPattern = "$DeepLinkUri/$EditRoute/{$TaskIdArgument}"

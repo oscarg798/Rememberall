@@ -10,7 +10,7 @@ import com.oscarg798.remembrall.common.ui.getButtonShape
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
 
 @Composable
-internal fun DoneButtonDefinition(
+internal fun RemembrallButtonDefinition(
     content: @Composable () -> Unit,
     onClick: () -> Unit = {}
 ) {

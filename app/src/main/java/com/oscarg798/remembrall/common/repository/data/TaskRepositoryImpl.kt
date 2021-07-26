@@ -6,8 +6,15 @@ import com.oscarg798.remembrall.common.model.Task
 import com.oscarg798.remembrall.common.network.dto.TaskDto
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import java.util.UUID
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepository {
+
+    private val editableTaskUpdateListener = MutableStateFlow<Task?>(null)
+
+    override val taskUpdateListener: Flow<Task?>
+        get() = editableTaskUpdateListener
 
     override suspend fun addTask(addTaskParam: TaskRepository.AddTaskParam): Task {
         val task = TaskDto(
@@ -31,6 +38,10 @@ class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepos
         taskDataSource.update(TaskDto(task, tasksCalendarSyncInformation))
     }
 
+    override suspend fun update(task: Task) {
+        taskDataSource.update(TaskDto(task))
+    }
+
     override suspend fun removeTask(id: String) {
         taskDataSource.deleteTask(id)
     }
@@ -39,4 +50,8 @@ class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepos
         taskDataSource.getTasks().map { it.toTask() }
 
     override suspend fun getTask(id: String): Task = taskDataSource.getTask(id).toTask()
+
+    override fun onTaskUpdated(task: Task) {
+        editableTaskUpdateListener.value = task
+    }
 }

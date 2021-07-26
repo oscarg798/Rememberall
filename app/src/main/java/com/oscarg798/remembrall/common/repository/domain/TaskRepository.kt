@@ -3,8 +3,11 @@ package com.oscarg798.remembrall.common.repository.domain
 import com.oscarg798.remembrall.common.model.CalendarSyncInformation
 import com.oscarg798.remembrall.common.model.Task
 import com.oscarg798.remembrall.common.model.TaskPriority
+import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
+
+    val taskUpdateListener: Flow<Task?>
 
     suspend fun addTask(addTaskParam: AddTaskParam): Task
 
@@ -18,6 +21,10 @@ interface TaskRepository {
         tasksCalendarSyncInformation: CalendarSyncInformation,
         task: Task
     )
+
+    suspend fun update(task: Task)
+
+    fun onTaskUpdated(task: Task)
 
     data class AddTaskParam(
         val name: String,

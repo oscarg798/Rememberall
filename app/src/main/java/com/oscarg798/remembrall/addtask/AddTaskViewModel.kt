@@ -3,14 +3,14 @@ package com.oscarg798.remembrall.addtask
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
-import com.oscarg798.remembrall.addtask.ui.AddTaskScreenConfiguration
+import com.oscarg798.remembrall.addtask.ui.AddtaskScreenConfiguration
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
-import com.oscarg798.remembrall.addtask.usecase.GetAddTaskConfiguration
+import com.oscarg798.remembrall.addtask.usecase.GetAvailablePrioritiesUseCase
 import com.oscarg798.remembrall.addtask.usecase.GetDisplayableDueDate
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common.provider.StringProvider
-import com.oscarg798.remembrall.common.usecase.GetSignedUserUseCase
+import com.oscarg798.remembrall.common.usecase.GetSignedInUserUseCase
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDateTime
@@ -22,8 +22,8 @@ import kotlinx.coroutines.withContext
 class AddTaskViewModel @Inject constructor(
     private val getFormattedDueDate: GetDisplayableDueDate,
     private val addTaskUseCase: AddTaskUseCase,
-    private val getSignedUserUseCase: GetSignedUserUseCase,
-    private val getAvailablePrioritiesUseCase: GetAddTaskConfiguration,
+    private val getSignedInUserUseCase: GetSignedInUserUseCase,
+    private val getAvailablePrioritiesUseCaseEdit: GetAvailablePrioritiesUseCase,
     private val stringProvider: StringProvider,
     coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<AddTaskViewModel.ViewState, AddTaskViewModel.Event>(
@@ -52,13 +52,17 @@ class AddTaskViewModel @Inject constructor(
 
     private fun getAvailablePriorities(coroutineContextProvider: CoroutineContextProvider) {
         viewModelScope.launch {
-            val screenConfiguration = withContext(coroutineContextProvider.computation) {
-                getAvailablePrioritiesUseCase.execute()
+            val availablePriorities = withContext(coroutineContextProvider.computation) {
+                getAvailablePrioritiesUseCaseEdit.execute()
             }
 
+            val screenConfiguration = AddtaskScreenConfiguration(
+                availablePriorities,
+                TaskPriority.Low
+            )
             update {
                 it.copy(
-                    addTaskScreenConfiguration = screenConfiguration,
+                    addtaskScreenConfiguration = screenConfiguration,
                     priority = screenConfiguration.selectedPriority
                 )
             }
@@ -69,7 +73,7 @@ class AddTaskViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(coroutineContextProvider.io) {
                 runCatching {
-                    getSignedUserUseCase.execute()
+                    getSignedInUserUseCase.execute()
                 }.fold(
                     {
                         update { it.copy(isUserLoggedIn = true) }
@@ -134,13 +138,9 @@ class AddTaskViewModel @Inject constructor(
     fun onAttendeeRemoved(value: String) {
         viewModelScope.launch {
             update { state ->
-                state.copy(
-                    attendees = mutableSetOf<String>().apply {
-                        val currentAttendees = currentState().attendees.toMutableSet()
-                        currentAttendees.remove(value)
-                        addAll(currentAttendees)
-                    }
-                )
+                val attendees = currentState().attendees.toMutableSet()
+                attendees.remove(value)
+                state.copy(attendees = attendees)
             }
         }
     }
@@ -215,7 +215,7 @@ class AddTaskViewModel @Inject constructor(
         val priority: TaskPriority? = null,
         val isUserLoggedIn: Boolean = false,
         val attendees: Set<String> = setOf(),
-        val addTaskScreenConfiguration: AddTaskScreenConfiguration? = null,
+        val addtaskScreenConfiguration: AddtaskScreenConfiguration? = null,
         val error: String? = null
     )
 

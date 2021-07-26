@@ -2,16 +2,16 @@ package com.oscarg798.remembrall.tasklist.ui.util
 
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.model.Task
 import com.oscarg798.remembrall.common.provider.StringProvider
-import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTask
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTaskGroup
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTasksGroups
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
-class GetDisplayableTasks @Inject constructor(
+class GetTaskListScreenConfiguration @Inject constructor(
     private val dueDateFormatter: DueDateFormatter,
     private val stringProvider: StringProvider
 ) {
@@ -142,20 +142,9 @@ class GetDisplayableTasks @Inject constructor(
     )
 
     private fun getDisplayableTask(task: Task) = DisplayableTask(
-        id = task.id,
-        name = task.name,
-        description = task.description,
-        priority = task.priority,
-        completed = task.completed,
-        calendarSynced = task.calendarSyncInformation?.synced ?: false,
-        dueDate = task.dueDate?.let {
-            getDisplayableDueDate(task.dueDate)
-        }
+        task = task,
+        dueDateFormatter = dueDateFormatter
     )
-
-    private fun getDisplayableDueDate(dueDate: Long): String {
-        return dueDateFormatter.toDisplayableDate(dueDate)
-    }
 
     private fun isDueToday(task: Task): Boolean {
         utilCalendar.time = Date(task.dueDate!!)

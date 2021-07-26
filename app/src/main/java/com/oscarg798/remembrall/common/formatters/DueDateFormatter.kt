@@ -3,6 +3,7 @@ package com.oscarg798.remembrall.common.formatters
 import dagger.Reusable
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
@@ -36,6 +37,17 @@ class DueDateFormatter @Inject constructor() {
 
     fun toDueDateInMillis(date: LocalDateTime): Long {
         return toDueDateInMillis(toDisplayableDate(date))
+    }
+
+    fun toDueLocalDatetime(date: Long): LocalDateTime {
+        return Date(date).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+    }
+
+    fun toCalendarTaskDate(date: Long): String {
+        val taskDueDate = toDueLocalDatetime(date)
+        val dueDate = taskDueDate.format(dateTimeFormatter)
+        dueDateCalendar.time = Date(toDueDateInMillis(dueDate))
+        return calendarTaskDateFormatter.format(dueDateCalendar.time)
     }
 
     fun toCalendarTaskDate(date: LocalDateTime): String {

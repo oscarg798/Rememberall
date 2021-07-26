@@ -4,22 +4,21 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.ui.getButtonTextStyle
 
 @Composable
-internal fun DoneButton(
+internal fun RemembrallButton(
+    text: String,
     loading: Boolean = false,
     onButtonClick: () -> Unit
 ) {
-    DoneButtonDefinition(
+    RemembrallButtonDefinition(
         content = {
             if (loading) {
                 CircularProgressIndicator(color = MaterialTheme.colors.onSecondary)
             } else {
                 Text(
-                    stringResource(R.string.done_label),
+                    text,
                     style = getButtonTextStyle()
                 )
             }

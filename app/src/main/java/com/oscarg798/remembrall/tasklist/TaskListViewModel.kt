@@ -2,11 +2,11 @@ package com.oscarg798.remembrall.tasklist
 
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.usecase.GetSignedUserUseCase
+import com.oscarg798.remembrall.common.model.DisplayableTask
+import com.oscarg798.remembrall.common.usecase.GetSignedInUserUseCase
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
-import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTask
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTaskGroup
-import com.oscarg798.remembrall.tasklist.ui.util.GetDisplayableTasks
+import com.oscarg798.remembrall.tasklist.ui.util.GetTaskListScreenConfiguration
 import com.oscarg798.remembrall.tasklist.usecase.GetTaskUseCase
 import com.oscarg798.remembrall.tasklist.usecase.RemoveTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +17,8 @@ import kotlinx.coroutines.withContext
 @HiltViewModel
 class TaskListViewModel @Inject constructor(
     private val removeTaskUseCase: RemoveTaskUseCase,
-    private val getSignedUserUseCase: GetSignedUserUseCase,
-    private val getDisplayableTasks: GetDisplayableTasks,
+    private val getSignedInUserUseCase: GetSignedInUserUseCase,
+    private val getDisplayableTasks: GetTaskListScreenConfiguration,
     private val getTasksUseCase: GetTaskUseCase,
     coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<TaskListViewModel.ViewState, TaskListViewModel.Event>(
@@ -32,7 +32,7 @@ class TaskListViewModel @Inject constructor(
 
             runCatching {
                 withContext(coroutineContextProvider.io) {
-                    getSignedUserUseCase.execute()
+                    getSignedInUserUseCase.execute()
                 }
             }.onSuccess { _ ->
                 update { it.copy(userSessionStatus = ViewState.UserSessionStatus.SignedIn) }

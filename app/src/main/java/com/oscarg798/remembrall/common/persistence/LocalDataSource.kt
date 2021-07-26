@@ -40,7 +40,8 @@ class LocalDataSource @Inject constructor(private val taskDao: TaskDao) : TaskDa
         calendarSynced = calendarSyncInformation?.synced,
         calendarEventId = calendarSyncInformation?.calendarEventId,
         calendarId = calendarSyncInformation?.calendarId,
-        attendees = calendarSyncInformation?.attendees?.joinToString(AttendeesSeparator)
+        attendees = calendarSyncInformation?.attendees?.map { it.email }
+            ?.joinToString(AttendeesSeparator)
     )
 
     private fun TaskEntity.toTaskDto(): TaskDto = TaskDto(

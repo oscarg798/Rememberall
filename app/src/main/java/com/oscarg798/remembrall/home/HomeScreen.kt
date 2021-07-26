@@ -6,10 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.oscarg798.remembrall.addtask.ui.addTaskScreen
 import com.oscarg798.remembrall.common.navigation.Router
+import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
+import com.oscarg798.remembrall.edittask.editTaskScreen
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.SplashScreen
-import com.oscarg798.remembrall.taskdetails.ViewModelStore
-import com.oscarg798.remembrall.taskdetails.taskDetailsScreen
+import com.oscarg798.remembrall.taskdetails.ui.taskDetailsScreen
 import com.oscarg798.remembrall.tasklist.ui.listScreen
 
 @Composable
@@ -25,6 +26,7 @@ fun HomeScreen(onFinishRequest: () -> Unit) {
         )
         addTaskScreen(navController = navController)
         profileScreen()
-        taskDetailsScreen(viewModelStore = viewModelStore)
+        taskDetailsScreen(navController = navController, viewModelStore = viewModelStore)
+        editTaskScreen(navController = navController, viewModelStore = viewModelStore)
     }
 }

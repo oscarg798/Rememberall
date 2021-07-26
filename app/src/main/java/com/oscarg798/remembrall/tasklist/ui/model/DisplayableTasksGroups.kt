@@ -1,5 +1,7 @@
 package com.oscarg798.remembrall.tasklist.ui.model
 
+import com.oscarg798.remembrall.common.model.DisplayableTask
+
 data class DisplayableTasksGroups(
     val nonExpirable: Collection<DisplayableTask>? = null,
     val todayTasks: Collection<DisplayableTask>? = null,
