@@ -80,12 +80,14 @@ fun TaskBody(
     Row {
         TaskTitle(
             task = task,
-            modifier = Modifier.weight(
-                when (taskCardOptions) {
-                    is TaskCardOptions.Present -> .8f
-                    else -> 1f
-                }
-            )
+            modifier = Modifier
+                .padding(top = Dimensions.Spacing.Small)
+                .weight(
+                    when (taskCardOptions) {
+                        is TaskCardOptions.Present -> .8f
+                        else -> 1f
+                    }
+                )
         )
 
         if (taskCardOptions is TaskCardOptions.Present) {

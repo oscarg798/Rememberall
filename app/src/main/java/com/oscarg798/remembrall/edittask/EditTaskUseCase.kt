@@ -11,7 +11,8 @@ class EditTaskUseCase @Inject constructor(
     private val getTaskById: GetTaskById,
     private val dueDateFormatter: DueDateFormatter,
     private val addTaskToCalendarUseCase: AddTaskToCalendarUseCase,
-    private val taskRepository: TaskRepository
+    private val taskRepository: TaskRepository,
+    private val updateCalendarTaskUseCase: UpdateCalendarTaskUseCase
 ) {
 
     suspend fun execute(
@@ -29,7 +30,7 @@ class EditTaskUseCase @Inject constructor(
 
             task = getTaskById.execute(task.id)
         } else if (task.calendarSyncInformation != null && task.dueDate != null) {
-            // TODO update task calendar info
+            updateCalendarTaskUseCase.execute(task)
         }
 
         taskRepository.update(task)

@@ -260,9 +260,11 @@ class EditTaskViewModel @AssistedInject constructor(
                 }
             }.fold(
                 {
+                    update { it.copy(loading = false) }
                     _event.tryEmit(Event.TaskEdited)
                 },
                 { error ->
+                    update { it.copy(loading = false) }
                     if (error !is Exception) throw error
 
                     update { it.copy(loading = false, error = error) }

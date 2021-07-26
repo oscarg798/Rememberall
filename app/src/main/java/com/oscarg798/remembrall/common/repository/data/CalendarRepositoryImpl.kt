@@ -40,6 +40,38 @@ class CalendarRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateCalendarEvent(
+        calendarId: String,
+        calendarEventId: String,
+        calendarTask: CalendarRepository.CalendarTask,
+        attendees: Set<String>?
+    ): CalendarSyncInformation {
+        calendarClient.update(
+            calendarId, calendarEventId,
+            EventDto(
+                id = calendarTask.id,
+                summary = calendarTask.summary,
+                startDate = EventDtoDate(calendarTask.startTimeDate),
+                endDate = EventDtoDate(calendarTask.endTimeDate),
+                description = calendarTask.description,
+                attendees = attendees?.let {
+                    attendees.map {
+                        EventAttendeeDto(email = it)
+                    }
+                }
+            )
+        )
+
+        return CalendarSyncInformation(
+            calendarId = calendarId,
+            calendarEventId = calendarTask.id,
+            synced = true,
+            attendees = attendees?.map {
+                CalendarAttendee(it)
+            }
+        )
+    }
+
     override suspend fun addTaskToCalendar(
         calendarId: String,
         calendarTask: CalendarRepository.CalendarTask,

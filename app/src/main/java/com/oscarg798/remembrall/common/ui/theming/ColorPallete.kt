@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.common.ui.theming
 
-import android.annotation.SuppressLint
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
@@ -19,7 +19,6 @@ private val Froly = Color(0xFFf7b7cd)
 private val SweetCorn = Color(0xfffaf7d9)
 private val Riptide = Color(0xFf87E8D0)
 
-@SuppressLint("ConflictingOnColor")
 val LightColors = lightColors(
     primary = Indigo,
     primaryVariant = BurntSienna,
@@ -32,6 +31,21 @@ val LightColors = lightColors(
     onSecondary = Color.White,
     onBackground = DownRiver,
     onSurface = MineShaft,
+    onError = Color.White
+)
+
+val DarkColors = darkColors(
+    primary = Indigo,
+    primaryVariant = BurntSienna,
+    secondary = Indigo,
+    secondaryVariant = BlueMarguerite,
+    background = MineShaft,
+    surface = MineShaft,
+    error = BurntSienna,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
     onError = Color.White
 )
 

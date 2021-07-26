@@ -132,6 +132,6 @@ private fun DatePickerDialog(
     }
 }
 
-private const val DueTimeLabelTextWeight = 0.2f
-private const val DueTimeValueTextWeight = 0.6f
+private const val DueTimeLabelTextWeight = 0.3f
+private const val DueTimeValueTextWeight = 0.5f
 private const val DueTimeIconWeight = 0.2f

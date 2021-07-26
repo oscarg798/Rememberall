@@ -11,6 +11,13 @@ interface CalendarRepository {
 
     suspend fun getCalendars(): Collection<Calendar>
 
+    suspend fun updateCalendarEvent(
+        calendarId: String,
+        calendarEventId: String,
+        calendarTask: CalendarTask,
+        attendees: Set<String>?
+    ): CalendarSyncInformation
+
     suspend fun addTaskToCalendar(
         calendarId: String,
         calendarTask: CalendarTask,

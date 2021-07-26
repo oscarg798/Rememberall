@@ -27,6 +27,7 @@ internal fun TaskList(
     onClick: (String) -> Unit,
     onRemove: (DisplayableTask) -> Unit
 ) {
+
     LazyColumn(
         Modifier
             .padding(top = Dimensions.Spacing.Medium)
@@ -35,6 +36,7 @@ internal fun TaskList(
         if (loading) {
             loadingList()
         } else {
+
             tasks.forEach {
                 item {
                     Text(

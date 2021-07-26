@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.splash
+package com.oscarg798.remembrall.splash.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +19,7 @@ import com.oscarg798.remembrall.common.navigation.Router
 import com.oscarg798.remembrall.common.ui.RemembrallPage
 import com.oscarg798.remembrall.common.ui.RemembrallScaffold
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.splash.SplashViewModel
 import kotlinx.coroutines.flow.collect
 
 fun NavGraphBuilder.SplashScreen(

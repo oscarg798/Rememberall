@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.ui.theming.Dimensions
@@ -35,6 +36,7 @@ internal fun EmptyTaskList() {
 
             Text(
                 text = stringResource(R.string.task_list_empty),
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h3
                     .merge(TextStyle(MaterialTheme.colors.onBackground)),
                 modifier = Modifier.padding(horizontal = Dimensions.Spacing.Medium)
