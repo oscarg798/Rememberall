@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+android{
+
+    compileSdk = 30
+    buildToolsVersion = "30.0.3"
+
+    defaultConfig {
+        minSdk = 26
+        targetSdk = 30
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion "1.5.10"
+        kotlinCompilerExtensionVersion '1.0.0'
+    }
+
+}
+
+dependencies {
+
+    implementation compose.liveData
+    implementation compose.ui
+    implementation compose.tooling
+    implementation compose.foundation
+    implementation compose.material
+    implementation compose.icons
+    implementation compose.iconsExtended
+    implementation compose.animations
+    implementation compose.constraintLayout
+    implementation compose.compiler
+    implementation compose.activities
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}

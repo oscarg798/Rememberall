@@ -14,8 +14,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
 
 @Composable
 internal fun ProfileButton(

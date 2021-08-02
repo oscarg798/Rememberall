@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.common.extensions
 
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.model.TaskPriority
-import com.oscarg798.remembrall.common.ui.theming.TaskPriorityColorPallete
+import com.oscarg798.remembrall.ui_common.theming.TaskPriorityColorPallete
 
 fun TaskPriority.getLabel() = when (this) {
     TaskPriority.High -> R.string.priority_high_label

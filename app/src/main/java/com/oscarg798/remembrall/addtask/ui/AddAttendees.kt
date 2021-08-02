@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.buttons
 import com.vanpra.composematerialdialogs.input

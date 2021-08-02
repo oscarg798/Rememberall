@@ -38,8 +38,8 @@ import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.extensions.getColor
 import com.oscarg798.remembrall.common.extensions.getLabel
 import com.oscarg798.remembrall.common.model.DisplayableTask
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
 
 @Composable
 fun TaskCard(

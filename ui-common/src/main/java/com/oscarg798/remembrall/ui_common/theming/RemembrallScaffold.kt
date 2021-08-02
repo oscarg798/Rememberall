@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.ui
+package com.oscarg798.remembrall.ui_common.theming
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,8 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.extensions.SingleLine
-import com.oscarg798.remembrall.common.ui.theming.RemembrallTheme
 
 @Composable
 fun RemembrallTopBarTitle(title: String) {
@@ -59,3 +57,4 @@ fun RemembrallScaffold(
 }
 
 private val NoElevation = 0.dp
+private const val SingleLine = 1

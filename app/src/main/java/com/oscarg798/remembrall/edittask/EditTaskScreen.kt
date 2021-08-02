@@ -18,12 +18,12 @@ import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.extensions.requireArguments
 import com.oscarg798.remembrall.common.navigation.Router
 import com.oscarg798.remembrall.common.ui.AddEditTaskForm
-import com.oscarg798.remembrall.common.ui.RemembrallPage
-import com.oscarg798.remembrall.common.ui.RemembrallScaffold
-import com.oscarg798.remembrall.common.ui.RemembrallTopBar
-import com.oscarg798.remembrall.common.ui.RemembrallTopBarTitle
-import com.oscarg798.remembrall.common.ui.showSnackBar
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
+import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
+import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBar
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBarTitle
+import com.oscarg798.remembrall.ui_common.theming.showSnackBar
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors

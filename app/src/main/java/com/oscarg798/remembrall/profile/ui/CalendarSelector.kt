@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.model.Calendar
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 internal fun CalendarSelector(

@@ -21,12 +21,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.navigation.Router
-import com.oscarg798.remembrall.common.ui.RemembrallPage
-import com.oscarg798.remembrall.common.ui.RemembrallScaffold
-import com.oscarg798.remembrall.common.ui.RemembrallTopBar
-import com.oscarg798.remembrall.common.ui.RemembrallTopBarTitle
-import com.oscarg798.remembrall.common.ui.registerActivityResultCallback
 import com.oscarg798.remembrall.profile.ProfileViewModel
+import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
+import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBar
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBarTitle
+import com.oscarg798.remembrall.ui_common.theming.registerActivityResultCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

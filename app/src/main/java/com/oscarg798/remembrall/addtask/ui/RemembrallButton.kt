@@ -4,7 +4,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.oscarg798.remembrall.common.ui.getButtonTextStyle
+import com.oscarg798.remembrall.ui_common.theming.getButtonTextStyle
 
 @Composable
 internal fun RemembrallButton(

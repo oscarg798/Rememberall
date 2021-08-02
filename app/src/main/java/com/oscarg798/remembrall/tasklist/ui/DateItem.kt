@@ -16,9 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.common.ui.theming.RemembrallTextAppearance
-import com.oscarg798.remembrall.common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTextAppearance
+import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
 
 @Composable
 fun DayItem(

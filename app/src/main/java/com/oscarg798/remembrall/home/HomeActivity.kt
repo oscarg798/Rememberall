@@ -3,7 +3,7 @@ package com.oscarg798.remembrall.home
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.oscarg798.remembrall.common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

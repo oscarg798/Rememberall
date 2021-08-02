@@ -16,10 +16,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.common.navigation.Router
-import com.oscarg798.remembrall.common.ui.RemembrallPage
-import com.oscarg798.remembrall.common.ui.RemembrallScaffold
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
 import com.oscarg798.remembrall.splash.SplashViewModel
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
+import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
 import kotlinx.coroutines.flow.collect
 
 fun NavGraphBuilder.SplashScreen(

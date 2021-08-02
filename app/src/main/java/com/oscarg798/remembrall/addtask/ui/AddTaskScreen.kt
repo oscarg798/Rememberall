@@ -15,11 +15,11 @@ import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.addtask.AddTaskViewModel
 import com.oscarg798.remembrall.common.navigation.Router
-import com.oscarg798.remembrall.common.ui.RemembrallPage
-import com.oscarg798.remembrall.common.ui.RemembrallScaffold
-import com.oscarg798.remembrall.common.ui.RemembrallTopBar
-import com.oscarg798.remembrall.common.ui.RemembrallTopBarTitle
-import com.oscarg798.remembrall.common.ui.showSnackBar
+import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
+import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBar
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBarTitle
+import com.oscarg798.remembrall.ui_common.theming.showSnackBar
 import kotlinx.coroutines.flow.collect
 
 fun NavGraphBuilder.addTaskScreen(

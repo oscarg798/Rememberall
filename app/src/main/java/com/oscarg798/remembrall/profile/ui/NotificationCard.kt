@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 internal fun NotificationCard(

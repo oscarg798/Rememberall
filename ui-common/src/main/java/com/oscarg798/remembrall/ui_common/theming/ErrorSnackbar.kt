@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.ui
+package com.oscarg798.remembrall.ui_common.theming
 
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHostState

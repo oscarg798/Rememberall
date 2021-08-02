@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.stringResource
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.common.ui.getButtonTextStyle
+import com.oscarg798.remembrall.ui_common.theming.getButtonTextStyle
 
 @Composable
 internal fun SignInButton(onClick: () -> Unit) {

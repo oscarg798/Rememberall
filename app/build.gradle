@@ -154,6 +154,8 @@ dependencies {
     implementation androidGms.auth
     implementation platform(firebase.boom)
 
+    implementation project(path: ':ui-common')
+
     testImplementation mockk.mockk
     testImplementation kotlinCoroutinesTest
 

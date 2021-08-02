@@ -16,12 +16,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.navigation.Router
-import com.oscarg798.remembrall.common.ui.RemembrallPage
-import com.oscarg798.remembrall.common.ui.RemembrallScaffold
-import com.oscarg798.remembrall.common.ui.RemembrallTopBar
-import com.oscarg798.remembrall.common.ui.RemembrallTopBarTitle
 import com.oscarg798.remembrall.tasklist.LoadingProfileButton
 import com.oscarg798.remembrall.tasklist.TaskListViewModel
+import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
+import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBar
+import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBarTitle
 import kotlinx.coroutines.flow.collect
 
 fun NavGraphBuilder.listScreen(

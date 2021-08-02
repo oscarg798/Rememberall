@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.ui.Shimmer
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.Shimmer
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 internal fun LoadingProfile() {

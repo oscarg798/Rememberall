@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.model.Calendar
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 internal fun ProfileDetails(

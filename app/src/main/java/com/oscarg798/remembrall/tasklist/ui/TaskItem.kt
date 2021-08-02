@@ -9,7 +9,7 @@ import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.ui.TaskBody
 import com.oscarg798.remembrall.common.ui.TaskCard
 import com.oscarg798.remembrall.common.ui.TaskCardOptions
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 internal fun TaskItem(

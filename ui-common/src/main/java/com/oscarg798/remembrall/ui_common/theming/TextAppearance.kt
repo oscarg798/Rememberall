@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.ui.theming
+package com.oscarg798.remembrall.ui_common.theming
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.oscarg798.remembrall.R
+import com.oscarg798.remembrall.ui_common.R
 
 private val H1FontSize = 28.sp
 private val H2FontSize = 24.sp

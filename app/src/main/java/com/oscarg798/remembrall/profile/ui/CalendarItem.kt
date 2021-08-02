@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.model.Calendar
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
 
 @Composable
 fun CalendarItem(

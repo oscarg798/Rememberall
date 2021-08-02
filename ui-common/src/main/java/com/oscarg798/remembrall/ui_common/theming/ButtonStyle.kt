@@ -1,11 +1,11 @@
-package com.oscarg798.remembrall.common.ui
+package com.oscarg798.remembrall.ui_common.theming
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 fun getButtonShape() = RoundedCornerShape(Dimensions.CornerRadius.Small)
 

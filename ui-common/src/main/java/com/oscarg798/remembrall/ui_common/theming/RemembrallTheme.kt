@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.ui.theming
+package com.oscarg798.remembrall.ui_common.theming
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

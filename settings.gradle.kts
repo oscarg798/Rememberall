@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "remembrall"
 include(":app")
+include(":ui-common")

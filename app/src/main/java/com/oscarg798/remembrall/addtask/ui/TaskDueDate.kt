@@ -24,8 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
-import com.oscarg798.remembrall.common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.datetimepicker
 import java.time.LocalDateTime

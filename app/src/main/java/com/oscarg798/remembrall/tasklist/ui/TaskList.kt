@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.model.DisplayableTask
-import com.oscarg798.remembrall.common.ui.Shimmer
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
 import com.oscarg798.remembrall.tasklist.ui.model.DisplayableTaskGroup
+import com.oscarg798.remembrall.ui_common.Shimmer
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 internal fun TaskList(

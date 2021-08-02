@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.ui
+package com.oscarg798.remembrall.ui_common
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat

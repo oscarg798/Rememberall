@@ -29,7 +29,7 @@ import com.oscarg798.remembrall.common.extensions.getBackgroundColor
 import com.oscarg798.remembrall.common.extensions.getColor
 import com.oscarg798.remembrall.common.extensions.getLabel
 import com.oscarg798.remembrall.common.model.TaskPriority
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable
 fun TaskPriorityChip(

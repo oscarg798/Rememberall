@@ -6,9 +6,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.oscarg798.remembrall.common.ui.getButtonShape
-import com.oscarg798.remembrall.common.ui.getButtonTextStyle
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.getButtonShape
+import com.oscarg798.remembrall.ui_common.theming.getButtonTextStyle
 
 @Composable
 internal fun LogOutButton(onClick: () -> Unit) {

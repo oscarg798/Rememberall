@@ -6,8 +6,8 @@ import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layoutId
-import com.oscarg798.remembrall.common.ui.getButtonShape
-import com.oscarg798.remembrall.common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.theming.getButtonShape
 
 @Composable
 internal fun RemembrallButtonDefinition(

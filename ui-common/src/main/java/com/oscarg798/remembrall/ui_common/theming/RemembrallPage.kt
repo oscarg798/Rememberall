@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.ui
+package com.oscarg798.remembrall.ui_common.theming
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-internal fun RemembrallPage(
+fun RemembrallPage(
     backgroundColor: Color = MaterialTheme.colors.background,
     content: @Composable () -> Unit
 ) {
