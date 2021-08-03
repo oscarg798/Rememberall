@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.oscarg798.remembrall.addtask.ui.addTaskScreen
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
-import com.oscarg798.remembrall.edittask.editTaskScreen
+import com.oscarg798.remembrall.edittask.ui.editTaskScreen
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.ui.SplashScreen
 import com.oscarg798.remembrall.taskdetail.ui.taskDetailsScreen

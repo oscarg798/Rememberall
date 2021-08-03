@@ -1,0 +1,13 @@
+apply from: "../common.gradle"
+
+
+dependencies {
+
+    api androidGms.auth
+
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.10'
+    implementation project(path: ':common_calendar')
+    implementation project(path: ':ui-common')
+
+    implementation utils.composeDialogs
+}

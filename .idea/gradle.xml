@@ -10,12 +10,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/addtask" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common-addedit" />
             <option value="$PROJECT_DIR$/common-auth" />
             <option value="$PROJECT_DIR$/common-gettask" />
             <option value="$PROJECT_DIR$/common-schedule" />
             <option value="$PROJECT_DIR$/common_calendar" />
+            <option value="$PROJECT_DIR$/edittask" />
             <option value="$PROJECT_DIR$/profile" />
             <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/taskdetail" />
