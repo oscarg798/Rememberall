@@ -1,9 +1,9 @@
 package com.oscarg798.remembrall.common.network.di
 
 import com.google.gson.Gson
+import com.oscarg798.remebrall.common_calendar.data.restclient.CalendarRestClient
 import com.oscarg798.remembrall.BuildConfig
 import com.oscarg798.remembrall.common.network.interceptor.GoogleAuthInterceptor
-import com.oscarg798.remembrall.common.network.restclient.CalendarRestClient
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

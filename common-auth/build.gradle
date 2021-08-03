@@ -4,5 +4,5 @@ apply from: "../common.gradle"
 dependencies {
 
     implementation arrow.core
-    implementation androidGms.auth
+    api androidGms.auth
 }

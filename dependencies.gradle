@@ -100,7 +100,7 @@ ext {
     stetho_version = "1.5.1"
 
 }
-def hiltVersion = "2.37"
+def hiltVersion = "2.38.1"
 
 def androidX = [:]
 androidX.coreKtx = "androidx.core:core-ktx:1.6.0"

@@ -132,11 +132,6 @@ dependencies {
     implementation navigationComponent.uiKtx
     implementation navigationComponent.compose
 
-    implementation retrofit.gsonConverter
-    implementation retrofit.okhttpLoggingInterceptor
-    implementation retrofit.okhttp3
-    implementation retrofit.gson
-
     implementation lottie.main
     implementation lottie.compose
 
@@ -160,6 +155,9 @@ dependencies {
     implementation project(path: ':tasklist')
     implementation project(path: ':common-gettask')
     implementation project(path: ':taskdetail')
+    implementation project(path: ':common_calendar')
+    implementation project(path: ':common-schedule')
+    implementation project(path: ':profile')
 
 
 

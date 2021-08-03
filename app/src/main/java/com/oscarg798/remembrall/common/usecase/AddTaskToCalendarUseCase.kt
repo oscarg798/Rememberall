@@ -1,8 +1,8 @@
 package com.oscarg798.remembrall.common.usecase
 
+import com.oscarg798.remebrall.common_calendar.domain.repository.CalendarRepository
 import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.Task
-import com.oscarg798.remembrall.common.repository.domain.CalendarRepository
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import java.time.LocalDateTime
 import javax.inject.Inject

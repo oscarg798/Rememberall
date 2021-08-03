@@ -7,7 +7,11 @@ import android.util.Patterns
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.gson.Gson
+import com.oscarg798.remebrall.common_calendar.data.repository.CalendarRepositoryImpl
+import com.oscarg798.remebrall.common_calendar.domain.repository.CalendarRepository
+import com.oscarg798.remebrall.schedule.util.PendingIntentFinder
 import com.oscarg798.remembrall.BuildConfig
+import com.oscarg798.remembrall.common.HomeActivityPendingIntentFinder
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.datasource.TaskDataSource
 import com.oscarg798.remembrall.common.persistence.AppDatabase
@@ -15,11 +19,8 @@ import com.oscarg798.remembrall.common.persistence.LocalDataSource
 import com.oscarg798.remembrall.common.persistence.TaskDao
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
-import com.oscarg798.remembrall.common.repository.GetTodayScheduleUseCase
-import com.oscarg798.remembrall.common.repository.data.CalendarRepositoryImpl
 import com.oscarg798.remembrall.common.repository.data.LocalPreferenceRepository
 import com.oscarg798.remembrall.common.repository.data.TaskRepositoryImpl
-import com.oscarg798.remembrall.common.repository.domain.CalendarRepository
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import com.oscarg798.remembrall.common_auth.model.AuthOptions
@@ -126,14 +127,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetTodayScheduleUseCase(
-        taskRepository:
-            TaskRepository
-    ): GetTodayScheduleUseCase =
-        GetTodayScheduleUseCase(taskRepository)
-
-    @Provides
-    @Singleton
     fun providePreferenceRepository(
         localPreferenceRepository:
             LocalPreferenceRepository
@@ -153,6 +146,14 @@ object AppModule {
     @Provides
     @Reusable
     fun provideEmailPattern(): Pattern = Patterns.EMAIL_ADDRESS
+
+    @Provides
+    @Reusable
+    fun providePendingIntentFinder(
+        homeActivityPendingIntentFinder:
+            HomeActivityPendingIntentFinder
+    ): PendingIntentFinder =
+        homeActivityPendingIntentFinder
 }
 
 private const val Private = 0

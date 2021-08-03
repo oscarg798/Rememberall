@@ -1,9 +1,9 @@
 package com.oscarg798.remembrall.common.persistence
 
+import com.oscarg798.remebrall.common_calendar.data.model.CalendarAttendeeDto
 import com.oscarg798.remembrall.common.datasource.TaskDataSource
 import com.oscarg798.remembrall.common.exception.TaskNotFoundException
 import com.oscarg798.remembrall.common.model.TaskPriority
-import com.oscarg798.remembrall.common.network.dto.CalendarAttendeeDto
 import com.oscarg798.remembrall.common.network.dto.CalendarSyncInformationDto
 import com.oscarg798.remembrall.common.network.dto.TaskDto
 import javax.inject.Inject

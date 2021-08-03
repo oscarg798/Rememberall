@@ -1,5 +1,6 @@
 package com.oscarg798.remembrall.common.network.dto
 
+import com.oscarg798.remebrall.common_calendar.data.model.CalendarAttendeeDto
 import com.oscarg798.remembrall.common.model.CalendarSyncInformation
 
 data class CalendarSyncInformationDto(
