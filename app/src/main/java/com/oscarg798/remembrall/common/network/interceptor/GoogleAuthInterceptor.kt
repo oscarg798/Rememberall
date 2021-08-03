@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.oscarg798.remembrall.common.exception.OAuthException
 import com.oscarg798.remembrall.common.network.dto.OAuthResponseDto
-import com.oscarg798.remembrall.common.network.restclient.ExternalSignInClient
+import com.oscarg798.remembrall.common_auth.network.restclient.ExternalSignInClient
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

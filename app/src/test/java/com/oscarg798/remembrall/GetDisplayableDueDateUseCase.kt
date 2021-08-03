@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall
 
 import com.oscarg798.remembrall.addtask.usecase.GetDisplayableDueDate
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import io.mockk.every
 import io.mockk.mockk
 import java.time.LocalDateTime

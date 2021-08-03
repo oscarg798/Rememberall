@@ -16,9 +16,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.extensions.requireArguments
-import com.oscarg798.remembrall.common.navigation.Router
 import com.oscarg798.remembrall.common.ui.AddEditTaskForm
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
+import com.oscarg798.remembrall.ui_common.navigation.Router
 import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
 import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBar

@@ -5,7 +5,7 @@ import com.oscarg798.remembrall.common.model.Calendar
 import com.oscarg798.remembrall.common.repository.domain.CalendarRepository
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
 import com.oscarg798.remembrall.common.usecase.GetCalendarListUseCase
-import com.oscarg798.remembrall.common.usecase.GetSignedInUserUseCase
+import com.oscarg798.remembrall.common_auth.usecase.GetSignedInUserUseCase
 import com.oscarg798.remembrall.profile.ui.ProfileInformation
 import javax.inject.Inject
 

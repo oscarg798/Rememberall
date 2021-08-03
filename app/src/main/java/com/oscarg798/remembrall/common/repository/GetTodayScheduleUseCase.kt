@@ -20,8 +20,8 @@ class GetTodayScheduleUseCase(private val taskRepository: TaskRepository) {
     suspend fun execute(): Collection<Task> {
         return taskRepository.getTasks().filter {
             it.dueDate != null &&
-                it.dueDate >= todayTime &&
-                it.dueDate <= tomorrowTime &&
+                it.dueDate!! >= todayTime &&
+                it.dueDate!! <= tomorrowTime &&
                 !it.completed
         }
     }

@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.taskdetails
 
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.usecase.GetTaskById
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel

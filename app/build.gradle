@@ -155,6 +155,11 @@ dependencies {
     implementation platform(firebase.boom)
 
     implementation project(path: ':ui-common')
+    implementation project(path: ':common')
+    implementation project(path: ':common-auth')
+    implementation project(path: ':tasklist')
+
+
 
     testImplementation mockk.mockk
     testImplementation kotlinCoroutinesTest

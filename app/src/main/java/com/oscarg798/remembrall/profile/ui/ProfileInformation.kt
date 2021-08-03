@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.profile.ui
 
 import com.oscarg798.remembrall.common.model.Calendar
-import com.oscarg798.remembrall.common.model.User
+import com.oscarg798.remembrall.common_auth.model.User
 
 data class ProfileInformation(
     val user: User,

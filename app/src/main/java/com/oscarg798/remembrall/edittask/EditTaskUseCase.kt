@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.edittask
 
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.EditableTask
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import com.oscarg798.remembrall.common.usecase.AddTaskToCalendarUseCase

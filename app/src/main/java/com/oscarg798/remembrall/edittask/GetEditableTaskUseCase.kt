@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.edittask
 
 import com.oscarg798.remembrall.addtask.usecase.GetAvailablePrioritiesUseCase
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.model.EditableTask
 import com.oscarg798.remembrall.common.usecase.GetTaskById

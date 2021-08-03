@@ -2,11 +2,11 @@ package com.oscarg798.remembrall.profile
 
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.oscarg798.remembrall.common.GoogleAuthOptionsBuilder
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.model.AuthOptions
 import com.oscarg798.remembrall.common.model.Calendar
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
+import com.oscarg798.remembrall.common_auth.model.AuthOptions
+import com.oscarg798.remembrall.common_auth.model.GoogleAuthOptionsBuilder
 import com.oscarg798.remembrall.profile.ui.ProfileInformation
 import com.oscarg798.remembrall.profile.usecase.GetProfileInformationUseCase
 import com.oscarg798.remembrall.profile.usecase.LogOutUseCase

@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.common.usecase
 
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import javax.inject.Inject
 
 class GetDueDateAsMillisFormDisplayableDueDateUseCase @Inject constructor(

@@ -2,15 +2,15 @@ package com.oscarg798.remembrall
 
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
-import com.oscarg798.remembrall.common.exception.AuthException
+import com.oscarg798.remembrall.common_auth.exception.AuthException
 import com.oscarg798.remembrall.common.exception.CalendarNotFoundException
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.Calendar
 import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.CalendarSyncInformation
 import com.oscarg798.remembrall.common.model.Task
 import com.oscarg798.remembrall.common.model.TaskPriority
-import com.oscarg798.remembrall.common.repository.domain.AuthRepository
+import com.oscarg798.remembrall.common_auth.repository.domain.AuthRepository
 import com.oscarg798.remembrall.common.repository.domain.CalendarRepository
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import io.mockk.Runs

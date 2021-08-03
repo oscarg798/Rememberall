@@ -1,0 +1,8 @@
+apply from: "../common.gradle"
+
+
+dependencies {
+
+    implementation arrow.core
+    implementation androidGms.auth
+}

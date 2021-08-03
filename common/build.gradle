@@ -1,0 +1,85 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android{
+
+    compileSdk = 30
+    buildToolsVersion = "30.0.3"
+
+    defaultConfig {
+        minSdk = 26
+        targetSdk = 30
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion "1.5.10"
+        kotlinCompilerExtensionVersion '1.0.0'
+    }
+
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type",
+                            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                            "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
+        jvmTarget = "1.8"
+    }
+
+}
+
+dependencies {
+
+    api compose.liveData
+    api compose.ui
+    api compose.tooling
+    api compose.foundation
+    api compose.material
+    api compose.icons
+    api compose.iconsExtended
+    api compose.animations
+    api compose.constraintLayout
+    api compose.compiler
+    api compose.activities
+
+    api daggerHilt.android
+    api daggerHilt.compose
+    api daggerHilt.work
+    api daggerHilt.compiler
+    kapt daggerHilt.daggerCompiler
+    kaptAndroidTest daggerHilt.compiler
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}

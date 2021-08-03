@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android{
 
@@ -41,21 +44,30 @@ android{
         kotlinCompilerExtensionVersion '1.0.0'
     }
 
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type",
+                            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                            "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
 
-    implementation compose.liveData
-    implementation compose.ui
-    implementation compose.tooling
-    implementation compose.foundation
-    implementation compose.material
-    implementation compose.icons
-    implementation compose.iconsExtended
-    implementation compose.animations
-    implementation compose.constraintLayout
-    implementation compose.compiler
-    implementation compose.activities
+    kapt daggerHilt.daggerCompiler
+    kaptAndroidTest daggerHilt.compiler
+
+    /**
+     * Even if we apply this as api on main the
+     * gradle plugin is checking this been applied here too
+     */
+    implementation daggerHilt.android
+
+    implementation project(':common')
 }
 
 repositories {

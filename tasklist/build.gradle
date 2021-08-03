@@ -1,0 +1,8 @@
+apply from: "../common.gradle"
+
+dependencies {
+
+    implementation project(path: ':common')
+    implementation project(path: ':ui-common')
+    implementation project(path: ':common-auth')
+}

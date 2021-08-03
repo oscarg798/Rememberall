@@ -25,10 +25,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.common.extensions.AlignToStart
-import com.oscarg798.remembrall.common.extensions.getBackgroundColor
-import com.oscarg798.remembrall.common.extensions.getColor
-import com.oscarg798.remembrall.common.extensions.getLabel
 import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.ui_common.extensions.getBackgroundColor
+import com.oscarg798.remembrall.ui_common.extensions.getColor
+import com.oscarg798.remembrall.ui_common.extensions.getLabel
 import com.oscarg798.remembrall.ui_common.theming.Dimensions
 
 @Composable

@@ -10,8 +10,8 @@ import com.oscarg798.remembrall.addtask.usecase.GetDisplayableDueDate
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common.provider.StringProvider
-import com.oscarg798.remembrall.common.usecase.GetSignedInUserUseCase
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
+import com.oscarg798.remembrall.common_auth.usecase.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDateTime
 import javax.inject.Inject

@@ -8,3 +8,6 @@ dependencyResolutionManagement {
 rootProject.name = "remembrall"
 include(":app")
 include(":ui-common")
+include(":tasklist")
+include(":common")
+include(":common-auth")

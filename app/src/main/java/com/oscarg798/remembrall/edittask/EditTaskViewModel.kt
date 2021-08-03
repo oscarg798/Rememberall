@@ -2,13 +2,13 @@ package com.oscarg798.remembrall.edittask
 
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.formatters.DueDateFormatter
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.model.EditableTask
 import com.oscarg798.remembrall.common.model.TaskPriority
-import com.oscarg798.remembrall.common.usecase.GetSignedInUserUseCase
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
+import com.oscarg798.remembrall.common_auth.usecase.GetSignedInUserUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -133,9 +133,9 @@ class EditTaskViewModel @AssistedInject constructor(
                 if (currentEditableTask.task.calendarSyncInformation != null) {
                     val updatedTask = currentEditableTask.task.copy(
                         calendarSyncInformation = currentEditableTask
-                            .task.calendarSyncInformation.copy(
-                                attendees = attendees
-                            )
+                            .task.calendarSyncInformation!!.copy(
+                            attendees = attendees
+                        )
                     )
                     it.copy(
                         loading = false,
@@ -173,9 +173,9 @@ class EditTaskViewModel @AssistedInject constructor(
                 if (currentEditableTask.task.calendarSyncInformation != null) {
                     val updatedTask = currentEditableTask.task.copy(
                         calendarSyncInformation = currentEditableTask
-                            .task.calendarSyncInformation.copy(
-                                attendees = updatedAttendees
-                            )
+                            .task.calendarSyncInformation!!.copy(
+                            attendees = updatedAttendees
+                        )
                     )
                     it.copy(
                         loading = false,

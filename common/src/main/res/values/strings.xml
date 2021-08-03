@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">remembrall</string>
+    <string name="task_name_label">Name</string>
+    <string name="task_description_label">Description</string>
+    <string name="due_date_label">When:</string>
+    <string name="priority_high_label">High</string>
+    <string name="priority_urgent_label">Urgent</string>
+    <string name="priority_medium_label">Medium</string>
+    <string name="priority_low_label">Low</string>
+    <string name="add_task_screen_title">Add task</string>
+    <string name="done_label">Done</string>
+    <string name="generic_error">Something went wrong try again</string>
+    <string name="remove_task_label">Remove</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_calendar_label">Calendar for task creation</string>
+    <string name="today_due_date_label">Today</string>
+    <string name="expired_label">Already Expired</string>
+    <string name="comming_label">Coming</string>
+    <string name="non_expirable_label">Other</string>
+    <string name="task_list_empty">Start by pressing + to never forget something</string>
+    <string name="free_agenda_content_text">Today agenda is Free</string>
+    <string name="small_notification_title">Your Agenda</string>
+    <string name="free_agenda_notification_content">Your today\'s Agenda is free today</string>
+    <string name="free_agenda_notification_subtext">No tasks expiring today</string>
+    <string name="free_agenda_notification_subtitle">Remembrall daily schedule</string>
+    <string name="big_notification_title">Your Agenda</string>
+    <string name="busy_agenda_notification_content">Better plan you day according today\'s agenda</string>
+    <string name="busy_agenda_notification_subtext">You have some %s items expiring today</string>
+    <string name="busy_agenda_notification_subtitle">Remembrall daily schedule</string>
+    <string name="busy_agenda_notification_big_text">Summary: %s</string>
+    <string name="tasks_by_priority_bullet_point">\u2022 You have %s tasks with priority %s for today</string>
+    <string name="no_tasks_by_priority_bullet_point">\u2022 No tasks with %s priority</string>
+    <string name="urgent_task_priority_label">Urgent</string>
+    <string name="high_task_priority_label">High</string>
+    <string name="medium_task_priority_label">Medium</string>
+    <string name="low_task_priority_label">Low</string>
+    <string name="attendees_validation_error">Attendees must be a valid email address</string>
+    <string name="name_validation_error">Tasks should have a name</string>
+    <string name="prioriority_validation_error">Tasks should have a priority</string>
+    <string name="attendees_without_due_date_error">Adding attendees require a due date</string>
+    <string name="add_attendees_dialog_title">Attendees email</string>
+    <string name="add_attendees_input_label">Attendee</string>
+    <string name="add_attendees_input_hint">Email</string>
+    <string name="positive_button_text">Okay</string>
+    <string name="negative_button_text">Cancel</string>
+    <string name="add_attendees_label">Attendees:</string>
+    <string name="due_date_hint">Add a due date to add this tasks to your calendar</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="task_detail_title">Task detail</string>
+    <string name="EditButtonText">Edit</string>
+</resources>
