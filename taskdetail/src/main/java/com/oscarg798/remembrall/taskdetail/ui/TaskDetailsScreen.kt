@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.taskdetails.ui
+package com.oscarg798.remembrall.taskdetail.ui
 
 import android.app.Activity
 import android.os.Bundle
@@ -21,17 +21,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
-import com.oscarg798.remembrall.R
-import com.oscarg798.remembrall.addtask.ui.RemembrallButton
 import com.oscarg798.remembrall.common.extensions.requireArguments
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
-import com.oscarg798.remembrall.taskdetails.TaskDetailsViewModel
+import com.oscarg798.remembrall.taskdetail.R
+import com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel
 import com.oscarg798.remembrall.ui_common.navigation.Router
 import com.oscarg798.remembrall.ui_common.theming.Dimensions
 import com.oscarg798.remembrall.ui_common.theming.RemembrallPage
 import com.oscarg798.remembrall.ui_common.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui_common.theming.RemembrallTopBarTitle
+import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
 import com.oscarg798.remembrall.ui_common.ui.TaskBody
 import com.oscarg798.remembrall.ui_common.ui.TaskCard
 import com.oscarg798.remembrall.ui_common.ui.TaskCardOptions
@@ -59,9 +59,9 @@ private fun TaskDetail(
     taskId: String
 ) {
     val context = LocalContext.current as Activity
-    val viewModel: TaskDetailsViewModel = viewModelStore.get("${TaskDetailViewModelKey}_$taskId") {
+    val viewModel: com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel = viewModelStore.get("${TaskDetailViewModelKey}_$taskId") {
         createViewModel(taskId, context)
-    } as TaskDetailsViewModel
+    } as com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel
 
     val edited = remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -114,7 +114,7 @@ private fun TaskDetail(
 
     LaunchedEffect(key1 = viewModel) {
         viewModel.events.collect {
-            if (it is TaskDetailsViewModel.Event.NavigateToEdit) {
+            if (it is com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel.Event.NavigateToEdit) {
                 Router.Edit.navigate(
                     navController = navController,
                     Bundle().apply {
@@ -137,13 +137,13 @@ private fun getDeepLinks() = listOf(
 @InstallIn(ActivityComponent::class)
 internal interface TaskDetailsViewModelEntryPoint {
 
-    fun factory(): TaskDetailsViewModel.TaskDetailsViewModelFactory
+    fun factory(): com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel.TaskDetailsViewModelFactory
 }
 
 fun createViewModel(
     taskId: String,
     activity: Activity
-): TaskDetailsViewModel {
+): com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel {
     return EntryPointAccessors.fromActivity(
         activity,
         TaskDetailsViewModelEntryPoint::class.java

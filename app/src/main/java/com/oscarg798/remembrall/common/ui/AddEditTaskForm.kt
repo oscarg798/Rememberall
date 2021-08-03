@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.oscarg798.remembrall.R
 import com.oscarg798.remembrall.addtask.ui.AddAttendees
-import com.oscarg798.remembrall.addtask.ui.RemembrallButton
 import com.oscarg798.remembrall.addtask.ui.TaskDescriptionField
 import com.oscarg798.remembrall.addtask.ui.TaskDueDateField
 import com.oscarg798.remembrall.addtask.ui.TaskNameField
@@ -15,6 +14,7 @@ import com.oscarg798.remembrall.addtask.ui.TaskPriorityField
 import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
 import java.time.LocalDateTime
 
 @Composable

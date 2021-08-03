@@ -3,5 +3,5 @@ apply from: "../common.gradle"
 dependencies {
 
     implementation project(path: ':ui-common')
-    implementation project(path: ':common-auth')
+    implementation project(path: ':common-gettask')
 }

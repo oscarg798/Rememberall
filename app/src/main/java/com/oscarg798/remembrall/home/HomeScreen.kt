@@ -9,7 +9,7 @@ import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
 import com.oscarg798.remembrall.edittask.editTaskScreen
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.ui.SplashScreen
-import com.oscarg798.remembrall.taskdetails.ui.taskDetailsScreen
+import com.oscarg798.remembrall.taskdetail.ui.taskDetailsScreen
 import com.oscarg798.remembrall.tasklist.ui.listScreen
 import com.oscarg798.remembrall.ui_common.navigation.Router
 

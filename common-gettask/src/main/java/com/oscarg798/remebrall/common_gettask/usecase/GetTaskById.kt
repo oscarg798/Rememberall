@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.usecase
+package com.oscarg798.remebrall.common_gettask.usecase
 
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import javax.inject.Inject
