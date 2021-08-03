@@ -46,12 +46,14 @@ class ProfileViewModel @Inject constructor(
                         error = null
                     )
                 }
-            }.onFailure {
+            }.onFailure {error->
+                if(error !is Exception) throw error
+
                 update {
                     it.copy(
                         loading = false,
                         profileInformation = null,
-                        error = null
+                        error = error
                     )
                 }
             }

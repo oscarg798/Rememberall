@@ -3,7 +3,7 @@ package com.oscarg798.remebrall.splash
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
-import com.oscarg798.remebrall.splash.usecase.VerifyUserSectionUseCase
+import com.oscarg798.remebrall.splash.usecase.VerifyUserSessionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val verifyUserSectionUseCase: VerifyUserSectionUseCase,
+    private val verifyUserSessionUseCase: VerifyUserSessionUseCase,
     coroutineContextProvider: CoroutineContextProvider
 ) :
     AbstractViewModel<SplashViewModel.ViewState, SplashViewModel.NavigateToHome>(
@@ -27,7 +27,7 @@ class SplashViewModel @Inject constructor(
 
             withContext(coroutineContextProvider.io) {
                 runCatching {
-                    verifyUserSectionUseCase.execute()
+                    verifyUserSessionUseCase.execute()
                 }
                 validateElapsedTime(launchTime)
             }

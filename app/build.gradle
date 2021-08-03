@@ -159,6 +159,9 @@ dependencies {
     implementation project(path: ':common-schedule')
     implementation project(path: ':profile')
     implementation project(path: ':splash')
+    implementation project(path: ':common-addedit')
+    implementation project(path: ':edittask')
+    implementation project(path: ':addtask')
 
 
 
@@ -170,4 +173,12 @@ repositories {
     google()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+def googleServices = file("google-services.json")
+
+if (!googleServices.exists()) {
+    // If there isn't a google-services.json available, we'll copy our fake version to the
+    // google-services.json
+    Files.copy(file("fake-services.json").toPath(), googleServices.toPath())
 }

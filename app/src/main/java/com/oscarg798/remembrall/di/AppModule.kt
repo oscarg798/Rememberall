@@ -93,7 +93,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences(PreferenceName, Private)
+        return context.getSharedPreferences(PreferenceName, Context.MODE_PRIVATE)
     }
 
     @Provides
@@ -156,7 +156,6 @@ object AppModule {
         homeActivityPendingIntentFinder
 }
 
-private const val Private = 0
 private const val PreferenceName = "Remembrall"
 private const val DatabaseName = "Remembrall"
 private const val CalendarScope = "https://www.googleapis.com/auth/calendar"

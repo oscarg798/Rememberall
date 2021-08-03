@@ -74,24 +74,16 @@ fun NavGraphBuilder.profileScreen() =
 
         LaunchedEffect(viewModel) {
             viewModel.getProfileInformation()
-        }
 
-        observeEvents(coroutineScope, viewModel, launcher)
-    }
-
-private fun observeEvents(
-    coroutineScope: CoroutineScope,
-    viewModel: ProfileViewModel,
-    launcher: ActivityResultLauncher<GoogleSignInOptions>
-) {
-    coroutineScope.launch {
-        viewModel.events.collect { event ->
-            when (event) {
-                is ProfileViewModel.Event.RequestAuth -> launcher.launch(event.options)
+            viewModel.events.collect { event ->
+                when (event) {
+                    is ProfileViewModel.Event.RequestAuth -> launcher.launch(event.options)
+                }
             }
+
         }
     }
-}
+
 
 @Composable
 private fun getAuthObserverLauncher(viewModel: ProfileViewModel) =
