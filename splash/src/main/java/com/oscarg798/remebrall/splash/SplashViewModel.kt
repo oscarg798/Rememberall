@@ -1,9 +1,9 @@
-package com.oscarg798.remembrall.splash
+package com.oscarg798.remebrall.splash
 
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
-import com.oscarg798.remembrall.splash.usecase.VerifyUserSectionUseCase
+import com.oscarg798.remebrall.splash.usecase.VerifyUserSectionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject

@@ -1,0 +1,10 @@
+apply from: "../common.gradle"
+
+dependencies {
+
+    implementation lottie.main
+    implementation lottie.compose
+
+    implementation project(path: ':common-auth')
+    implementation project(path: ':ui-common')
+}

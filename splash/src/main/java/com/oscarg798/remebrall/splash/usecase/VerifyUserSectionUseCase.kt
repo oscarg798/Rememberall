@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.splash.usecase
+package com.oscarg798.remebrall.splash.usecase
 
 import com.oscarg798.remembrall.common_auth.repository.domain.AuthRepository
 import javax.inject.Inject
