@@ -10,6 +10,11 @@ class GoogleAuthOptionsBuilder @Inject constructor() {
 
     fun buildFromAuthOptions(authOptions: AuthOptions): GoogleSignInOptions {
         val builder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+
+        if(authOptions.requestIdToken){
+            builder.requestIdToken(authOptions.clientId)
+        }
 
         if (authOptions.requestProfileInfo) {
             builder.requestProfile()

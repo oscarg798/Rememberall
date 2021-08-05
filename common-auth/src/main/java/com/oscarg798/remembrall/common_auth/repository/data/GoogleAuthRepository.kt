@@ -1,9 +1,10 @@
 package com.oscarg798.remembrall.common_auth.repository.data
 
+import arrow.core.getOrElse
 import arrow.core.getOrHandle
-import com.oscarg798.remembrall.common_auth.model.User
+import com.oscarg798.remembrall.common.auth.AuthRepository
+import com.oscarg798.remembrall.common.model.User
 import com.oscarg798.remembrall.common_auth.network.restclient.ExternalSignInClient
-import com.oscarg798.remembrall.common_auth.repository.domain.AuthRepository
 import javax.inject.Inject
 
 class GoogleAuthRepository @Inject constructor(
@@ -24,5 +25,15 @@ class GoogleAuthRepository @Inject constructor(
 
     override suspend fun logout() {
         externalSignInClient.logout()
+    }
+
+    override fun isUserLoggedIn(): Boolean {
+        return externalSignInClient.isUserLoggedIn()
+            .map { true }
+            .getOrElse { false }
+    }
+
+    override suspend fun finishLogIn() {
+        externalSignInClient.finishLogIn()
     }
 }

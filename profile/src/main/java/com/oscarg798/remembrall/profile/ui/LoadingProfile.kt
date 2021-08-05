@@ -10,30 +10,32 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.ui_common.Shimmer
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.ui.Shimmer
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 
 @Composable
 internal fun LoadingProfile() {
     Column(
         Modifier
-            .padding(horizontal = Dimensions.Spacing.Medium)
+            .padding(horizontal = RemembrallTheme.dimens.Medium)
     ) {
         LoadingItem()
         LoadingItem()
 
         Card(
             modifier = Modifier.padding(
-                vertical = Dimensions.Spacing.Small
+                vertical = RemembrallTheme.dimens.Small
             ),
-            shape = RoundedCornerShape(Dimensions.CornerRadius.Small)
+            shape = RoundedCornerShape(RemembrallTheme.dimens.Small)
         ) {
             LazyColumn {
                 items(listOf(1, 2, 3)) {
                     Shimmer(
-                        Modifier.layoutId(UserNameId)
+                        Modifier
+                            .layoutId(UserNameId)
                             .fillMaxWidth()
                             .height(LoadingTextHeight)
                     )
@@ -48,10 +50,11 @@ internal fun LoadingProfile() {
 
 @Composable
 private fun LoadingItem() = Shimmer(
-    Modifier
-        .padding(Dimensions.Spacing.Medium)
+    cornerRadius = CornerRadius(RemembrallTheme.dimens.Medium.value),
+    modifier = Modifier
+        .padding(RemembrallTheme.dimens.Medium)
         .fillMaxWidth()
         .height(LoadingTextHeight)
 )
 
-private val LoadingTextHeight = 50.dp
+private val LoadingTextHeight = 30.dp

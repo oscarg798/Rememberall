@@ -6,36 +6,31 @@ import android.content.SharedPreferences
 import android.util.Patterns
 import androidx.room.Room
 import androidx.work.WorkManager
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
-import com.oscarg798.remebrall.common_calendar.data.repository.CalendarRepositoryImpl
-import com.oscarg798.remebrall.common_calendar.domain.repository.CalendarRepository
-import com.oscarg798.remebrall.schedule.util.PendingIntentFinder
 import com.oscarg798.remembrall.BuildConfig
 import com.oscarg798.remembrall.common.HomeActivityPendingIntentFinder
+import com.oscarg798.remembrall.common.IdentifierGenerator
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.datasource.TaskDataSource
+import com.oscarg798.remembrall.common.model.Config
 import com.oscarg798.remembrall.common.persistence.AppDatabase
-import com.oscarg798.remembrall.common.persistence.LocalDataSource
 import com.oscarg798.remembrall.common.persistence.TaskDao
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
 import com.oscarg798.remembrall.common.repository.data.LocalPreferenceRepository
-import com.oscarg798.remembrall.common.repository.data.TaskRepositoryImpl
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
-import com.oscarg798.remembrall.common.repository.domain.TaskRepository
-import com.oscarg798.remembrall.common_auth.model.AuthOptions
-import com.oscarg798.remembrall.common_auth.network.restclient.ExternalSignInClient
-import com.oscarg798.remembrall.common_auth.network.restclient.GoogleSignInClient
-import com.oscarg798.remembrall.common_auth.repository.data.GoogleAuthRepository
-import com.oscarg798.remembrall.common_auth.repository.domain.AuthRepository
+import com.oscarg798.remembrall.schedule.util.PendingIntentFinder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.UUID
 import java.util.regex.Pattern
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 
 @InstallIn(SingletonComponent::class)
@@ -44,12 +39,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCoroutinesContextProvider() =
-        CoroutineContextProvider(
-            io = Dispatchers.IO,
-            computation = Dispatchers.Default,
-            main = Dispatchers.Main
-        )
+    fun provideCoroutinesContextProvider() = object : CoroutineContextProvider {
+        override val io: CoroutineContext
+            get() = Dispatchers.IO
+        override val computation: CoroutineContext
+            get() = Dispatchers.Default
+        override val main: CoroutineContext
+            get() = Dispatchers.Main
+    }
 
     @Provides
     @Singleton
@@ -69,57 +66,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTaskDataSource(
-        localDataSource:
-            LocalDataSource
-    ): TaskDataSource = localDataSource
-
-    @Provides
-    @Singleton
-    fun provideTaskRepository(
-        taskDataSource:
-            TaskDataSource
-    ): TaskRepository =
-        TaskRepositoryImpl(taskDataSource)
-
-    @Provides
-    @Reusable
-    fun provideGoogleAuthRepository(
-        googleSignInRepositoryImpl:
-            GoogleAuthRepository
-    ): AuthRepository =
-        googleSignInRepositoryImpl
-
-    @Provides
-    @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences(PreferenceName, Context.MODE_PRIVATE)
     }
-
-    @Provides
-    @Singleton
-    fun provideCalendarRepository(
-        calendarRepositoryImpl:
-            CalendarRepositoryImpl
-    ): CalendarRepository =
-        calendarRepositoryImpl
-
-    @Provides
-    @Singleton
-    fun provideAuthOptions(): AuthOptions = AuthOptions(
-        requestServerAuth = true,
-        requestProfileInfo = true,
-        scopes = setOf(CalendarScope),
-        clientId = BuildConfig.GoogleClientId
-    )
-
-    @Provides
-    @Singleton
-    fun provideExternalSignInClient(
-        googleSignInClient:
-            GoogleSignInClient
-    ): ExternalSignInClient =
-        googleSignInClient
 
     @Provides
     @Singleton
@@ -147,6 +96,7 @@ object AppModule {
     @Reusable
     fun provideEmailPattern(): Pattern = Patterns.EMAIL_ADDRESS
 
+    @ExperimentalPagerApi
     @Provides
     @Reusable
     fun providePendingIntentFinder(
@@ -154,8 +104,21 @@ object AppModule {
             HomeActivityPendingIntentFinder
     ): PendingIntentFinder =
         homeActivityPendingIntentFinder
+
+    @Provides
+    @Reusable
+    fun provideConfig(): Config = Config(BuildConfig.GoogleClientId)
+
+    @Singleton
+    @Provides
+    fun provideFirebaseStore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    @Singleton
+    @Provides
+    fun provideIdentifierGenerator(): IdentifierGenerator = object : IdentifierGenerator {
+        override fun createStringIdentifier(): String = UUID.randomUUID().toString()
+    }
 }
 
 private const val PreferenceName = "Remembrall"
 private const val DatabaseName = "Remembrall"
-private const val CalendarScope = "https://www.googleapis.com/auth/calendar"

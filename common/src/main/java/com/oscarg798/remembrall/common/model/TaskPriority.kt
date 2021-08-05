@@ -56,6 +56,9 @@ sealed class TaskPriority : Comparable<TaskPriority> {
         fun values() = TaskPriority::class.nestedClasses
             .map { klass -> klass.objectInstance }
             .filterIsInstance<TaskPriority>()
+
+        @WorkerThread
+        fun fromName(priority: String): TaskPriority = values().first { it.javaClass.name == priority }
     }
 }
 

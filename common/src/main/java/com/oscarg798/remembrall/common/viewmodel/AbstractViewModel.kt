@@ -1,17 +1,19 @@
 package com.oscarg798.remembrall.common.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 abstract class AbstractViewModel<ViewState, Event>(
-    private val initialState: ViewState,
-    protected val coroutineContextProvider: CoroutineContextProvider
-) : ViewModel() {
+    private val initialState: ViewState
+) : ViewModel(), CoroutineContextProvider {
 
     protected val _event = MutableSharedFlow<Event>(
         extraBufferCapacity = 1
@@ -38,5 +40,14 @@ abstract class AbstractViewModel<ViewState, Event>(
         }
     }
 
+    protected fun updateSync(reducer: (ViewState) -> ViewState) {
+        launch { update { state -> reducer(state) } }
+    }
+
     protected fun currentState() = _state.replayCache.firstOrNull() ?: initialState
 }
+
+fun <ViewState, Event> AbstractViewModel<ViewState, Event>.launch(block: suspend CoroutineScope.() -> Unit) =
+    viewModelScope.launch {
+        block()
+    }

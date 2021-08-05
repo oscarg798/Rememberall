@@ -1,44 +1,44 @@
 package com.oscarg798.remembrall.common_addedit.usecase
 
-import com.oscarg798.remebrall.common_calendar.domain.repository.CalendarRepository
 import com.oscarg798.remembrall.common.formatter.DueDateFormatter
-import com.oscarg798.remembrall.common.model.Task
+import com.oscarg798.remembrall.common.model.CalendarSyncInformation
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
-import java.time.LocalDateTime
+import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
 import javax.inject.Inject
+import java.time.LocalDateTime
 
 class AddTaskToCalendarUseCase @Inject constructor(
     private val calendarRepository: CalendarRepository,
-    private val taskRepository: TaskRepository,
     private val dueDateFormatter: DueDateFormatter
 ) {
 
     suspend fun execute(
-        task: Task,
-        dueDate: LocalDateTime,
-        attendees: Set<String>?
-    ) {
+        params: AddTaskToCalendarParams,
 
+    ): CalendarSyncInformation {
         val selectedCalendar = calendarRepository.getSelectedCalendar()
 
-        val startDate = dueDateFormatter.toCalendarTaskDate(dueDate)
-        val endDate = dueDateFormatter.toCalendarTaskDate(dueDate.plusHours(1))
-        val calendarEventId = task.id.replace("-", "")
-        val calendarSyncInformation = calendarRepository.addTaskToCalendar(
+        val startDate = dueDateFormatter.toCalendarTaskDate(params.dueDate)
+        val endDate = dueDateFormatter.toCalendarTaskDate(params.dueDate.plusHours(1))
+        val calendarEventId = params.taskId.replace("-", "")
+        return calendarRepository.addTaskToCalendar(
             calendarId = selectedCalendar.id,
             calendarTask = CalendarRepository.CalendarTask(
                 id = calendarEventId,
-                summary = task.name,
+                summary = params.name,
                 startTimeDate = startDate,
                 endTimeDate = endDate,
-                description = task.description
+                description = params.description
             ),
-            attendees = attendees
-        )
-
-        taskRepository.updateWithCalendarInformation(
-            tasksCalendarSyncInformation = calendarSyncInformation,
-            task = task
+            attendees = params.attendees
         )
     }
+
+    data class AddTaskToCalendarParams(
+        val taskId: String,
+        val name: String,
+        val dueDate: LocalDateTime,
+        val description: String? = null,
+        val attendees: Set<String>? = null
+    )
 }

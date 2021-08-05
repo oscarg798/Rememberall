@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'dagger.hilt.android.plugin'
 
-android{
+android {
 
     compileSdk = 30
     buildToolsVersion = "30.0.3"
@@ -40,8 +40,8 @@ android{
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.5.10"
-        kotlinCompilerExtensionVersion '1.0.0'
+        kotlinCompilerVersion "1.5.30"
+        kotlinCompilerExtensionVersion '1.0.3'
     }
 
     kotlinOptions {
@@ -58,29 +58,40 @@ android{
 
 dependencies {
 
-    api compose.liveData
-    api compose.ui
-    api compose.tooling
-    api compose.foundation
-    api compose.material
-    api compose.icons
-    api compose.iconsExtended
-    api compose.animations
-    api compose.constraintLayout
-    api compose.compiler
-    api compose.activities
+    api libs.androidx.lifecycle.savedState
+    api libs.androidx.lifecycle.core
+    api libs.androidx.lifecycle.viewmodel
 
-    api retrofit.gsonConverter
-    api retrofit.okhttpLoggingInterceptor
-    api retrofit.okhttp3
-    api retrofit.gson
+    api libs.compose.runtimeLivedata
+    api libs.compose.ui
+    api libs.compose.tooling
+    api libs.compose.foundation
+    api libs.compose.material
+    api libs.compose.icons
+    api libs.compose.iconsExtended
+    api libs.compose.animation
+    api libs.compose.constraintLayout
+    api libs.compose.compiler
+    api libs.compose.activity
 
-    api daggerHilt.android
-    api daggerHilt.compose
-    api daggerHilt.work
-    api daggerHilt.compiler
-    kapt daggerHilt.daggerCompiler
-    kaptAndroidTest daggerHilt.compiler
+    api libs.retrofit2.converter
+    api libs.okhttp3.logging
+    api libs.okhttp3.okhttp
+    api libs.gson
+
+    implementation libs.hilt.android
+    implementation libs.hilt.compose
+    implementation libs.hilt.work
+    implementation libs.hilt.compiler
+    implementation libs.hilt.dagger.compiler
+    kapt(libs.hilt.dagger.compiler)
+    kaptAndroidTest(libs.hilt.dagger.compiler)
+
+    api libs.androidx.navigation.compose
+
+    implementation platform(libs.firebase.boom)
+
+    implementation libs.android.gms.auth
 }
 
 repositories {

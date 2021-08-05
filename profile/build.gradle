@@ -1,9 +1,9 @@
 apply from: "../common.gradle"
 
 dependencies {
-    implementation workManager.ktx
+    implementation libs.workManager.ktx
 
-    implementation project(path: ':ui-common')
+    implementation project(path: ':common-ui')
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-auth')
     implementation project(path: ':common-schedule')

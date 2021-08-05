@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common_addedit.R
+import com.oscarg798.remembrall.ui_common.ui.RemembrallTextFielColorConfiguration
 
 @Composable
 internal fun TaskNameField(
@@ -25,6 +26,6 @@ internal fun TaskNameField(
         maxLines = SingleLine,
         modifier = Modifier
             .fillMaxWidth(),
-        colors = addTaskFieldColorConfiguration()
+        colors = RemembrallTextFielColorConfiguration()
     )
 }

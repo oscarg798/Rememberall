@@ -8,10 +8,10 @@ data class DisplayableTask(
     val description: String?,
     val priority: TaskPriority,
     val completed: Boolean = false,
-    val calendarSynced: Boolean = false,
+    val dueDate: String,
     val attendees: Collection<CalendarAttendee>? = null,
-    val dueDate: String? = null
-) {
+
+    ) {
 
     constructor(task: Task, dueDateFormatter: DueDateFormatter) : this(
         id = task.id,
@@ -19,9 +19,9 @@ data class DisplayableTask(
         description = task.description,
         priority = task.priority,
         completed = task.completed,
-        calendarSynced = task.calendarSyncInformation != null,
-        attendees = task.calendarSyncInformation?.attendees,
-        dueDate =
-        if (task.dueDate != null) dueDateFormatter.toDisplayableDate(task.dueDate) else null
+        attendees = task.calendarSyncInformation.attendees,
+        dueDate = dueDateFormatter.toDisplayableDate(
+            task.dueDate
+        )
     )
 }

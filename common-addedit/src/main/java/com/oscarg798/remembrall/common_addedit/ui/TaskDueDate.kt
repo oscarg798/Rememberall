@@ -14,7 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -23,24 +27,58 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common_addedit.R
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
-import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.ui.AwesomeIcon
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
 import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.datetimepicker
+import com.vanpra.composematerialdialogs.MaterialDialogState
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
+import com.vanpra.composematerialdialogs.datetime.time.timepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Composable
 internal fun TaskDueDateField(
     formattedDueDate: String,
-    isUserLoggedIn: Boolean,
     enabled: Boolean,
     onDatePicked: (LocalDateTime) -> Unit
 ) {
-    val dialog = remember { MaterialDialog(autoDismiss = false) }
+    var datePicked by remember { mutableStateOf<LocalDate?>(null) }
+    var timePicked by remember { mutableStateOf<LocalTime?>(null) }
+    val dateDialogState = rememberMaterialDialogState()
+    val timeDialogState = rememberMaterialDialogState()
 
-    DatePickerDialog(dialog, onDatePicked)
+    DatePickerDialog(dateDialogState) {
+        datePicked = it
+    }
 
-    Column() {
+    TimePickerDialog(dialogState = timeDialogState) {
+        timePicked = it
+    }
+
+    LaunchedEffect(key1 = datePicked) {
+        if (datePicked == null) {
+            return@LaunchedEffect
+        }
+
+        timeDialogState.show()
+    }
+
+    LaunchedEffect(key1 = timePicked) {
+        if (timePicked == null) {
+            return@LaunchedEffect
+        }
+        val date =
+            datePicked ?: throw IllegalStateException("Time should not be picked before date")
+        val time =
+            timePicked ?: throw  IllegalStateException("Time should not be null at this point")
+        onDatePicked(LocalDateTime.of(date, time))
+
+    }
+
+    Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -48,7 +86,7 @@ internal fun TaskDueDateField(
                 .wrapContentHeight()
                 .clickable {
                     if (enabled) {
-                        dialog.show()
+                        dateDialogState.show()
                     }
                 }
         ) {
@@ -57,7 +95,7 @@ internal fun TaskDueDateField(
                 text = stringResource(R.string.due_date_label),
                 style = TextStyle(color = MaterialTheme.colors.onBackground),
                 modifier = Modifier
-                    .padding(Dimensions.Spacing.Medium)
+                    .padding(RemembrallTheme.dimens.Medium)
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .weight(DueTimeLabelTextWeight)
@@ -65,12 +103,12 @@ internal fun TaskDueDateField(
 
             Text(
                 text = formattedDueDate,
-                style = TextStyle(color = SecondaryTextColor),
+                style = TextStyle(color = SecondaryTextColor).merge(MaterialTheme.typography.body1),
                 modifier = Modifier
                     .padding(
-                        end = Dimensions.Spacing.Medium,
-                        top = Dimensions.Spacing.Medium,
-                        bottom = Dimensions.Spacing.Medium
+                        end = RemembrallTheme.dimens.Medium,
+                        top = RemembrallTheme.dimens.Medium,
+                        bottom = RemembrallTheme.dimens.Medium
                     )
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -86,49 +124,42 @@ internal fun TaskDueDateField(
                     .weight(DueTimeIconWeight)
             )
         }
-
-        if (isUserLoggedIn) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(Dimensions.Spacing.Small)
-                    .background(
-                        color = MaterialTheme.colors.secondary,
-                        shape = RoundedCornerShape(Dimensions.CornerRadius.Small)
-                    )
-            ) {
-                Text(
-                    text = String.format(
-                        stringResource(R.string.due_date_hint),
-                        formattedDueDate
-                    ),
-                    style = MaterialTheme.typography.body2
-                        .merge(TextStyle(color = MaterialTheme.colors.onSecondary)),
-                    modifier = Modifier
-                        .padding(Dimensions.Spacing.Medium)
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                )
-            }
-        }
     }
 }
 
 @Composable
 private fun DatePickerDialog(
-    dialog: MaterialDialog,
-    onDatePicked: (LocalDateTime) -> Unit
+    dialogState: MaterialDialogState,
+    onDatePicked: (LocalDate) -> Unit
 ) {
-    dialog.build {
-        datetimepicker(
-            is24HourClock = true,
-            onCancel = {
-                dialog.hide()
-            }
-        ) { date ->
+    MaterialDialog(dialogState = dialogState,
+        buttons = {
+            negativeButton(stringResource(R.string.negative_button_text))
+            positiveButton(stringResource(R.string.positive_button_text))
+        },) {
+        datepicker() { date ->
             onDatePicked.invoke(date)
-            dialog.hide()
+            dialogState.hide()
         }
     }
+}
+
+@Composable
+private fun TimePickerDialog(
+    dialogState: MaterialDialogState,
+    onTimePicked: (LocalTime) -> Unit
+) {
+    MaterialDialog(dialogState = dialogState,
+        buttons = {
+            negativeButton(stringResource(R.string.negative_button_text))
+            positiveButton(stringResource(R.string.positive_button_text))
+        }) {
+
+        timepicker { time ->
+            onTimePicked.invoke(time)
+        }
+    }
+
 }
 
 private const val DueTimeLabelTextWeight = 0.3f

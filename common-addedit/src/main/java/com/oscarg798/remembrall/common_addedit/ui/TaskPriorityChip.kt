@@ -29,7 +29,8 @@ import com.oscarg798.remembrall.common_addedit.R
 import com.oscarg798.remembrall.ui_common.extensions.getBackgroundColor
 import com.oscarg798.remembrall.ui_common.extensions.getColor
 import com.oscarg798.remembrall.ui_common.extensions.getLabel
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.ui.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 
 @Composable
 fun TaskPriorityChip(
@@ -50,9 +51,9 @@ fun TaskPriorityChip(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.layoutId(LabelBoxId)
-                .padding(Dimensions.Spacing.ExtraSmall)
+                .padding( RemembrallTheme.dimens.ExtraSmall)
                 .defaultMinSize(minWidth = 75.dp)
-                .clip(RoundedCornerShape(Dimensions.CornerRadius.Small))
+                .clip(RoundedCornerShape(RemembrallTheme.dimens.Small))
                 .background(priority.getBackgroundColor()).fillMaxWidth()
         ) {
             Text(
@@ -64,8 +65,8 @@ fun TaskPriorityChip(
                     )
                 ),
                 modifier = Modifier.padding(
-                    horizontal = Dimensions.Spacing.Medium,
-                    vertical = Dimensions.Spacing.ExtraSmall
+                    horizontal =  RemembrallTheme.dimens.Medium,
+                    vertical =  RemembrallTheme.dimens.ExtraSmall
                 )
 
             )

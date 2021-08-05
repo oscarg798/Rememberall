@@ -100,129 +100,14 @@ ext {
     stetho_version = "1.5.1"
 
 }
-def hiltVersion = "2.38.1"
 
-def androidX = [:]
-androidX.coreKtx = "androidx.core:core-ktx:1.6.0"
-androidX.appCompat = "androidx.appcompat:appcompat:1.3.1"
-androidX.constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-androidX.activityx = "androidx.activity:activity-ktx:1.3.0-rc02"
-ext.androidX = androidX
 
-def testing = [:]
-testing.junit = "junit:junit:4.13.2"
-testing.AndroidXJunit = "androidx.test.ext:junit:1.1.3"
-testing.espressoCore = "androidx.test.espresso:espresso-core:3.4.0"
-ext.testing = testing
 
-def mockk = [:]
-mockk.mockk = "io.mockk:mockk:1.12.0"
-ext.mockk = mockk
 
-def material= [:]
-material.material = "com.google.android.material:material:1.4.0"
-ext.material = material
 
-def androidGms = [:]
-androidGms.auth  = "com.google.android.gms:play-services-auth:19.2.0"
-ext.androidGms = androidGms
 
-def navigationComponent = [:]
-navigationComponent.fragment = "androidx.navigation:navigation-fragment:2.3.5"
-navigationComponent.ui = "androidx.navigation:navigation-ui:2.3.5"
-navigationComponent.fragmentKtx = "androidx.navigation:navigation-fragment-ktx:2.3.5"
-navigationComponent.uiKtx = "androidx.navigation:navigation-ui-ktx:2.3.5"
-navigationComponent.compose = "androidx.navigation:navigation-compose:2.4.0-alpha05"
-ext.navigationComponent = navigationComponent
 
-def firebase = [:]
-firebase.boom = "com.google.firebase:firebase-bom:27.0.0"
-firebase.crashlytics = "com.google.firebase:firebase-crashlytics:17.4.0"
-ext.firebase = firebase
 
-def hilt = [:]
-hilt.android = "com.google.dagger:hilt-android:$hiltVersion"
-hilt.androidTesting = "com.google.dagger:hilt-android-testing:$hiltVersion"
-hilt.daggerCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
-hilt.viewModel = "androidx.hilt:hilt-lifecycle-viewmodel:$androidXHiltVersion"
-hilt.common = "androidx.hilt:hilt-common:$androidXHiltVersion"
-hilt.compose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
-hilt.compiler  = 'androidx.hilt:hilt-compiler:1.0.0'
-hilt.navigation = "androidx.hilt:hilt-navigation-fragment:1.0.0"
-hilt.work = "androidx.hilt:hilt-work:1.0.0"
-ext.daggerHilt = hilt
 
-def androidTesting = [:]
-androidTesting.orchestrator = "androidx.test:orchestrator:1.3.0"
-ext.androidTesting = androidTesting
 
-def chucker = [:]
-chucker.library = "com.github.chuckerteam.chucker:library:3.4.0"
-chucker.no_op = "com.github.chuckerteam.chucker:library-no-op:3.4.0"
-ext.chucker = chucker
 
-ext.googlePlayCoreVersion = "1.9.1"
-
-def googlePlay = [:]
-googlePlay.core = "com.google.android.play:core:$googlePlayCoreVersion"
-googlePlay.coreKtx = "com.google.android.play:core-ktx:1.8.1"
-ext.googlePlay = googlePlay
-
-def compose = [:]
-compose.liveData = "androidx.compose.runtime:runtime-livedata:1.0.0"
-compose.ui = "androidx.compose.ui:ui:1.0.0"
-compose.tooling = "androidx.compose.ui:ui-tooling:1.0.0"
-compose.foundation = "androidx.compose.foundation:foundation:1.0.0"
-compose.material = "androidx.compose.material:material:1.0.0"
-compose.icons = "androidx.compose.material:material-icons-core:1.0.0"
-compose.iconsExtended = "androidx.compose.material:material-icons-extended:1.0.0"
-compose.animations = "androidx.compose.animation:animation:1.0.0"
-compose.constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta01"
-compose.compiler = "androidx.compose.compiler:compiler:1.0.0"
-compose.activities = "androidx.activity:activity-compose:1.3.0-rc02"
-compose.test = "androidx.compose.ui:ui-test-junit4:1.0.0"
-ext.compose = compose
-
-def androidXlifecycle = [:]
-androidXlifecycle.savedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1"
-androidXlifecycle.core = "androidx.lifecycle:lifecycle-livedata-core-ktx:2.3.1"
-androidXlifecycle.livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
-androidXlifecycle.viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha02"
-ext.androidXlifecycle = androidXlifecycle
-
-def lottie = [:]
-lottie.main = "com.airbnb.android:lottie:$lottie_version"
-lottie.compose = "com.airbnb.android:lottie-compose:4.0.0"
-ext.lottie = lottie
-
-def retrofit = [:]
-retrofit.gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofit_version"
-retrofit.okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$retrofit_interceptor"
-retrofit.okhttp3 = "com.squareup.okhttp3:okhttp:$okhttp3_version"
-retrofit.gson = "com.google.code.gson:gson:$gson_version"
-ext.retrofit = retrofit
-
-def room_version = '2.3.0'
-def room = [:]
-room.runtime = "androidx.room:room-runtime:$room_version"
-room.compiler = "androidx.room:room-compiler:$room_version"
-room.ktx = "androidx.room:room-ktx:$room_version"
-room.testing = "androidx.room:room-testing:$room_version"
-ext.room = room
-
-def arrow = [:]
-arrow.sintax = "io.arrow-kt:arrow-syntax:$arrow_version"
-arrow.meta = "io.arrow-kt:arrow-meta:$arrow_version"
-arrow.core = "io.arrow-kt:arrow-core:$arrow_version"
-ext.arrow = arrow
-
-def work_version = "2.5.0"
-def workManager = [:]
-workManager.ktx = "androidx.work:work-runtime-ktx:$work_version"
-ext.workManager = workManager
-
-def utils  = [:]
-utils.composeDialogs  = "io.github.vanpra.compose-material-dialogs:datetime:0.4.3"
-ext.utils = utils
-
-ext.kotlinCoroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"

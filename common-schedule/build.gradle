@@ -2,65 +2,7 @@ apply from: "../common.gradle"
 
 dependencies {
 
-    implementation workManager.ktx
+    implementation libs.workManager.ktx
 
-    implementation androidX.coreKtx
-    implementation androidX.appCompat
-    implementation androidX.activityx
-    implementation material.material
-
-    implementation androidX.constraintLayout
-    testImplementation testing.junit
-    androidTestImplementation testing.AndroidXJunit
-    androidTestImplementation testing.espressoCore
-
-    implementation daggerHilt.android
-    implementation daggerHilt.compose
-    implementation daggerHilt.work
-    implementation daggerHilt.compiler
-    kapt daggerHilt.daggerCompiler
-    kaptAndroidTest daggerHilt.compiler
-
-    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-
-    implementation androidXlifecycle.savedState
-    implementation androidXlifecycle.core
-    implementation androidXlifecycle.viewModel
-
-    implementation compose.liveData
-    implementation compose.ui
-    implementation compose.tooling
-    implementation compose.foundation
-    implementation compose.material
-    implementation compose.icons
-    implementation compose.iconsExtended
-    implementation compose.animations
-    implementation compose.constraintLayout
-    implementation compose.compiler
-    implementation compose.activities
-
-    implementation navigationComponent.fragment
-    implementation navigationComponent.ui
-    implementation navigationComponent.fragmentKtx
-    implementation navigationComponent.uiKtx
-    implementation navigationComponent.compose
-
-    implementation lottie.main
-    implementation lottie.compose
-
-    implementation room.runtime
-    implementation room.ktx
-    kapt room.compiler
-
-    implementation arrow.core
-
-    implementation workManager.ktx
-
-    implementation utils.composeDialogs
-
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.10'
-    implementation androidGms.auth
-    implementation platform(firebase.boom)
-
-
+    kapt libs.hilt.compiler
 }

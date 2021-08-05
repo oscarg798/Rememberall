@@ -1,16 +1,15 @@
 package com.oscarg798.remembrall.common_addedit.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.oscarg798.remembrall.addtask.ui.AddAttendees
-import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common_addedit.R
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
 import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import java.time.LocalDateTime
 
 @Composable
@@ -18,11 +17,10 @@ fun AddEditTaskForm(
     taskName: String,
     taskDescription: String?,
     dueDate: String? = null,
-    attendees: Set<CalendarAttendee> = emptySet(),
+    attendees: Set<String>? = emptySet(),
     availablePriorities: List<TaskPriority>?,
     selectedPriority: TaskPriority?,
     loading: Boolean,
-    isUserLoggedIn: Boolean,
     onNameUpdated: (String) -> Unit,
     onDescriptionUpdated: (String) -> Unit,
     onDueDateSelected: (LocalDateTime) -> Unit,
@@ -31,11 +29,8 @@ fun AddEditTaskForm(
     onPrioritySelected: (TaskPriority) -> Unit,
     onDonePressed: () -> Unit
 ) {
-    Column(Modifier.padding(Dimensions.Spacing.Medium)) {
-        TaskNameField(
-            name = taskName,
-            enabled = !loading,
-        ) { onNameUpdated(it) }
+    Column(Modifier.fillMaxSize().padding(RemembrallTheme.dimens.Medium)) {
+        TaskNameField(name = taskName, enabled = !loading) { onNameUpdated(it) }
 
         TaskDescriptionField(
             description = taskDescription ?: "",
@@ -46,15 +41,12 @@ fun AddEditTaskForm(
         TaskDueDateField(
             formattedDueDate = dueDate ?: DueDatePlaceholder,
             enabled = !loading,
-            isUserLoggedIn = isUserLoggedIn,
         ) { onDueDateSelected(it) }
 
-        if (isUserLoggedIn && dueDate != null) {
+        if (dueDate != null) {
             AddAttendees(
                 enabled = !loading,
-                attendees = attendees.map {
-                    it.email
-                }.toSet(),
+                attendees = attendees,
                 onAttendeeRemoved = {
                     onAttendeeRemoved(it)
                 },

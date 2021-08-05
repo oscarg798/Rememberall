@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="generic_error">Something went wrong please try again later</string>
+    <string name="login_error">We were not able to get your account details please try again</string>
+</resources>

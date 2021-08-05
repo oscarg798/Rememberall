@@ -18,11 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
 import com.oscarg798.remembrall.common.extensions.SingleLine
-import com.oscarg798.remebrall.common_calendar.domain.model.Calendar
 import com.oscarg798.remembrall.profile.R
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
-import com.oscarg798.remembrall.ui_common.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
 
 @Composable
 fun CalendarItem(
@@ -40,7 +40,7 @@ fun CalendarItem(
                     .merge(TextStyle(color = MaterialTheme.colors.onSurface)),
                 maxLines = SingleLine,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(Dimensions.Spacing.Medium).weight(
+                modifier = Modifier.padding( RemembrallTheme.dimens.Medium).weight(
                     if (isSelected) {
                         0.8f
                     } else {
@@ -54,7 +54,7 @@ fun CalendarItem(
                     painter = painterResource(R.drawable.ic_check),
                     contentDescription = "",
                     modifier = Modifier
-                        .padding(Dimensions.Spacing.Medium)
+                        .padding( RemembrallTheme.dimens.Medium)
                         .weight(0.2f)
                         .size(SelectedCalendarIndicatorHeight)
                 )
@@ -65,8 +65,8 @@ fun CalendarItem(
             Divider(
                 modifier = Modifier
                     .padding(
-                        horizontal = Dimensions.Spacing.Medium,
-                        vertical = Dimensions.Spacing.ExtraSmall
+                        horizontal =  RemembrallTheme.dimens.Medium,
+                        vertical =  RemembrallTheme.dimens.ExtraSmall
                     )
                     .fillMaxWidth()
                     .width(DividerHeight),

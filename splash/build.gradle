@@ -2,9 +2,9 @@ apply from: "../common.gradle"
 
 dependencies {
 
-    implementation lottie.main
-    implementation lottie.compose
+    implementation libs.lottie.main
+    implementation libs.lottie.compose
 
     implementation project(path: ':common-auth')
-    implementation project(path: ':ui-common')
+    implementation project(path: ':common-ui')
 }

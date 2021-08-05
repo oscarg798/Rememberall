@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 
 @Composable
 internal fun NotificationCard(
@@ -18,14 +18,14 @@ internal fun NotificationCard(
     onCheckedChange: (Boolean) -> Unit
 ) {
     Card(
-        modifier = Modifier.padding(Dimensions.Spacing.Medium)
+        modifier = Modifier.padding( RemembrallTheme.dimens.Medium)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "Daily agenda",
                 style = MaterialTheme.typography.body1
                     .merge(TextStyle(color = MaterialTheme.colors.onBackground)),
-                modifier = Modifier.weight(0.8f).padding(Dimensions.Spacing.Medium)
+                modifier = Modifier.weight(0.8f).padding( RemembrallTheme.dimens.Medium)
             )
 
             Switch(

@@ -3,6 +3,8 @@ apply from: "../common.gradle"
 
 dependencies {
 
-    implementation arrow.core
-    api androidGms.auth
+    implementation libs.arrow.core
+    api libs.android.gms.auth
+
+    implementation libs.firebase.auth
 }

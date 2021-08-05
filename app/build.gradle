@@ -14,13 +14,13 @@ apply from: "../config.gradle"
 
 android {
 
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = 31
+    buildToolsVersion = "31.0.0"
 
     defaultConfig {
         applicationId = "com.oscarg798.remembrall"
         minSdk = 26
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
 
@@ -75,8 +75,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.5.10"
-        kotlinCompilerExtensionVersion '1.0.0'
+        kotlinCompilerVersion "1.5.30"
+        kotlinCompilerExtensionVersion '1.0.3'
     }
 
     repositories {
@@ -87,86 +87,86 @@ android {
             }
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
 }
 
 dependencies {
 
-    implementation androidX.coreKtx
-    implementation androidX.appCompat
-    implementation androidX.activityx
-    implementation material.material
+    implementation libs.androidx.coreKtx
+    implementation libs.androidx.appcompat
+    implementation libs.androix.activityx
+    implementation libs.material
 
-    implementation androidX.constraintLayout
-    testImplementation testing.junit
-    androidTestImplementation testing.AndroidXJunit
-    androidTestImplementation testing.espressoCore
-
-    implementation daggerHilt.android
-    implementation daggerHilt.compose
-    implementation daggerHilt.work
-    implementation daggerHilt.compiler
-    kapt daggerHilt.daggerCompiler
-    kaptAndroidTest daggerHilt.compiler
+    implementation libs.androidx.constraintLayout
+    testImplementation libs.junit.base
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.androidx.test.espresso.core
 
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
-    implementation androidXlifecycle.savedState
-    implementation androidXlifecycle.core
-    implementation androidXlifecycle.viewModel
+    implementation libs.androidx.navigation.compose
 
-    implementation compose.liveData
-    implementation compose.ui
-    implementation compose.tooling
-    implementation compose.foundation
-    implementation compose.material
-    implementation compose.icons
-    implementation compose.iconsExtended
-    implementation compose.animations
-    implementation compose.constraintLayout
-    implementation compose.compiler
-    implementation compose.activities
+    implementation libs.lottie.main
+    implementation libs.lottie.compose
 
-    implementation navigationComponent.fragment
-    implementation navigationComponent.ui
-    implementation navigationComponent.fragmentKtx
-    implementation navigationComponent.uiKtx
-    implementation navigationComponent.compose
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    kapt libs.androidx.room.compiler
 
-    implementation lottie.main
-    implementation lottie.compose
+    implementation libs.hilt.android
+    implementation libs.hilt.compose
+    implementation libs.hilt.work
+    implementation libs.hilt.compiler
+    implementation libs.hilt.dagger.compiler
+    kapt(libs.hilt.dagger.compiler)
+    kapt libs.hilt.compiler
+    kaptAndroidTest(libs.hilt.dagger.compiler)
 
-    implementation room.runtime
-    implementation room.ktx
-    kapt room.compiler
+    implementation libs.arrow.core
 
-    implementation arrow.core
+    implementation libs.workManager.ktx
 
-    implementation workManager.ktx
+    implementation libs.compose.dialogs
 
-    implementation utils.composeDialogs
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.30'
+    implementation libs.android.gms.auth
+    implementation platform(libs.firebase.boom)
 
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.10'
-    implementation androidGms.auth
-    implementation platform(firebase.boom)
-
-    implementation project(path: ':ui-common')
+    implementation project(path: ':common-ui')
     implementation project(path: ':common')
     implementation project(path: ':common-auth')
-    implementation project(path: ':tasklist')
+    implementation project(path: ':task-list')
     implementation project(path: ':common-gettask')
-    implementation project(path: ':taskdetail')
+    implementation project(path: ':task-detail')
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-schedule')
     implementation project(path: ':profile')
     implementation project(path: ':splash')
     implementation project(path: ':common-addedit')
-    implementation project(path: ':edittask')
-    implementation project(path: ':addtask')
+    implementation project(path: ':common-task')
+    implementation project(path: ':task-edit')
+    implementation project(path: ':task-add')
+    implementation project(path: ':login')
+    implementation project(path: ':home')
+    implementation project(path: ':checklist-list')
+    implementation project(path: ':checklist-add')
+    implementation project(path: ':checklist-detail')
+    implementation project(path: ':common-checklist')
 
+    implementation libs.accompanist.pager
+    implementation libs.accompanist.pagerIndicator
 
+    implementation platform(libs.firebase.boom)
+    implementation libs.firebase.analytics
+    implementation libs.firebase.firestore
+    implementation "io.grpc:grpc-okhttp:1.32.2"
+    implementation libs.firebase.auth
 
-    testImplementation mockk.mockk
-    testImplementation kotlinCoroutinesTest
+    testImplementation libs.mockk.base
+    testImplementation libs.coroutines.test
 
 }
 repositories {

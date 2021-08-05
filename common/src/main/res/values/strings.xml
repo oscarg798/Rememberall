@@ -13,6 +13,7 @@
     <string name="generic_error">Something went wrong try again</string>
     <string name="remove_task_label">Remove</string>
     <string name="profile_title">Profile</string>
+    <string name="login_title">Login</string>
     <string name="profile_calendar_label">Calendar for task creation</string>
     <string name="today_due_date_label">Today</string>
     <string name="expired_label">Already Expired</string>
@@ -38,7 +39,7 @@
     <string name="attendees_validation_error">Attendees must be a valid email address</string>
     <string name="name_validation_error">Tasks should have a name</string>
     <string name="prioriority_validation_error">Tasks should have a priority</string>
-    <string name="attendees_without_due_date_error">Adding attendees require a due date</string>
+    <string name="missing_due_date_error">You must enter a due date</string>
     <string name="add_attendees_dialog_title">Attendees email</string>
     <string name="add_attendees_input_label">Attendee</string>
     <string name="add_attendees_input_hint">Email</string>
@@ -57,4 +58,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="task_detail_title">Task detail</string>
     <string name="EditButtonText">Edit</string>
+
+    <string name="checklist_name_label">Name</string>
+    <string name="checklist_new_item_label">Add an Item</string>
 </resources>

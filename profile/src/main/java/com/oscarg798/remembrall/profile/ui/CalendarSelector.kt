@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import com.oscarg798.remebrall.common_calendar.domain.model.Calendar
+import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
 import com.oscarg798.remembrall.profile.R
-import com.oscarg798.remembrall.ui_common.theming.Dimensions
+import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 
 @Composable
 internal fun CalendarSelector(
@@ -23,21 +23,21 @@ internal fun CalendarSelector(
 ) {
     Column(
         Modifier
-            .padding(horizontal = Dimensions.Spacing.Medium)
+            .padding(horizontal =  RemembrallTheme.dimens.Medium)
     ) {
         Text(
             text = stringResource(R.string.profile_calendar_label),
             modifier = Modifier.padding(
-                vertical = Dimensions.Spacing.Small
+                vertical =  RemembrallTheme.dimens.Small
             ),
             style = MaterialTheme.typography.h3
                 .merge(TextStyle(color = MaterialTheme.colors.onBackground))
         )
         Card(
             modifier = Modifier.padding(
-                vertical = Dimensions.Spacing.Small
+                vertical =  RemembrallTheme.dimens.Small
             ),
-            shape = RoundedCornerShape(Dimensions.CornerRadius.Small)
+            shape = RoundedCornerShape(RemembrallTheme.dimens.Small)
         ) {
             LazyColumn {
                 itemsIndexed(profileInformation.calendars.toList()) { index, item ->

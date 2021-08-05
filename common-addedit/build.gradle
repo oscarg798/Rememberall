@@ -3,11 +3,14 @@ apply from: "../common.gradle"
 
 dependencies {
 
-    api androidGms.auth
+    api libs.android.gms.auth
 
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.10'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.30'
     implementation project(path: ':common_calendar')
-    implementation project(path: ':ui-common')
+    implementation project(path: ':common-ui')
 
-    implementation utils.composeDialogs
+    implementation libs.accompanist.pager
+    implementation libs.accompanist.pagerIndicator
+
+    api libs.compose.dialogs
 }

@@ -26,12 +26,12 @@
         </activity>
 
         <receiver
-            android:name="com.oscarg798.remebrall.schedule.ScheduleWorkerReceiver"
+            android:name=".schedule.ScheduleWorkerReceiver"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true" />
         <receiver
-            android:name="com.oscarg798.remebrall.schedule.BootReceiver"
+            android:name=".schedule.BootReceiver"
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true">
@@ -42,9 +42,10 @@
         </receiver>
 
         <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            tools:node="remove" />
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
     </application>
 
 </manifest>

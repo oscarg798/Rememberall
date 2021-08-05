@@ -10,20 +10,27 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/addtask" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/checklist-add" />
+            <option value="$PROJECT_DIR$/checklist-detail" />
+            <option value="$PROJECT_DIR$/checklist-list" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common-addedit" />
             <option value="$PROJECT_DIR$/common-auth" />
+            <option value="$PROJECT_DIR$/common-checklist" />
             <option value="$PROJECT_DIR$/common-gettask" />
             <option value="$PROJECT_DIR$/common-schedule" />
+            <option value="$PROJECT_DIR$/common-task" />
+            <option value="$PROJECT_DIR$/common-ui" />
             <option value="$PROJECT_DIR$/common_calendar" />
-            <option value="$PROJECT_DIR$/edittask" />
+            <option value="$PROJECT_DIR$/home" />
+            <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/profile" />
             <option value="$PROJECT_DIR$/splash" />
-            <option value="$PROJECT_DIR$/taskdetail" />
-            <option value="$PROJECT_DIR$/tasklist" />
-            <option value="$PROJECT_DIR$/ui-common" />
+            <option value="$PROJECT_DIR$/task-add" />
+            <option value="$PROJECT_DIR$/task-detail" />
+            <option value="$PROJECT_DIR$/task-edit" />
+            <option value="$PROJECT_DIR$/task-list" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

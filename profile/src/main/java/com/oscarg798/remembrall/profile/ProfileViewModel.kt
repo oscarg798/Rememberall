@@ -1,12 +1,11 @@
 package com.oscarg798.remembrall.profile
 
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
 import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remebrall.common_calendar.domain.model.Calendar
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
-import com.oscarg798.remembrall.common_auth.model.AuthOptions
-import com.oscarg798.remembrall.common_auth.model.GoogleAuthOptionsBuilder
+import com.oscarg798.remembrall.common.viewmodel.launch
+import com.oscarg798.remembrall.profile.model.ProfileInformation
 import com.oscarg798.remembrall.profile.usecase.GetProfileInformationUseCase
 import com.oscarg798.remembrall.profile.usecase.LogOutUseCase
 import com.oscarg798.remembrall.profile.usecase.SaveNotificationValueUseCase
@@ -18,66 +17,46 @@ import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val authOptions: AuthOptions,
     private val getProfileInformationUseCase: GetProfileInformationUseCase,
-    private val googleAuthOptionsBuilder: GoogleAuthOptionsBuilder,
     private val setCalendarSelectedUseCase: SetCalendarSelectedUseCase,
     private val saveNotificationValueUseCase: SaveNotificationValueUseCase,
     private val logOutUseCase: LogOutUseCase,
     coroutineContextProvider: CoroutineContextProvider
-) :
-    AbstractViewModel<ProfileViewModel.ViewState, ProfileViewModel.Event>(
-        ViewState(),
-        coroutineContextProvider
-    ) {
+) : AbstractViewModel<ProfileViewModel.ViewState, ProfileViewModel.Event>(
+    ViewState()
+), CoroutineContextProvider by coroutineContextProvider {
 
     fun getProfileInformation() {
-        viewModelScope.launch {
-            update { it.copy(loading = true, error = null) }
+        launch {
+            update { it.copy(loading = true) }
             runCatching {
-                withContext(coroutineContextProvider.io) {
+                withContext(io) {
                     getProfileInformationUseCase.execute()
                 }
             }.onSuccess { profileInformation ->
                 update {
                     it.copy(
                         loading = false,
-                        profileInformation = profileInformation,
-                        error = null
+                        profileInformation = profileInformation
                     )
                 }
-            }.onFailure {error->
-                if(error !is Exception) throw error
+            }.onFailure { error ->
+                if (error !is Exception) throw error
 
                 update {
                     it.copy(
                         loading = false,
-                        profileInformation = null,
-                        error = error
+                        profileInformation = null
                     )
                 }
+                _event.emit(Event.NavigateToLogin)
             }
         }
-    }
-
-    fun signIn() {
-        viewModelScope.launch {
-            update { it.copy(loading = true) }
-            val signInOptions = withContext(coroutineContextProvider.io) {
-                googleAuthOptionsBuilder.buildFromAuthOptions(authOptions)
-            }
-
-            _event.tryEmit(Event.RequestAuth(signInOptions))
-        }
-    }
-
-    fun onAuth() {
-        getProfileInformation()
     }
 
     fun onCalendarSelected(calendar: Calendar) {
-        viewModelScope.launch {
-            withContext(coroutineContextProvider.io) {
+        launch {
+            withContext(io) {
                 setCalendarSelectedUseCase.execute(calendar)
             }
 
@@ -95,11 +74,12 @@ class ProfileViewModel @Inject constructor(
             update { it.copy(loading = true) }
 
             runCatching {
-                withContext(coroutineContextProvider.io) {
+                withContext(io) {
                     logOutUseCase.execute()
                 }
             }.onSuccess {
                 update { it.copy(loading = false, profileInformation = null) }
+                _event.emit(Event.NavigateToLogin)
             }.onFailure {
                 update { it.copy(loading = false) }
             }
@@ -110,7 +90,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             update { it.copy(loading = true) }
 
-            withContext(coroutineContextProvider.io) {
+            withContext(io) {
                 saveNotificationValueUseCase.execute(enabled)
             }
 
@@ -120,11 +100,10 @@ class ProfileViewModel @Inject constructor(
 
     data class ViewState(
         val loading: Boolean = true,
-        val profileInformation: com.oscarg798.remembrall.profile.model.ProfileInformation? = null,
-        val error: Exception? = null
+        val profileInformation: ProfileInformation? = null
     )
 
-    sealed class Event {
-        data class RequestAuth(val options: GoogleSignInOptions) : Event()
+    sealed interface Event {
+        object NavigateToLogin : Event
     }
 }

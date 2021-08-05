@@ -5,14 +5,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'dagger.hilt.android.plugin'
 
-android{
+android {
 
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = 31
+    buildToolsVersion = "31.0.0"
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
     }
@@ -40,8 +40,8 @@ android{
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.5.10"
-        kotlinCompilerExtensionVersion '1.0.0'
+        kotlinCompilerVersion "1.5.30"
+        kotlinCompilerExtensionVersion '1.0.3'
     }
 
     kotlinOptions {
@@ -58,14 +58,15 @@ android{
 
 dependencies {
 
-    kapt daggerHilt.daggerCompiler
-    kaptAndroidTest daggerHilt.compiler
+    kapt(libs.hilt.dagger.compiler)
+    kaptAndroidTest(libs.hilt.dagger.compiler)
 
-    /**
-     * Even if we apply this as api on main the
-     * gradle plugin is checking this been applied here too
-     */
-    implementation daggerHilt.android
+    implementation libs.hilt.android
+    implementation libs.hilt.compose
+    implementation libs.hilt.work
+    implementation libs.hilt.dagger.compiler
+
+    implementation libs.reorderable
 
     implementation project(':common')
 }

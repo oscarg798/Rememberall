@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.profile.usecase
 
 import android.util.Log
-import com.oscarg798.remebrall.schedule.ScheduleWorkerScheduler
+import com.oscarg798.remembrall.schedule.ScheduleWorkerScheduler
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
 import javax.inject.Inject
 

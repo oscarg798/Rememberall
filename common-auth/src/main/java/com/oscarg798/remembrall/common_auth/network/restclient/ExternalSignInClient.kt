@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.common_auth.network.restclient
 
 import arrow.core.Either
 import com.oscarg798.remembrall.common_auth.exception.AuthException
-import com.oscarg798.remembrall.common_auth.model.User
+import com.oscarg798.remembrall.common.model.User
 import com.oscarg798.remembrall.common_auth.network.model.SignInDto
 
 /**
@@ -21,4 +21,8 @@ interface ExternalSignInClient {
     fun getSignedInUser(): Either<AuthException, SignInDto>
 
     suspend fun logout()
+
+    fun isUserLoggedIn(): Either<AuthException, Unit>
+
+   suspend fun finishLogIn()
 }
