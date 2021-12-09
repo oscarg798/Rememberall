@@ -56,6 +56,7 @@ android {
                             "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                             "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                             "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                             "-Xopt-in=kotlinx.coroutines.FlowPreview",
                             "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
         jvmTarget = "1.8"

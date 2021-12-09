@@ -2,10 +2,10 @@ package com.oscarg798.remembrall.ui_common.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
@@ -30,7 +30,7 @@ fun RemembrallButton(
         shape = getButtonShape()
     ) {
         if (loading) {
-            CircularProgressIndicator(color = MaterialTheme.colors.onSecondary)
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.onSecondary)
         } else {
             Text(
                 text,

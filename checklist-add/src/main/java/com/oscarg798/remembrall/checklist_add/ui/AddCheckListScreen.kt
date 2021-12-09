@@ -12,11 +12,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -90,8 +90,7 @@ fun NavGraphBuilder.addCheckListScreen() = composable(
                     RemembrallTopBarTitle(stringResource(id = R.string.add_checklist_title))
                 }
             )
-        },
-        snackbarHostState = snackbarHostState
+        }
     ) {
         RemembrallPage {
             Column(
@@ -121,11 +120,12 @@ fun NavGraphBuilder.addCheckListScreen() = composable(
 
                     if (state.selectedIcon != null) {
                         Card(
-                            Modifier
+                            backgroundColor = MaterialTheme.colorScheme.surface,
+                            modifier = Modifier
                                 .weight(.2f)
                                 .padding(start = RemembrallTheme.dimens.Small)
                                 .background(
-                                    color = MaterialTheme.colors.surface,
+                                    color = MaterialTheme.colorScheme.surface,
                                     shape = RoundedCornerShape(RemembrallTheme.dimens.Small.value)
                                 )
                         ) {

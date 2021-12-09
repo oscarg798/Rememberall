@@ -1,6 +1,7 @@
 package com.oscarg798.remembrall.ui_common.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,13 +20,15 @@ import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.DisplayableTask
-import com.oscarg798.remembrall.common.model.Task
 import com.oscarg798.remembrall.ui_common.R
 import com.oscarg798.remembrall.ui_common.extensions.getColor
 import com.oscarg798.remembrall.ui_common.extensions.getLabel
@@ -52,7 +54,8 @@ fun TaskCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
-        backgroundColor = MaterialTheme.colors.surface,
+        contentColor = MaterialTheme.colorScheme.surface,
+        backgroundColor = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(RemembrallTheme.dimens.Medium),
         modifier = modifier
             .clickable { onClick(task) }
@@ -142,10 +145,10 @@ fun TaskBody(
 private fun Attendees(attendees: Collection<CalendarAttendee>) {
     Text(
         text = "Attendees:",
-        style = MaterialTheme.typography.h3
+        style = MaterialTheme.typography.displaySmall
             .merge(
                 TextStyle(
-                    color = MaterialTheme.colors.onSurface,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontStyle = FontStyle.Italic
                 )
             )
@@ -154,7 +157,7 @@ private fun Attendees(attendees: Collection<CalendarAttendee>) {
         items(attendees.toList()) { attendee ->
             Text(
                 text = attendee.email,
-                style = TextStyle(color = MaterialTheme.colors.onSurface),
+                style = TextStyle(color = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .padding(RemembrallTheme.dimens.Medium)
             )
@@ -167,7 +170,7 @@ private fun TaskHeader(task: DisplayableTask) {
 
     Text(
         text = stringResource(task.priority.getLabel()),
-        style = MaterialTheme.typography.body1.merge(
+        style = MaterialTheme.typography.bodySmall.merge(
             TextStyle(
                 color = task.priority.getColor()
             )
@@ -187,8 +190,8 @@ private fun TaskHeader(task: DisplayableTask) {
 fun TaskTitle(task: DisplayableTask, modifier: Modifier = Modifier) {
     Text(
         text = task.name,
-        style = MaterialTheme.typography.h3
-            .merge(TextStyle(color = MaterialTheme.colors.onSurface)),
+        style = MaterialTheme.typography.titleMedium
+            .merge(TextStyle(color = MaterialTheme.colorScheme.onSurface)),
         maxLines = SingleLine,
         overflow = TextOverflow.Ellipsis,
         modifier = modifier
@@ -200,7 +203,7 @@ private fun TaskDescription(task: DisplayableTask, maxLines: Int = TaskDescripti
     val description = task.description ?: return
     Text(
         text = description,
-        style = MaterialTheme.typography.body1
+        style = MaterialTheme.typography.bodySmall
             .merge(TextStyle(color = SecondaryTextColor)),
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis
@@ -218,14 +221,14 @@ private fun TaskDueDate(task: DisplayableTask) {
         Image(
             painter = painterResource(id = R.drawable.ic_time),
             contentDescription = "",
-            colorFilter = ColorFilter.tint(MaterialTheme.colors.secondary),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
             modifier = Modifier.size(TaskDueIconSize)
         )
 
         Text(
             text = task.dueDate,
-            style = MaterialTheme.typography.body2
-                .merge(TextStyle(color = MaterialTheme.colors.secondary)),
+            style = MaterialTheme.typography.labelMedium
+                .merge(TextStyle(color = MaterialTheme.colorScheme.secondary)),
             maxLines = SingleLine,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(start = RemembrallTheme.dimens.Medium)

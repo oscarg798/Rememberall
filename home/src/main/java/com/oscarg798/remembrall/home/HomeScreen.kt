@@ -3,12 +3,12 @@ package com.oscarg798.remembrall.home
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,7 +41,6 @@ fun NavGraphBuilder.homeScreen(onFinishRequest: () -> Unit) = composable(
 ) { backStackEntry ->
 
     val pagerState = rememberPagerState()
-    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val navController = LocalNavControllerProvider.current
 
@@ -49,14 +48,12 @@ fun NavGraphBuilder.homeScreen(onFinishRequest: () -> Unit) = composable(
         listOf(
             TabItem(R.string.task_list_screen_title) {
                 TaskListScreen(
-                    backStackEntry,
-                    snackbarHostState
+                    backStackEntry
                 )
             },
             TabItem(R.string.checklist_title) {
                 CheckListScreen(
-                    backStackEntry,
-                    snackbarHostState
+                    backStackEntry
                 )
             }
         )
@@ -74,10 +71,9 @@ fun NavGraphBuilder.homeScreen(onFinishRequest: () -> Unit) = composable(
                     }
                 }
             )
-        },
-        snackbarHostState = snackbarHostState
+        }
     ) {
-        Column() {
+        Column {
             Tabs(pagerState, tabs, coroutineScope)
             TabsContent(tabs = tabs, pagerState = pagerState)
         }
@@ -99,9 +95,10 @@ private fun Tabs(
         selectedTabIndex = pagerState.currentPage,
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
-                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
             )
-        }, backgroundColor = MaterialTheme.colors.secondary
+        }, backgroundColor = MaterialTheme.colorScheme.background
     ) {
         tabs.forEachIndexed { index, tabItem ->
             Tab(selected = pagerState.currentPage == index, onClick = {
@@ -111,7 +108,7 @@ private fun Tabs(
                 Text(
                     text = stringResource(id = tabItem.title),
                     modifier= Modifier.padding(RemembrallTheme.dimens.Small),
-                    style = MaterialTheme.typography.h3.merge(TextStyle(MaterialTheme.colors.onSecondary))
+                    style = MaterialTheme.typography.bodyLarge.merge(TextStyle(MaterialTheme.colorScheme.onSurface))
                 )
             }
         }

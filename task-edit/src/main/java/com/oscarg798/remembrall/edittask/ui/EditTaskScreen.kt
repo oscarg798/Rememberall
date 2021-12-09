@@ -65,8 +65,7 @@ private fun EditTask(
                     RemembrallTopBarTitle("Edit")
                 }
             )
-        },
-        snackbarHostState = snackbarHostState
+        }
     ) {
         RemembrallPage {
 

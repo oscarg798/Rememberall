@@ -76,8 +76,7 @@ private fun TaskDetail(
                     RemembrallTopBarTitle(stringResource(R.string.task_detail_title))
                 }
             )
-        },
-        snackbarHostState = snackbarHostState
+        }
     ) {
         RemembrallPage {
 

@@ -30,11 +30,10 @@ fun NavGraphBuilder.splashScreen() = composable(
 ) { backStackEntry ->
 
     val viewModel: SplashViewModel = hiltViewModel(backStackEntry)
-    val snackbarHostState = remember { SnackbarHostState() }
     val events by viewModel.events.collectAsState(initial = null)
     val navController = LocalNavControllerProvider.current
 
-    RemembrallScaffold(snackbarHostState = snackbarHostState) {
+    RemembrallScaffold {
         RemembrallPage {
             Box(
                 modifier = Modifier

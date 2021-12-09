@@ -2,8 +2,8 @@ package com.oscarg798.remembrall.profile.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -23,8 +23,8 @@ internal fun ProfileDetails(
         Text(
             text = profileInformation.user.name,
             maxLines = SingleLine,
-            style = MaterialTheme.typography.h2
-                .merge(TextStyle(color = MaterialTheme.colors.onBackground)),
+            style = MaterialTheme.typography.displayMedium
+                .merge(TextStyle(color = MaterialTheme.colorScheme.onBackground)),
             modifier = Modifier.padding( RemembrallTheme.dimens.Medium)
         )
 

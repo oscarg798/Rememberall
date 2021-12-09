@@ -11,9 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,7 +32,7 @@ import com.oscarg798.remembrall.ui_common.ui.AddButton
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 
 @Composable
-fun CheckListScreen(backStackEntry: NavBackStackEntry, snackbarHostState: SnackbarHostState) {
+fun CheckListScreen(backStackEntry: NavBackStackEntry) {
 
     val viewModel: ChecklistViewModel = hiltViewModel(backStackEntry)
     val state by viewModel.state.collectAsState(initial = ChecklistViewModel.ViewState())
@@ -69,7 +68,7 @@ fun CheckListScreen(backStackEntry: NavBackStackEntry, snackbarHostState: Snackb
             LazyColumn {
                 items(checklists.toList(), key = { it.id }) { checklist ->
                     Card(
-                        backgroundColor = MaterialTheme.colors.surface,
+                        backgroundColor = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(RemembrallTheme.dimens.Medium),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -87,8 +86,8 @@ fun CheckListScreen(backStackEntry: NavBackStackEntry, snackbarHostState: Snackb
                                 modifier = Modifier
                                     .padding(RemembrallTheme.dimens.Large)
                                     .weight(.8f),
-                                style = MaterialTheme.typography.h3.merge(
-                                    TextStyle(MaterialTheme.colors.onBackground)
+                                style = MaterialTheme.typography.titleMedium.merge(
+                                    TextStyle(MaterialTheme.colorScheme.onBackground)
                                 )
                             )
 

@@ -37,8 +37,7 @@ fun NavGraphBuilder.addTaskScreen() =
                         RemembrallTopBarTitle(stringResource(R.string.add_task_screen_title))
                     }
                 )
-            },
-            snackbarHostState = snackbarHostState
+            }
         ) {
             RemembrallPage {
                 AddTaskForm(state, viewModel)

@@ -1,18 +1,15 @@
 package com.oscarg798.remembrall.common_addedit.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common_addedit.R
-import com.oscarg798.remembrall.ui_common.ui.AwesomeIcon
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
 import com.vanpra.composematerialdialogs.MaterialDialog
@@ -93,7 +89,7 @@ internal fun TaskDueDateField(
 
             Text(
                 text = stringResource(R.string.due_date_label),
-                style = TextStyle(color = MaterialTheme.colors.onBackground),
+                style = TextStyle(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier
                     .padding(RemembrallTheme.dimens.Medium)
                     .fillMaxWidth()
@@ -103,7 +99,7 @@ internal fun TaskDueDateField(
 
             Text(
                 text = formattedDueDate,
-                style = TextStyle(color = SecondaryTextColor).merge(MaterialTheme.typography.body1),
+                style = TextStyle(color = SecondaryTextColor).merge(MaterialTheme.typography.bodyMedium),
                 modifier = Modifier
                     .padding(
                         end = RemembrallTheme.dimens.Medium,
@@ -118,7 +114,7 @@ internal fun TaskDueDateField(
             Image(
                 painter = painterResource(id = R.drawable.ic_time),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.secondary),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
                 modifier = Modifier
                     .size(30.dp)
                     .weight(DueTimeIconWeight)

@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.collect
 
 @Composable
 fun TaskListScreen(
-    backStackEntry: NavBackStackEntry,
-    snackbarHostState: SnackbarHostState
+    backStackEntry: NavBackStackEntry
 ) {
 
     val viewModel: TaskListViewModel = hiltViewModel(viewModelStoreOwner = backStackEntry)

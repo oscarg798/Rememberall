@@ -50,7 +50,7 @@ fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
 
             when (event) {
                 is LoginViewModel.Event.RequestAuth -> authLauncher.launch(event.googleSignInOptions)
-                is LoginViewModel.Event.NavigateToHome -> Router.TaskList.navigate(navController)
+                is LoginViewModel.Event.NavigateToHome -> Router.Home.navigate(navController)
                 is LoginViewModel.Event.ShowErrorMessage -> snackbarHostState.showSnackbar(event.message)
             }
         }
@@ -62,7 +62,7 @@ fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
                         RemembrallTopBarTitle(stringResource(R.string.login_title))
                     }
                 )
-            }, snackbarHostState = snackbarHostState
+            }
         ) {
             Column(
                 Modifier.fillMaxSize(),

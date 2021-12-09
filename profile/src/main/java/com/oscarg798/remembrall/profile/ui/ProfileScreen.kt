@@ -27,7 +27,6 @@ fun NavGraphBuilder.profileScreen() =
         val viewModel: ProfileViewModel = hiltViewModel(backStackEntry)
         val state by viewModel.state.collectAsState(ProfileViewModel.ViewState())
         val events by viewModel.events.collectAsState(null)
-        val snackbarHostState = remember { SnackbarHostState() }
         val navController = LocalNavControllerProvider.current
 
         LaunchedEffect(key1 = viewModel) {
@@ -48,8 +47,7 @@ fun NavGraphBuilder.profileScreen() =
                         RemembrallTopBarTitle(stringResource(R.string.profile_title))
                     }
                 )
-            },
-            snackbarHostState = snackbarHostState
+            }
         ) {
             RemembrallPage {
                 when {

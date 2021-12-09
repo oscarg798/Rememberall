@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +38,7 @@ fun DayItem(
         ) {
             Text(
                 text = name,
-                style = MaterialTheme.typography.body1.merge(TextStyle(color = SecondaryTextColor))
+                style = MaterialTheme.typography.bodyMedium.merge(TextStyle(color = SecondaryTextColor))
             )
         }
 
@@ -52,7 +52,7 @@ fun DayItem(
         ) {
             Text(
                 text = value,
-                style = MaterialTheme.typography.h2.merge(
+                style = MaterialTheme.typography.displaySmall.merge(
                     TextStyle(
                         color = getDayColor(isToday)
                     )
@@ -71,14 +71,14 @@ fun DayItem(
 
 @Composable
 private fun getDayColor(isToday: Boolean) = if (isToday) {
-    MaterialTheme.colors.secondary
+    MaterialTheme.colorScheme.secondary
 } else {
-    MaterialTheme.colors.onSurface
+    MaterialTheme.colorScheme.onSurface
 }
 
 @Composable
 private fun getDividerColor(isToday: Boolean) = if (isToday) {
-    MaterialTheme.colors.secondary
+    MaterialTheme.colorScheme.secondary
 } else {
     SecondaryTextColor
 }

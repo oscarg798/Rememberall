@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +46,7 @@ fun AddAttendees(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = stringResource(R.string.add_attendees_label),
-                style = TextStyle(color = MaterialTheme.colors.onBackground),
+                style = TextStyle(color = MaterialTheme.colorScheme.onBackground),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -56,7 +56,7 @@ fun AddAttendees(
             Image(
                 painter = painterResource(R.drawable.ic_add_circular),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.secondary),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
                 modifier = Modifier
                     .size(AddAttendeesSize)
                     .weight(.2f)
@@ -82,7 +82,7 @@ fun AddAttendees(
                     ) {
                         Text(
                             text = attendee,
-                            style = TextStyle(color = MaterialTheme.colors.onSurface),
+                            style = TextStyle(color = MaterialTheme.colorScheme.onSurface),
                             modifier = Modifier
                                 .padding(RemembrallTheme.dimens.Medium)
                         )
@@ -97,7 +97,7 @@ fun AddAttendees(
                                     onAttendeeRemoved(attendee)
                                 }
                             },
-                        colorFilter = ColorFilter.tint(MaterialTheme.colors.primaryVariant)
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primaryContainer)
                     )
                 }
             }

@@ -13,14 +13,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -44,11 +40,9 @@ internal fun TaskList(
     onRemove: (DisplayableTask) -> Unit,
 ) {
     val listState = rememberLazyListState()
-    var wasInvalidated by remember { mutableStateOf(true) }
 
     LaunchedEffect(key1 = viewModel.hashCode() + tasks.hashCode()) {
         if (loading || tasks.isEmpty() || initialIndex == -1) return@LaunchedEffect
-        wasInvalidated = false
         listState.scrollToItem(initialIndex)
     }
 
@@ -67,8 +61,8 @@ internal fun TaskList(
                     item(key = entry.key.toString()) {
                         Text(
                             text = entry.key.toString(),
-                            style = MaterialTheme.typography.h3
-                                .merge(TextStyle(color = MaterialTheme.colors.onBackground)),
+                            style = MaterialTheme.typography.displaySmall
+                                .merge(TextStyle(color = MaterialTheme.colorScheme.onBackground)),
                             modifier = Modifier
                                 .padding(horizontal = RemembrallTheme.dimens.Large)
                                 .fillMaxWidth()
@@ -99,11 +93,9 @@ internal fun TaskList(
                                     TaskItem(
                                         task = it,
                                         onClick = { taskId ->
-                                            wasInvalidated = true
                                             onClick(taskId)
                                         },
                                         onRemoveClicked = { task ->
-                                            wasInvalidated = true
                                             onRemove(task)
                                         },
                                         modifier = Modifier.padding(
@@ -124,7 +116,6 @@ internal fun TaskList(
                 .align(Alignment.BottomEnd)
                 .padding(RemembrallTheme.dimens.Medium)
         ) {
-            wasInvalidated = true
             onAddButtonClicked()
         }
     }
@@ -135,11 +126,11 @@ private fun DayGroupField(dayGroup: TaskGroup.DayGroup, modifier: Modifier = Mod
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
         Text(
             text = dayGroup.dayName,
-            style = MaterialTheme.typography.h3.merge(TextStyle(color = MaterialTheme.colors.onBackground))
+            style = MaterialTheme.typography.bodyLarge.merge(TextStyle(color = MaterialTheme.colorScheme.onBackground))
         )
         Text(
             text = dayGroup.dayNumber,
-            style = MaterialTheme.typography.h4.merge(TextStyle(color = MaterialTheme.colors.onBackground))
+            style = MaterialTheme.typography.bodyLarge.merge(TextStyle(color = MaterialTheme.colorScheme.onBackground))
         )
     }
 }
@@ -147,7 +138,7 @@ private fun DayGroupField(dayGroup: TaskGroup.DayGroup, modifier: Modifier = Mod
 private fun LazyListScope.loadingList() {
     items(Examples.toList()) {
         Card(
-            backgroundColor = MaterialTheme.colors.surface,
+            backgroundColor = MaterialTheme.colorScheme.surface,
             shape = RoundedCornerShape(RemembrallTheme.dimens.Medium),
             modifier = Modifier
                 .fillMaxWidth()

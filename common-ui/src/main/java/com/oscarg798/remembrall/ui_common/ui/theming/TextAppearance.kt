@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.ui_common.ui.theming
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -72,54 +72,82 @@ internal val AwesomeFont = FontFamily(
 )
 
 internal fun getTypography(fontSizes: FontSizes): Typography = Typography(
-    h1 = TextStyle(
+    displayLarge = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = fontSizes.H1,
         fontFamily = AveriaSans
     ),
-    h2 = TextStyle(
+    displayMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.H1,
+        fontFamily = AveriaSans
+    ),
+    displaySmall = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = fontSizes.H2,
         fontFamily = AveriaSans
     ),
-    h3 = TextStyle(
+    headlineLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.H2,
+        fontFamily = AveriaSans
+    ),
+    headlineMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.H2,
+        fontFamily = AveriaSans
+    ),
+    headlineSmall = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = fontSizes.H3,
         fontFamily = AveriaSans
     ),
-    h4 = TextStyle(
+    titleLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.H3,
+        fontFamily = AveriaSans
+    ),
+    titleMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.H3,
+        fontFamily = AveriaSans
+    ),
+    titleSmall = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = fontSizes.H4,
         fontFamily = AveriaSans
     ),
-    body1 = TextStyle(
-        fontWeight = FontWeight.Normal,
+    bodyLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.H4,
+        fontFamily = AveriaSans
+    ),
+    bodyMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
         fontSize = fontSizes.Body1,
         fontFamily = AveriaSans
     ),
-    body2 = TextStyle(
-        fontWeight = FontWeight.Normal,
+    bodySmall = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.Body1,
+        fontFamily = AveriaSans
+    ),
+    labelLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
         fontSize = fontSizes.Body2,
         fontFamily = AveriaSans
     ),
-    subtitle1 = TextStyle(
-        fontWeight = FontWeight.Light,
-        color = SecondaryTextColor,
-        fontSize = fontSizes.Subtitle1FontSize,
+    labelMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.Body2,
         fontFamily = AveriaSans
     ),
-    subtitle2 = TextStyle(
-        fontWeight = FontWeight.Light,
-        color = SecondaryTextColor,
-        fontSize = fontSizes.Subtitle2FontSize,
+    labelSmall = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = fontSizes.Body2,
         fontFamily = AveriaSans
     )
+
 )
 
-internal val LocalTypography = staticCompositionLocalOf<FontSizes> {
-    error("You must provide a typography")
-}
-
-val LocalFontAwesome = staticCompositionLocalOf<FontFamily> {
-    error("You must provide it first")
-}
+val LocalFontAwesome = staticCompositionLocalOf<FontFamily> {  error("You must provide it first") }

@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,8 +36,8 @@ fun CalendarItem(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = calendar.name,
-                style = MaterialTheme.typography.body1
-                    .merge(TextStyle(color = MaterialTheme.colors.onSurface)),
+                style = MaterialTheme.typography.bodyMedium
+                    .merge(TextStyle(color = MaterialTheme.colorScheme.onSurface)),
                 maxLines = SingleLine,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding( RemembrallTheme.dimens.Medium).weight(

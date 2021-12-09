@@ -2,8 +2,8 @@ package com.oscarg798.remembrall.profile.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
