@@ -76,8 +76,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.5.30"
-        kotlinCompilerExtensionVersion '1.0.3'
+        kotlinCompilerVersion "1.6.0"
+        kotlinCompilerExtensionVersion '1.1.0-rc01'
     }
 
     repositories {
@@ -132,7 +132,7 @@ dependencies {
 
     implementation libs.compose.dialogs
 
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.30'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.0'
     implementation libs.android.gms.auth
     implementation platform(libs.firebase.boom)
 

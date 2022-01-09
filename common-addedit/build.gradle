@@ -5,7 +5,7 @@ dependencies {
 
     api libs.android.gms.auth
 
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.30'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.0'
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-ui')
 
