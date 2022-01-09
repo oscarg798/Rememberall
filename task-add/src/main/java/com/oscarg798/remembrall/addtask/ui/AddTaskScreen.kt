@@ -35,6 +35,8 @@ fun NavGraphBuilder.addTaskScreen() =
                 RemembrallTopBar(
                     title = {
                         RemembrallTopBarTitle(stringResource(R.string.add_task_screen_title))
+                    }, backButtonAction = {
+                        navController.popBackStack()
                     }
                 )
             }

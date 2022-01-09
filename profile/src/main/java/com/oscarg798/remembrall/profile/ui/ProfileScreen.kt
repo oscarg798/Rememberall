@@ -1,10 +1,8 @@
 package com.oscarg798.remembrall.profile.ui
 
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -35,7 +33,7 @@ fun NavGraphBuilder.profileScreen() =
 
         LaunchedEffect(events) {
             val event = events ?: return@LaunchedEffect
-            if(event is ProfileViewModel.Event.NavigateToLogin){
+            if (event is ProfileViewModel.Event.NavigateToLogin) {
                 Router.Login.navigate(navController = navController)
             }
         }
@@ -45,6 +43,8 @@ fun NavGraphBuilder.profileScreen() =
                 RemembrallTopBar(
                     title = {
                         RemembrallTopBarTitle(stringResource(R.string.profile_title))
+                    }, backButtonAction = {
+                        navController.popBackStack()
                     }
                 )
             }

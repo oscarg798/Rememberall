@@ -98,6 +98,9 @@ fun NavGraphBuilder.checklistDetailScreen() = composable(
                         modifier = Modifier.size(30.dp)
                     )
                 }
+            },
+            backButtonAction = {
+                navController.popBackStack()
             }
         )
     }) {

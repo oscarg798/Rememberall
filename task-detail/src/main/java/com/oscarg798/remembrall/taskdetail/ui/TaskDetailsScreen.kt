@@ -74,6 +74,8 @@ private fun TaskDetail(
             RemembrallTopBar(
                 title = {
                     RemembrallTopBarTitle(stringResource(R.string.task_detail_title))
+                }, backButtonAction = {
+                    navController.popBackStack()
                 }
             )
         }

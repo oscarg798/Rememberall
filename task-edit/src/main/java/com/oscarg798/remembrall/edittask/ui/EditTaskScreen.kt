@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
@@ -63,6 +62,9 @@ private fun EditTask(
             RemembrallTopBar(
                 title = {
                     RemembrallTopBarTitle("Edit")
+                },
+                backButtonAction = {
+                    navController.popBackStack()
                 }
             )
         }

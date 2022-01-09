@@ -48,7 +48,6 @@ import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBarTitle
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.listItems
-import org.burnoutcrew.reorderable.ItemPosition
 
 fun NavGraphBuilder.addCheckListScreen() = composable(
     route = Router.AddChecklist.route,
@@ -88,6 +87,9 @@ fun NavGraphBuilder.addCheckListScreen() = composable(
             RemembrallTopBar(
                 title = {
                     RemembrallTopBarTitle(stringResource(id = R.string.add_checklist_title))
+                },
+                backButtonAction = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -167,7 +169,7 @@ fun NavGraphBuilder.addCheckListScreen() = composable(
                     onRemoveClicked = {
                         viewModel.onCheckListRemoved(it.id)
                     },
-                    onMove = {fromPos, toPos ->
+                    onMove = { fromPos, toPos ->
                         viewModel.reorderCheckList(fromPos.index, toPos.index)
                     }
                 )

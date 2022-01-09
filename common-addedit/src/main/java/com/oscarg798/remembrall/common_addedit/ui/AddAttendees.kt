@@ -76,6 +76,7 @@ fun AddAttendees(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Card(
+                        backgroundColor = MaterialTheme.colorScheme.surface,
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(.8f)
