@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common_addedit.R
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
@@ -114,15 +115,27 @@ private fun ShowAttendeesDialog(onAttendeeAdded: (String) -> Unit, state: Materi
         buttons = {
             negativeButton(stringResource(R.string.negative_button_text))
             positiveButton(stringResource(R.string.positive_button_text))
-        }
+        },
+        backgroundColor = MaterialTheme.colorScheme.background
     ) {
-        input(
-            label = stringResource(R.string.add_attendees_input_label),
-            hint = stringResource(R.string.add_attendees_input_hint)
-        ) { attendee ->
-            onAttendeeAdded(attendee)
-            state.hide()
+        Column {
+            Text(
+                text = "Add an Attendee by adding its email address",
+                style = MaterialTheme.typography.bodyMedium.merge(
+                    TextStyle(MaterialTheme.colorScheme.onBackground)
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(RemembrallTheme.dimens.Medium)
+            )
+            input(
+                label = stringResource(R.string.add_attendees_input_label),
+                hint = stringResource(R.string.add_attendees_input_hint)
+            ) { attendee ->
+                onAttendeeAdded(attendee)
+                state.hide()
+            }
         }
+
     }
 }
 

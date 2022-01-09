@@ -163,10 +163,10 @@ arrow-core = "io.arrow-kt:arrow-core:0.13.2"
 
 workManager-ktx = "androidx.work:work-runtime-ktx:2.7.0-rc01"
 
-compose-dialogs = "io.github.vanpra.compose-material-dialogs:datetime:0.6.1"
+compose-dialogs = "io.github.vanpra.compose-material-dialogs:datetime:0.6.2"
 
-accompanist-pager = "com.google.accompanist:accompanist-pager:0.19.0"
-accompanist-pagerIndicator = "com.google.accompanist:accompanist-pager-indicators:0.19.0"
-accompanist-insets = "com.google.accompanist:accompanist-insets:0.19.0"
+accompanist-pager = "com.google.accompanist:accompanist-pager:0.22.0-rc"
+accompanist-pagerIndicator = "com.google.accompanist:accompanist-pager-indicators:0.22.0-rc"
+accompanist-insets = "com.google.accompanist:accompanist-insets:0.22.0-rc"
 
 reorderable = "org.burnoutcrew.composereorderable:reorderable:0.7.0"
