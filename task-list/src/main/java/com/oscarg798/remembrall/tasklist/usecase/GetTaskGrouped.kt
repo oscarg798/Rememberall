@@ -5,6 +5,7 @@ import com.oscarg798.remembrall.common.model.Task
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import javax.inject.Inject
 import java.util.SortedMap
+import java.util.TreeMap
 
 class GetTaskGrouped @Inject constructor(
     private val getTaskUseCase: GetTaskUseCase,
@@ -25,7 +26,8 @@ class GetTaskGrouped @Inject constructor(
 
             val groupLabel = TaskGroup.MonthGroup(
                 name = taskDate.month,
-                value = monthPositionMapper.fromMonthName(taskDate.month), year = taskDate.year
+                value = dueDateFormatter.getMonthNumber(taskDate.month),
+                year = taskDate.year
             )
             val group = groups[groupLabel]
                 ?: TaskGroup(taskDate, mapOf())
@@ -49,13 +51,9 @@ class GetTaskGrouped @Inject constructor(
             }
         }
 
-        val result =  groups.toSortedMap() { first, second ->
+        return  groups.toSortedMap() { first, second ->
             convertMonthStringToIntPosition(first).compareTo(convertMonthStringToIntPosition(second))
         }
-
-        result
-
-        return result
     }
 
     private fun sortBasedOnDay(currentItems: MutableMap<TaskGroup.DayGroup, Collection<Task>>) {
@@ -67,14 +65,13 @@ class GetTaskGrouped @Inject constructor(
     private fun convertMonthStringToIntPosition(
         monthGroup: TaskGroup.MonthGroup,
     ): Int {
-        return "${monthGroup.year}${
+        return "${
             if (monthGroup.value.length == 1) {
                 "0${monthGroup.value}"
             } else {
                 monthGroup.value
             }
-
-        }".toInt()
+        }${monthGroup.year}".toInt()
     }
 }
 

@@ -13,14 +13,16 @@ import java.util.Locale
 @Reusable
 class DueDateFormatter @Inject constructor() {
 
+    private val locale = Locale.getDefault()
     private val calendarTaskDateFormatter =
-        SimpleDateFormat(CalendarDatePattern, Locale.getDefault())
-    private val dateTimeFormatter = DateTimeFormatter.ofPattern(DatePattern, Locale.getDefault())
-    private val dateFormatter = SimpleDateFormat(DatePattern, Locale.getDefault())
-    private val monthDateFormatter = SimpleDateFormat(MonthPattern, Locale.getDefault())
-    private val yearDateFormatter = SimpleDateFormat(YearPattern, Locale.getDefault())
-    private val dayDateFormatter = SimpleDateFormat(DayPattern, Locale.getDefault())
-    private val dayNameFormatter = SimpleDateFormat(DayNamePattern, Locale.getDefault())
+        SimpleDateFormat(CalendarDatePattern, locale)
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern(DatePattern, locale)
+    private val dateFormatter = SimpleDateFormat(DatePattern, locale)
+    private val monthDateFormatter = SimpleDateFormat(MonthPattern, locale)
+    private val monthNumberFormatter = SimpleDateFormat(MonthNumberPattern, locale);
+    private val yearDateFormatter = SimpleDateFormat(YearPattern, locale)
+    private val dayDateFormatter = SimpleDateFormat(DayPattern, locale)
+    private val dayNameFormatter = SimpleDateFormat(DayNamePattern, locale)
     private val dueDateCalendar = Calendar.getInstance()
 
     fun toDisplayableDate(dueDate: Long): String {
@@ -59,24 +61,29 @@ class DueDateFormatter @Inject constructor() {
         return calendarTaskDateFormatter.format(dueDateCalendar.time)
     }
 
-    fun getYearFromDueDate(dueDate: Long): String{
+    fun getYearFromDueDate(dueDate: Long): String {
         dueDateCalendar.time = Date(dueDate)
-        return yearDateFormatter.format(dueDateCalendar.time )
+        return yearDateFormatter.format(dueDateCalendar.time)
     }
 
-    fun getMonthFromDueDate(dueDate: Long): String{
+    fun getMonthFromDueDate(dueDate: Long): String {
         dueDateCalendar.time = Date(dueDate)
-        return monthDateFormatter.format(dueDateCalendar.time )
+        return monthDateFormatter.format(dueDateCalendar.time)
     }
 
-    fun getDayFromDueDate(dueDate: Long): String{
+    fun getDayFromDueDate(dueDate: Long): String {
         dueDateCalendar.time = Date(dueDate)
-        return dayDateFormatter.format(dueDateCalendar.time )
+        return dayDateFormatter.format(dueDateCalendar.time)
     }
 
-    fun getDayNameFromDueDate(dueDate: Long): String{
+    fun getDayNameFromDueDate(dueDate: Long): String {
         dueDateCalendar.time = Date(dueDate)
-        return dayNameFormatter.format(dueDateCalendar.time )
+        return dayNameFormatter.format(dueDateCalendar.time)
+    }
+
+    fun getMonthNumber(monthName: String): String {
+        dueDateCalendar.time = monthDateFormatter.parse(monthName)!!
+        return monthNumberFormatter.format(dueDateCalendar.time)
     }
 }
 
@@ -84,5 +91,6 @@ private const val DayNamePattern = "EEE"
 private const val DayPattern = "dd"
 private const val YearPattern = "yyyy"
 private const val MonthPattern = "MMMM"
+private const val MonthNumberPattern = "MM"
 private const val CalendarDatePattern = "yyyy-MM-dd'T'HH:mm:ssXXX"
 private const val DatePattern = "EEE, MMM dd yyyy HH:mm"
