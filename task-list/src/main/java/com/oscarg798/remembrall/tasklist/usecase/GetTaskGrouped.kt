@@ -49,9 +49,13 @@ class GetTaskGrouped @Inject constructor(
             }
         }
 
-        return groups.toSortedMap { first, second ->
+        val result =  groups.toSortedMap() { first, second ->
             convertMonthStringToIntPosition(first).compareTo(convertMonthStringToIntPosition(second))
         }
+
+        result
+
+        return result
     }
 
     private fun sortBasedOnDay(currentItems: MutableMap<TaskGroup.DayGroup, Collection<Task>>) {

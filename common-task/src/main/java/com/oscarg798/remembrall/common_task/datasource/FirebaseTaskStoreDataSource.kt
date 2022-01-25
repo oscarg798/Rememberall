@@ -1,11 +1,16 @@
 package com.oscarg798.remembrall.common_task.datasource
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
+import com.oscarg798.remembrall.common.toSuspend
 import com.oscarg798.remembrall.common_task.TaskDataSourceException
 import com.oscarg798.remembrall.common_task.TaskNotFoundException
 import com.oscarg798.remembrall.common_task.model.TaskDto
-import com.oscarg798.remembrall.common.toSuspend
 import javax.inject.Inject
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 class FirebaseTaskStoreDataSource @Inject constructor(private val taskCollection: CollectionReference) :
     TaskDataSource {
@@ -31,12 +36,24 @@ class FirebaseTaskStoreDataSource @Inject constructor(private val taskCollection
     }
 
     override suspend fun getTasks(user: String): Collection<TaskDto> {
-        val taskResult = taskCollection.whereEqualTo(UserColumnName, user).get().toSuspend {
-            TaskDataSourceException.UnableToLoadTasks(it)
-        }
+        val tasks = mutableListOf<Task<QuerySnapshot>>()
+        tasks.add(getQuerySnapshot(taskCollection.whereEqualTo(UserColumnName, user)))
+        tasks.add(getQuerySnapshot(taskCollection.whereArrayContainsAny(AttendeesColumnName, listOf(user))))
 
-        return taskResult.result.documents.map {
-            TaskDto(it.id, it.data!!)
+        val results = tasks
+
+        return results.map {
+            it.result.documents
+        }.map {
+            it.map { document ->
+                TaskDto(document.id, document.data!!)
+            }
+        }.flatten()
+    }
+
+    private suspend fun getQuerySnapshot(query: Query): Task<QuerySnapshot> = coroutineScope {
+        query.get().toSuspend {
+            TaskDataSourceException.UnableToLoadTasks(it)
         }
     }
 
@@ -58,4 +75,5 @@ class FirebaseTaskStoreDataSource @Inject constructor(private val taskCollection
     }
 }
 
+private const val AttendeesColumnName = "attendees"
 private const val UserColumnName = "user"

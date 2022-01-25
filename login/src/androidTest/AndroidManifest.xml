@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sharedUserId="com.oscarg798.remembrall.login.uid"
+    package="com.oscarg798.remembrall.login">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application>
+        <activity
+            android:name="com.oscarg798.remembrall.login.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar.Bridge">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

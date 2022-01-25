@@ -21,14 +21,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oscarg798.remembrall.common.extensions.requireArguments
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
+import com.oscarg798.remembrall.common_task.ui.TaskBody
+import com.oscarg798.remembrall.common_task.ui.TaskCard
+import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 import com.oscarg798.remembrall.taskdetail.R
 import com.oscarg798.remembrall.taskdetail.TaskDetailsViewModel
 import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui_common.navigation.Router
 import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
-import com.oscarg798.remembrall.ui_common.ui.TaskBody
-import com.oscarg798.remembrall.ui_common.ui.TaskCard
-import com.oscarg798.remembrall.ui_common.ui.TaskCardOptions
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
