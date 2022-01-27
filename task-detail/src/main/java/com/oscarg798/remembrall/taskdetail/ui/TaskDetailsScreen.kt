@@ -106,8 +106,10 @@ private fun TaskDetail(
                         descriptionMaxLines = DescriptionMaxLines
                     )
 
-                    RemembrallButton(stringResource(R.string.EditButtonText)) {
-                        viewModel.onEditClicked()
+                    if (task.owned) {
+                        RemembrallButton(stringResource(R.string.EditButtonText)) {
+                            viewModel.onEditClicked()
+                        }
                     }
                 }
             }

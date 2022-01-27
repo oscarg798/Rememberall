@@ -9,8 +9,7 @@ import java.util.TreeMap
 
 class GetTaskGrouped @Inject constructor(
     private val getTaskUseCase: GetTaskUseCase,
-    private val dueDateFormatter: DueDateFormatter,
-    private val monthPositionMapper: MonthPositionMapper
+    private val dueDateFormatter: DueDateFormatter
 ) {
 
     suspend operator fun invoke(): SortedMap<TaskGroup.MonthGroup, TaskGroup> {

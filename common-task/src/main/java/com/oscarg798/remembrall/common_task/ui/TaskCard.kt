@@ -88,14 +88,14 @@ fun TaskBody(
             modifier = Modifier
                 .padding(top = RemembrallTheme.dimens.Small)
                 .weight(
-                    when (taskCardOptions) {
-                        is TaskCardOptions.Present -> .8f
+                    when {
+                        taskCardOptions is TaskCardOptions.Present && task.owned -> .8f
                         else -> 1f
                     }
                 )
         )
 
-        if (taskCardOptions is TaskCardOptions.Present) {
+        if (taskCardOptions is TaskCardOptions.Present && task.owned) {
             Box(
                 modifier = Modifier.weight(.2f),
                 contentAlignment = Alignment.CenterEnd
@@ -127,7 +127,10 @@ fun TaskBody(
                                 showingDropdown.value = false
                             }
                         ) {
-                            Text(stringResource(it.title), style = TextStyle(color = MaterialTheme.colorScheme.onBackground))
+                            Text(
+                                stringResource(it.title),
+                                style = TextStyle(color = MaterialTheme.colorScheme.onBackground)
+                            )
                         }
                     }
                 }
@@ -141,7 +144,24 @@ fun TaskBody(
         Attendees(attendees = task.attendees!!)
     }
 
-    TaskDueDate(task = task)
+    Row(Modifier.fillMaxWidth()) {
+        TaskDueDate(
+            task = task,
+            Modifier
+                .padding(top = RemembrallTheme.dimens.ExtraSmall)
+                .weight(if (task.owned) 1f else .8f)
+        )
+
+        if (!task.owned) {
+            Image(
+                painter = painterResource(id = com.oscarg798.remembrall.common_task.R.drawable.ic_attendee),
+                contentDescription = "attendee indicator",
+                modifier = Modifier
+                    .size(20.dp)
+                    .weight(.2f)
+            )
+        }
+    }
 }
 
 @Composable
@@ -214,11 +234,9 @@ private fun TaskDescription(task: DisplayableTask, maxLines: Int = TaskDescripti
 }
 
 @Composable
-private fun TaskDueDate(task: DisplayableTask) {
+private fun TaskDueDate(task: DisplayableTask, modifier: Modifier) {
     Row(
-        modifier = Modifier
-            .padding(top = RemembrallTheme.dimens.ExtraSmall)
-            .fillMaxWidth(),
+        modifier = modifier,
         horizontalArrangement = Arrangement.Start
     ) {
         Image(
