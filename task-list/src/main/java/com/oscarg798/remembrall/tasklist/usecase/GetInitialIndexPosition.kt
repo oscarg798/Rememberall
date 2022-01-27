@@ -1,18 +1,23 @@
 package com.oscarg798.remembrall.tasklist.usecase
 
+import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import javax.inject.Inject
 import java.util.Calendar
 
-class GetInitialIndexPosition @Inject constructor(private val monthPositionMapper: MonthPositionMapper) {
+class GetInitialIndexPosition @Inject constructor(private val dueDateFormatter: DueDateFormatter) {
 
     operator fun invoke(groupedTask: Map<TaskGroup.MonthGroup, TaskGroup>): Int {
         val currentDate = Calendar.getInstance()
+        val currentDateInMillis = currentDate.timeInMillis
         val currentMonthValue = currentDate.get(Calendar.MONTH)
         val currentDay = currentDate.get(Calendar.DAY_OF_MONTH)
+
+        val currentMonthName = dueDateFormatter.getMonthFromDueDate(currentDateInMillis)
+
         val currentMonthGroup = TaskGroup.MonthGroup(
-            name = monthPositionMapper.fromMonthValue(currentMonthValue),
-            value = currentMonthValue.toString(),
+            name = currentMonthName,
+            value = dueDateFormatter.getMonthNumber(currentMonthName),
             year = currentDate.get(Calendar.YEAR).toString()
         )
         var index = -1
@@ -29,7 +34,7 @@ class GetInitialIndexPosition @Inject constructor(private val monthPositionMappe
             index += if (it.key.value != currentMonthGroup.value) {
                 it.value.itemsByDay.values.getIndexFromSize()
             } else {
-                it.value.itemsByDay.filter { dayGroupEntry->
+                it.value.itemsByDay.filter { dayGroupEntry ->
                     dayGroupEntry.key.dayNumber.toInt() < currentDay
                 }.values.getIndexFromSize()
             }

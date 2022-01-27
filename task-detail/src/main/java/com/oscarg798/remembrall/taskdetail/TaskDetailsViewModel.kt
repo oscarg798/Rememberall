@@ -8,6 +8,7 @@ import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_gettask.usecase.GetTaskById
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
+import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -43,7 +44,10 @@ class TaskDetailsViewModel @AssistedInject constructor(
             update { it.copy(loading = true) }
 
             val task = withContext(io) {
-                DisplayableTask(task = getTaskById.execute(taskId), dueDateFormatter = dueDateFormatter)
+                DisplayableTask(
+                    task = getTaskById.execute(taskId),
+                    dueDateFormatter = dueDateFormatter
+                )
             }
             update {
                 it.copy(loading = false, task = task)

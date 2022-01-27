@@ -5,16 +5,17 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oscarg798.remembrall.common.model.DisplayableTask
-import com.oscarg798.remembrall.ui_common.ui.TaskBody
-import com.oscarg798.remembrall.ui_common.ui.TaskCard
-import com.oscarg798.remembrall.ui_common.ui.TaskCardOptions
+import com.oscarg798.remembrall.common_task.ui.TaskBody
+import com.oscarg798.remembrall.common_task.ui.TaskCard
+import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 
 @Composable
 internal fun TaskItem(
     task: DisplayableTask,
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
-    onRemoveClicked: (DisplayableTask) -> Unit
+    options: List<TaskCardOptions.Option>,
+    onOptionClicked: (DisplayableTask, TaskCardOptions.Option) -> Unit
 ) {
 
     TaskCard(
@@ -28,7 +29,10 @@ internal fun TaskItem(
     ) {
         TaskBody(
             task = task,
-            taskCardOptions = TaskCardOptions.Present(onRemoveClicked = onRemoveClicked)
+            taskCardOptions = TaskCardOptions.Present(
+                options
+            ),
+            onOptionClicked =  onOptionClicked
         )
     }
 }

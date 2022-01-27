@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.model.DisplayableTask
+import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 import com.oscarg798.remembrall.tasklist.TaskListViewModel
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
@@ -35,9 +36,10 @@ internal fun TaskList(
     tasks: Map<TaskGroup.MonthGroup, DisplayableTasksGroup>,
     loading: Boolean,
     initialIndex: Int = -1,
+    options: List<TaskCardOptions.Option>,
     onAddButtonClicked: () -> Unit,
     onClick: (String) -> Unit,
-    onRemove: (DisplayableTask) -> Unit,
+    onOptionClicked: (DisplayableTask, TaskCardOptions.Option) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -95,9 +97,8 @@ internal fun TaskList(
                                         onClick = { taskId ->
                                             onClick(taskId)
                                         },
-                                        onRemoveClicked = { task ->
-                                            onRemove(task)
-                                        },
+                                        options = options,
+                                        onOptionClicked = onOptionClicked,
                                         modifier = Modifier.padding(
                                             vertical = RemembrallTheme.dimens.Medium
                                         )

@@ -6,6 +6,7 @@ import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
+import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import com.oscarg798.remembrall.tasklist.usecase.GetInitialIndexPosition
@@ -72,23 +73,34 @@ class TaskListViewModel @Inject constructor(
     }
 
 
-    fun removeTask(task: DisplayableTask) = launch {
-        withContext(io) {
-            removeTaskUseCase.execute(task.id)
-        }
+    fun onOptionClicked(task: DisplayableTask, option: TaskCardOptions.Option) {
+        when (option) {
+            TaskCardOptions.Option.Edit -> _event.tryEmit(Event.NavigateToEdit(task.id))
+            TaskCardOptions.Option.Remove -> launch {
+                withContext(io) {
+                    removeTaskUseCase.execute(task.id)
+                }
 
-        getTasks()
+                getTasks()
+            }
+        }
     }
 
     data class ViewState(
         val loading: Boolean = true,
         val tasks: Map<TaskGroup.MonthGroup, DisplayableTasksGroup> = mapOf(),
         val initialIndex: Int = -1,
+        val options: List<TaskCardOptions.Option> = listOf(
+            TaskCardOptions.Option.Edit,
+            TaskCardOptions.Option.Remove
+        ),
+        @Deprecated("Errors should be model as events instead of state property")
         val error: Exception? = null
     )
 
     sealed class Event {
         object OpenProfile : Event()
         object ShowAddTaskForm : Event()
+        data class NavigateToEdit(val taskId: String): Event()
     }
 }

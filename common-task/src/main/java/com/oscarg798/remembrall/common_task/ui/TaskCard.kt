@@ -1,5 +1,6 @@
-package com.oscarg798.remembrall.ui_common.ui
+package com.oscarg798.remembrall.common_task.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,14 +22,12 @@ import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,7 +44,6 @@ import com.oscarg798.remembrall.ui_common.extensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
 
-//TODO: Move this to ui-task
 @Composable
 fun TaskCard(
     task: DisplayableTask,
@@ -76,7 +74,8 @@ fun TaskBody(
     task: DisplayableTask,
     descriptionMaxLines: Int = TaskDescriptionMaxLines,
     showAttendees: Boolean = false,
-    taskCardOptions: TaskCardOptions
+    taskCardOptions: TaskCardOptions,
+    onOptionClicked: (DisplayableTask, TaskCardOptions.Option) -> Unit = { _, _ -> }
 ) {
 
     val showingDropdown = remember { mutableStateOf(false) }
@@ -89,14 +88,14 @@ fun TaskBody(
             modifier = Modifier
                 .padding(top = RemembrallTheme.dimens.Small)
                 .weight(
-                    when (taskCardOptions) {
-                        is TaskCardOptions.Present -> .8f
+                    when {
+                        taskCardOptions is TaskCardOptions.Present && task.owned -> .8f
                         else -> 1f
                     }
                 )
         )
 
-        if (taskCardOptions is TaskCardOptions.Present) {
+        if (taskCardOptions is TaskCardOptions.Present && task.owned) {
             Box(
                 modifier = Modifier.weight(.2f),
                 contentAlignment = Alignment.CenterEnd
@@ -116,16 +115,23 @@ fun TaskBody(
                 )
 
                 DropdownMenu(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     expanded = showingDropdown.value,
                     onDismissRequest = { showingDropdown.value = false }
                 ) {
-                    DropdownMenuItem(
-                        onClick = {
-                            taskCardOptions.onRemoveClicked(task)
-                            showingDropdown.value = false
+                    taskCardOptions.options.map {
+                        DropdownMenuItem(
+                            modifier = Modifier.background(MaterialTheme.colorScheme.background),
+                            onClick = {
+                                onOptionClicked(task, it)
+                                showingDropdown.value = false
+                            }
+                        ) {
+                            Text(
+                                stringResource(it.title),
+                                style = TextStyle(color = MaterialTheme.colorScheme.onBackground)
+                            )
                         }
-                    ) {
-                        Text(stringResource(R.string.remove_task_label))
                     }
                 }
             }
@@ -138,7 +144,24 @@ fun TaskBody(
         Attendees(attendees = task.attendees!!)
     }
 
-    TaskDueDate(task = task)
+    Row(Modifier.fillMaxWidth()) {
+        TaskDueDate(
+            task = task,
+            Modifier
+                .padding(top = RemembrallTheme.dimens.ExtraSmall)
+                .weight(if (task.owned) 1f else .8f)
+        )
+
+        if (!task.owned) {
+            Image(
+                painter = painterResource(id = com.oscarg798.remembrall.common_task.R.drawable.ic_attendee),
+                contentDescription = "attendee indicator",
+                modifier = Modifier
+                    .size(20.dp)
+                    .weight(.2f)
+            )
+        }
+    }
 }
 
 @Composable
@@ -211,11 +234,9 @@ private fun TaskDescription(task: DisplayableTask, maxLines: Int = TaskDescripti
 }
 
 @Composable
-private fun TaskDueDate(task: DisplayableTask) {
+private fun TaskDueDate(task: DisplayableTask, modifier: Modifier) {
     Row(
-        modifier = Modifier
-            .padding(top = RemembrallTheme.dimens.ExtraSmall)
-            .fillMaxWidth(),
+        modifier = modifier,
         horizontalArrangement = Arrangement.Start
     ) {
         Image(
@@ -236,10 +257,19 @@ private fun TaskDueDate(task: DisplayableTask) {
     }
 }
 
+
 sealed interface TaskCardOptions {
 
     object None : TaskCardOptions
-    class Present(val onRemoveClicked: (DisplayableTask) -> Unit) : TaskCardOptions
+    data class Present(val options: List<Option>) : TaskCardOptions
+
+    sealed class Option(
+        @StringRes
+        val title: Int
+    ) {
+        object Remove : Option(R.string.remove_task_label)
+        object Edit : Option(R.string.edit_task_label)
+    }
 }
 
 private const val TaskDescriptionMaxLines = 2

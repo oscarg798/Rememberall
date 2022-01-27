@@ -1,6 +1,45 @@
 apply from: "../common.gradle"
+apply plugin: 'com.facebook.testing.screenshot'
+
+android {
+
+    defaultConfig {
+        testInstrumentationRunner "com.oscarg798.remembrall.login.CustomTestRunner"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
+}
+
+screenshots {
+    referenceDir = "$projectDir/build/screenshotsDebugAndroidTest/"
+
+}
+
+project.afterEvaluate {
+    project.tasks.connectedDebugAndroidTest.finalizedBy project.tasks.runDebugAndroidTestScreenshotTest
+}
+
 
 dependencies {
+
+    implementation libs.material
+    implementation libs.androidx.coreKtx
+    implementation libs.androidx.appcompat
+    implementation libs.androix.activityx
+    implementation libs.material
+
+    implementation libs.firebase.auth
+
+    androidTestImplementation libs.androidx.test.junit
+    androidTestImplementation libs.androidx.test.core
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.mockk.android
+    androidTestImplementation libs.hilt.androidTesting
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.40.5"
 
     implementation project(path: ':common-ui')
     implementation project(path: ':common_calendar')

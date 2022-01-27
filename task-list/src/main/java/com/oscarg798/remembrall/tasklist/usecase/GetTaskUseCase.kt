@@ -13,8 +13,7 @@ class GetTaskUseCase @Inject constructor(
 ) {
 
     suspend fun execute(): Collection<Task> =
-        taskRepository.getTasks(getSignedInUserUseCase.execute().email)
-            .filter { !it.completed }
+        taskRepository.getTasks(getSignedInUserUseCase.execute().email).filter { !it.completed }
             .sortedWith { first, second ->
                 first.priority.compareTo(second.priority)
             }

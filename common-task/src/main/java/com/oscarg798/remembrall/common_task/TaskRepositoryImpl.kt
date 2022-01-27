@@ -19,6 +19,7 @@ class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepos
     override suspend fun addTask(user: String, addTaskParam: TaskRepository.AddTaskParam): Task {
         val task = TaskDto(
             id = addTaskParam.id,
+            owner= user,
             name = addTaskParam.name,
             description = addTaskParam.description,
             priority = addTaskParam.priority,
@@ -29,7 +30,7 @@ class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepos
 
         taskDataSource.addTask(user, task)
 
-        return task.toTask()
+        return task.toTask(true)
     }
 
     override suspend fun update(task: Task) {
@@ -41,7 +42,9 @@ class TaskRepositoryImpl(private val taskDataSource: TaskDataSource) : TaskRepos
     }
 
     override suspend fun getTasks(user: String): Collection<Task> =
-        taskDataSource.getTasks(user).map { it.toTask() }
+        taskDataSource.getTasks(user).map { it.toTask(
+            it.owner == user
+        ) }
 
     override suspend fun getTask(id: String): Task = taskDataSource.getTask(id).toTask()
 

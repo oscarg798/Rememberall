@@ -4,6 +4,7 @@ import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 
 data class DisplayableTask(
     val id: String,
+    val owned: Boolean,
     val name: String,
     val description: String?,
     val priority: TaskPriority,
@@ -15,6 +16,7 @@ data class DisplayableTask(
 
     constructor(task: Task, dueDateFormatter: DueDateFormatter) : this(
         id = task.id,
+        owned = task.owned,
         name = task.name,
         description = task.description,
         priority = task.priority,

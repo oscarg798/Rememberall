@@ -1,8 +1,8 @@
-package com.oscarg798.remembrall.login
+package com.oscarg798.remembrall
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.*
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -12,11 +12,11 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class LoginActivityTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.oscarg798.remembrall.login.test", appContext.packageName)
+        assertEquals("com.oscarg798.remembrall", appContext.packageName)
     }
 }

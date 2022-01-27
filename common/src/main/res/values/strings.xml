@@ -12,6 +12,7 @@
     <string name="done_label">Done</string>
     <string name="generic_error">Something went wrong try again</string>
     <string name="remove_task_label">Remove</string>
+    <string name="edit_task_label">Edit</string>
     <string name="profile_title">Profile</string>
     <string name="login_title">Login</string>
     <string name="profile_calendar_label">Calendar for task creation</string>

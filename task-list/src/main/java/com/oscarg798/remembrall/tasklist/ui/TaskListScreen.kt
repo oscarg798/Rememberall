@@ -1,8 +1,6 @@
 package com.oscarg798.remembrall.tasklist.ui
 
 import android.os.Bundle
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,7 +10,6 @@ import androidx.navigation.NavBackStackEntry
 import com.oscarg798.remembrall.tasklist.TaskListViewModel
 import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui_common.navigation.Router
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun TaskListScreen(
@@ -25,12 +22,13 @@ fun TaskListScreen(
     val navController = LocalNavControllerProvider.current
 
     when {
-        state.tasks.isEmpty() && !state.loading -> EmptyTaskList()
+        state.tasks.isEmpty() && !state.loading -> EmptyTaskList { viewModel.onAddClicked() }
         else -> TaskList(
             viewModel,
             tasks = state.tasks,
             loading = state.loading,
             initialIndex = state.initialIndex,
+            options = state.options,
             onClick = {
                 Router.TaskDetail.navigate(
                     navController,
@@ -38,16 +36,21 @@ fun TaskListScreen(
                         putString(Router.TaskDetail.TaskIdArgument, it)
                     }
                 )
-            }, onAddButtonClicked = { viewModel.onAddClicked() }) {
-            viewModel.removeTask(it)
+            }, onAddButtonClicked = { viewModel.onAddClicked() }) { task, option ->
+            viewModel.onOptionClicked(task, option)
         }
     }
 
-    LaunchedEffect(key1 = events){
+    LaunchedEffect(key1 = events) {
         val event = events ?: return@LaunchedEffect
         when (event) {
             is TaskListViewModel.Event.ShowAddTaskForm -> Router.AddTask.navigate(navController)
             is TaskListViewModel.Event.OpenProfile -> Router.Profile.navigate(navController)
+            is TaskListViewModel.Event.NavigateToEdit -> Router.Edit.navigate(
+                navController,
+                Bundle().apply {
+                    putString(Router.Edit.TaskIdArgument, event.taskId)
+                })
         }
     }
 
