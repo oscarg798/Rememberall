@@ -28,9 +28,11 @@
             <option value="$PROJECT_DIR$/coroutinesutils" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/login" />
+            <option value="$PROJECT_DIR$/mobiusutils" />
             <option value="$PROJECT_DIR$/oauth" />
             <option value="$PROJECT_DIR$/oauthimpl" />
             <option value="$PROJECT_DIR$/profile" />
+            <option value="$PROJECT_DIR$/rxutils" />
             <option value="$PROJECT_DIR$/sessionImpl" />
             <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/task-add" />

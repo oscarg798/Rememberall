@@ -1,17 +1,10 @@
 package com.oscarg798.remembrall.login.ui
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.IntentSender.SendIntentException
 import androidx.activity.compose.BackHandler
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,15 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.google.android.gms.auth.api.identity.BeginSignInResult
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.oscarg798.remembrall.login.LoginViewModel
 import com.oscarg798.remembrall.login.R
 import com.oscarg798.remembrall.login.domain.Effect
@@ -39,8 +26,6 @@ import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBarTitle
-import com.oscarg798.remembrall.ui_common.ui.theming.registerActivityResultCallback
-
 
 fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
     composable(

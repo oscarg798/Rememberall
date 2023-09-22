@@ -16,21 +16,14 @@ internal sealed interface Event {
     object OnBackPresses : Event
     object OnSignedIn : Event
     data class OnLoginError(val error: Exception) : Event
-    data class OnExternalSignInOptionsFound(
-        val options: GoogleSignInOptions,
-        val signInRequest: BeginSignInRequest
+    data class OnExternalSignInFinished(
+        val result: ExternalAuthProvider.SignInRequestResult
     ) : Event
-
-    data class OnExternalSignInFinished(val result: ExternalAuthProvider.SignInRequestResult) : Event
 }
 
 internal sealed interface Effect {
-    object GetExternalSigningCredentials : Effect
     data class FinishLogin(val idToken: String) : Effect
-    data class RequestExternalAuth(
-        val options: GoogleSignInOptions,
-        val signInRequest: BeginSignInRequest
-    ) : Effect
+    object RequestExternalAuth : Effect
     sealed interface UIEffect : Effect {
         object NavigateToHome : UIEffect
         object NavigateBack : UIEffect

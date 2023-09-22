@@ -26,11 +26,12 @@ internal class OAuthClientImpl @Inject constructor(
     override suspend fun auth(authCode: String): OAuthResponse {
         val currentResponse = getCurrentOAuthResponse()
 
-        if (currentResponse != null && !isTokenStillValid(currentResponse)) {
+        if (currentResponse != null && isTokenStillValid(currentResponse) &&
+                currentResponse.authCode == authCode) {
             return currentResponse
         }
 
-        if (currentResponse?.refreshToken != null) {
+        if (currentResponse?.refreshToken != null && currentResponse.authCode == authCode) {
             return refreshCurrentToken(currentResponse)
         }
 
@@ -48,7 +49,8 @@ internal class OAuthClientImpl @Inject constructor(
             expiresIn = response.expiresIn,
             refreshToken = response.refreshToken,
             idToken = response.idToken,
-            issuedOn = dateProvider.provideCurrentTimeInMillis()
+            issuedOn = dateProvider.provideCurrentTimeInMillis(),
+            authCode = authCode
         )
 
         saveOAuthResponse(oAuthResponse)

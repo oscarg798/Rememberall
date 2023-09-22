@@ -2,6 +2,7 @@ package com.oscarg798.remembrall.common_auth.network.restclient
 
 import android.content.Context
 import arrow.core.Either
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.RuntimeExecutionException
@@ -79,10 +80,15 @@ class GoogleSignInClient @Inject constructor(
     }
 
     override suspend fun logout() {
+
         GoogleSignIn.getClient(
             context,
             googleAuthOptionsBuilder.buildFromAuthOptions(authOptions)
         ).signOut().toSuspend {
+            AuthException.LogOutError(it)
+        }
+
+        Identity.getSignInClient(context).signOut().toSuspend {
             AuthException.LogOutError(it)
         }
 

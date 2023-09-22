@@ -3,14 +3,15 @@ package com.oscarg798.remembrall.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
-import com.oscarg798.remembrall.common_auth.model.AuthOptions
-import com.oscarg798.remembrall.common_auth.model.GoogleAuthOptionsBuilder
-import com.oscarg798.remembrall.auth.ExternalAuthProvider
 import com.oscarg798.remembrall.login.domain.Effect
 import com.oscarg798.remembrall.login.domain.Event
 import com.oscarg798.remembrall.login.domain.Model
-import com.oscarg798.remembrall.login.domain.update
-import com.oscarg798.remembrall.login.usecase.FinishLogIn
+import com.oscarg798.remembrall.mobiusutils.LoopInjector
+import com.oscarg798.remembrall.mobiusutils.ViewModelConnection
+import com.spotify.mobius.Connectable
+import com.spotify.mobius.Connection
+import com.spotify.mobius.First.first
+import com.spotify.mobius.functions.Consumer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -18,74 +19,40 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class LoginViewModel @Inject constructor(
-    private val finishLogIn: FinishLogIn,
-    private val authOptions: AuthOptions,
-    private val googleAuthOptionsBuilder: GoogleAuthOptionsBuilder,
+    loopInjector: LoopInjector<Model, Event, Effect>,
     coroutineContextProvider: CoroutineContextProvider,
-    private val externalAuthProvider: ExternalAuthProvider,
-) : ViewModel(), CoroutineContextProvider by coroutineContextProvider {
+     uiEffectState: MutableSharedFlow<Effect.UIEffect>
+) : ViewModel(),
+    CoroutineContextProvider by coroutineContextProvider,
+    Connectable<Model, Event> {
 
     private val _model = MutableStateFlow(Model())
     val model: StateFlow<Model> = _model
-
-    private val _uiEffects = MutableSharedFlow<Effect.UIEffect>(extraBufferCapacity = 1)
-    val uiEffect: Flow<Effect.UIEffect> = _uiEffects
+    val uiEffect: Flow<Effect.UIEffect> = uiEffectState
 
     private val events = MutableSharedFlow<Event>()
-    private val effects = MutableSharedFlow<Effect>()
+    private val controller = loopInjector.provide(_model.value) { first(it) }
 
     init {
-        viewModelScope.launch {
-            events.map {
-                update(_model.value, it)
-            }.collectLatest {
-                _model.value = it.first
-                it.second.forEach { effect ->
-                    effects.emit(effect)
-                }
-            }
-        }
+        controller.connect(this)
+        controller.start()
+    }
 
-        viewModelScope.launch {
-            effects.collectLatest {
-                when (it) {
-                    is Effect.UIEffect -> _uiEffects.emit(it)
-                    is Effect.RequestExternalAuth -> {
-                        onEvent(Event.OnExternalSignInFinished(externalAuthProvider.signIn()))
-                    }
-
-                    is Effect.FinishLogin -> runCatching {
-                        finishLogIn()
-                    }.fold({
-                        onEvent(Event.OnSignedIn)
-                    }, { error ->
-                        if (error !is Exception) {
-                            throw error
-                        }
-                        onEvent(Event.OnLoginError(error))
-                    })
-
-                    Effect.GetExternalSigningCredentials -> {
-                        onEvent(
-                            Event.OnExternalSignInOptionsFound(
-                                googleAuthOptionsBuilder.buildFromAuthOptions(
-                                    authOptions
-                                ),
-                                googleAuthOptionsBuilder.buildSignInRequest(authOptions)
-                            )
-                        )
-                    }
-                }
-            }
-        }
+    override fun connect(output: Consumer<Event>): Connection<Model> {
+        viewModelScope.launch { events.collectLatest { output.accept(it) } }
+        return object : ViewModelConnection<Model>(_model) {}
     }
 
     fun onEvent(event: Event) {
         viewModelScope.launch { events.emit(event) }
+    }
+
+    override fun onCleared() {
+        controller.stop()
+        super.onCleared()
     }
 }

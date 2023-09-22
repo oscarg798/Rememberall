@@ -7,5 +7,6 @@ data class OAuthResponse(
     val expiresIn: Long,
     val refreshToken: String?,
     val idToken: String?,
-    val issuedOn: Long
+    val issuedOn: Long,
+    val authCode: String
 )

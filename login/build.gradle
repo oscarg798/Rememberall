@@ -34,6 +34,8 @@ dependencies {
 
     implementation libs.firebase.auth
 
+    implementation libs.mobius.android
+
     androidTestImplementation libs.androidx.test.junit
     androidTestImplementation libs.androidx.test.core
     androidTestImplementation libs.androidx.test.rules
@@ -41,9 +43,11 @@ dependencies {
     androidTestImplementation libs.hilt.androidTesting
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.40.5"
 
-    implementation project(path: ':common-ui')
-    implementation project(path: ':common_calendar')
-    implementation project(path: ':common-auth')
-    implementation project(path: ':coroutinesutils')
     implementation project(path: ':auth')
+    implementation project(path: ':rxutils')
+    implementation project(path: ':common-ui')
+    implementation project(path: ':common-auth')
+    implementation project(path: ':mobiusutils')
+    implementation project(path: ':common_calendar')
+    implementation project(path: ':coroutinesutils')
 }

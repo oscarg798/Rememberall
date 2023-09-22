@@ -20,6 +20,7 @@ import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
 import com.oscarg798.remembrall.common.repository.data.LocalPreferenceRepository
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
+import com.oscarg798.remembrall.rxutils.SchedulersProvider
 import com.oscarg798.remembrall.schedule.util.PendingIntentFinder
 import dagger.Module
 import dagger.Provides
@@ -27,11 +28,14 @@ import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.UUID
 import java.util.regex.Pattern
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.rx3.asScheduler
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -46,6 +50,18 @@ object AppModule {
             get() = Dispatchers.Default
         override val main: CoroutineContext
             get() = Dispatchers.Main
+    }
+
+    @Provides
+    @Singleton
+    fun provideSchedulerProvider() = object : SchedulersProvider{
+        override val io: Scheduler
+            get() = Schedulers.io()
+        override val computation: Scheduler
+            get() = Schedulers.computation()
+        override val main: Scheduler
+            get() = Dispatchers.Main.asScheduler()
+
     }
 
     @Provides

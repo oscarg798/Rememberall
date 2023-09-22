@@ -145,6 +145,7 @@ dependencies {
     implementation project(path: ':splash')
     implementation project(path: ":config")
     implementation project(path: ':profile')
+    implementation project(path: ':rxutils')
     implementation project(path: ':task-add')
     implementation project(path: ':common-ui')
     implementation project(path: ':task-list')
@@ -172,6 +173,8 @@ dependencies {
     implementation libs.firebase.firestore
     implementation "io.grpc:grpc-okhttp:1.32.2"
     implementation libs.firebase.auth
+
+    implementation libs.coroutines.rx3
 
     testImplementation libs.mockk.base
     testImplementation libs.coroutines.test

@@ -1,59 +1,66 @@
 package com.oscarg798.remembrall.login.domain
 
 import com.oscarg798.remembrall.common_auth.exception.AuthException
+import com.spotify.mobius.Next
+import com.spotify.mobius.Next.dispatch
+import com.spotify.mobius.Next.next
 
-internal typealias UpComing = Pair<Model, Set<Effect>>
+internal typealias UpComing = Next<Model, Effect>
 
 internal fun update(
     model: Model,
     event: Event
 ): UpComing = when (event) {
-    Event.OnBackPresses -> onBackPressed(model)
+    Event.OnBackPresses -> onBackPressed()
     Event.SignIn -> onSignIn(model)
     is Event.OnLoginError -> onLoginError(model, event)
     Event.OnSignedIn -> onSignedIn(model)
-    is Event.OnExternalSignInOptionsFound -> onExternalOptionsFound(model, event)
-    is Event.OnExternalSignInFinished -> onExternalSignInFinished(model, event)
+    is Event.OnExternalSignInFinished -> onExternalSignInFinished(event)
 }
 
-private fun onExternalSignInFinished(model: Model, event: Event.OnExternalSignInFinished): UpComing =
-    Pair(model, setOf(Effect.FinishLogin(event.result.token))).also {
-        System.err.println("External Sign in finished finishing login")
-    }
+private fun onExternalSignInFinished(
+    event: Event.OnExternalSignInFinished
+): UpComing = dispatch(setOf(Effect.FinishLogin(event.result.token)))
 
-private fun onExternalOptionsFound(
-    model: Model,
-    event: Event.OnExternalSignInOptionsFound
-): UpComing {
-    return Pair(model, setOf(Effect.RequestExternalAuth(event.options, event.signInRequest)))
-}
 
 private fun onSignedIn(model: Model): UpComing {
-    System.err.println("Going to home")
-    return Pair(model.copy(loading = false), setOf(Effect.UIEffect.NavigateToHome))
+    val effects = setOf(Effect.UIEffect.NavigateToHome)
+    return if (model.loading) {
+        next(model.copy(loading = false), effects)
+    } else {
+        dispatch(effects)
+    }
 }
 
-private fun onBackPressed(model: Model) = Pair(model, setOf(Effect.UIEffect.NavigateBack))
-private fun onSignIn(model: Model) = Pair(
-    if (model.loading) {
-        model
+private fun onBackPressed(): UpComing {
+    return dispatch(setOf(Effect.UIEffect.NavigateBack))
+}
+
+private fun onSignIn(model: Model): UpComing {
+    val effects =setOf(Effect.RequestExternalAuth)
+    return if (model.loading) {
+        dispatch(effects)
     } else {
-        model.copy(loading = true)
-    }, setOf(Effect.GetExternalSigningCredentials)
-)
+        next(
+            model.copy(
+                loading = true,
+            ),
+            effects
+        )
+    }
+}
 
 private fun onLoginError(model: Model, event: Event.OnLoginError): UpComing {
-    System.err.println("ERROR LOGIN$$$$$$$$$$$$$$$$$$$$$$$$$$")
-    System.err.println("ERROR LOGIN ${event.error.message}")
-    System.err.println("ERROR LOGIN ${event.error.stackTrace}")
-    System.err.println("ERROR LOGIN ${event.error}")
-    System.err.println("ERROR LOGIN$$$$$$$$$$$$$$$$$$$$$$$$$$")
-    return Pair(
-        model.copy(loading = false), setOf(
-            when (event.error) {
-                is AuthException -> Effect.UIEffect.ShowErrorMessage.LoginError
-                else -> Effect.UIEffect.ShowErrorMessage.UnknownError
-            }
-        )
+    val effects = setOf(
+        when (event.error) {
+            is AuthException -> Effect.UIEffect.ShowErrorMessage.LoginError
+            else -> Effect.UIEffect.ShowErrorMessage.UnknownError
+        }
     )
+
+    return if (model.loading) {
+        next(model.copy(loading = false), effects)
+    } else {
+        dispatch(effects)
+    }
 }
