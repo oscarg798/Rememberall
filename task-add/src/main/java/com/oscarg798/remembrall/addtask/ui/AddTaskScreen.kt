@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
@@ -20,11 +20,10 @@ import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBarTitle
 import com.oscarg798.remembrall.ui_common.ui.theming.showSnackBar
-import kotlinx.coroutines.flow.collect
 
 fun NavGraphBuilder.addTaskScreen() =
     composable(Router.AddTask.route, deepLinks = getDeepLinks()) { backStackEntry ->
-        val viewModel: AddTaskViewModel = hiltNavGraphViewModel(backStackEntry)
+        val viewModel: AddTaskViewModel = hiltViewModel(backStackEntry)
         val state by viewModel.state.collectAsState(AddTaskViewModel.ViewState())
         val snackbarHostState = remember { SnackbarHostState() }
         val coroutineScope = rememberCoroutineScope()

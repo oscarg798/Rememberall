@@ -2,11 +2,11 @@ package com.oscarg798.remembrall.common_auth.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.oscarg798.remembrall.common.auth.AuthRepository
-import com.oscarg798.remembrall.common.model.Config
 import com.oscarg798.remembrall.common_auth.model.AuthOptions
 import com.oscarg798.remembrall.common_auth.network.restclient.ExternalSignInClient
 import com.oscarg798.remembrall.common_auth.network.restclient.GoogleSignInClient
 import com.oscarg798.remembrall.common_auth.repository.data.GoogleAuthRepository
+import com.oscarg798.remembrall.config.Config
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

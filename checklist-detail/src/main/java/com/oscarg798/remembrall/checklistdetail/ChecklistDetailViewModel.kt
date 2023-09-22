@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.oscarg798.remembrall.checklistdetail.usecase.GetChecklistById
 import com.oscarg798.remembrall.checklistdetail.usecase.RemoveChecklistItem
 import com.oscarg798.remembrall.checklistdetail.usecase.UpdateCheckList
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
@@ -26,9 +26,9 @@ class ChecklistDetailViewModel @AssistedInject constructor(
     private val stringProvider: StringProvider,
     private val getChecklistItem: GetChecklistItem,
     private val removeChecklistItem: RemoveChecklistItem,
-    coroutineContextProvider: CoroutineContextProvider
+    coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 ) : AbstractViewModel<ChecklistDetailViewModel.ViewState, ChecklistDetailViewModel.Event>(ViewState()),
-    CoroutineContextProvider by coroutineContextProvider {
+    com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
 
     init {
         getChecklist()

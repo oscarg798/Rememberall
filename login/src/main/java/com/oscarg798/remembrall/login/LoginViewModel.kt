@@ -1,76 +1,91 @@
 package com.oscarg798.remembrall.login
 
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.provider.StringProvider
-import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
-import com.oscarg798.remembrall.common.viewmodel.launch
-import com.oscarg798.remembrall.common_auth.exception.AuthException
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common_auth.model.AuthOptions
 import com.oscarg798.remembrall.common_auth.model.GoogleAuthOptionsBuilder
+import com.oscarg798.remembrall.auth.ExternalAuthProvider
+import com.oscarg798.remembrall.login.domain.Effect
+import com.oscarg798.remembrall.login.domain.Event
+import com.oscarg798.remembrall.login.domain.Model
+import com.oscarg798.remembrall.login.domain.update
 import com.oscarg798.remembrall.login.usecase.FinishLogIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+internal class LoginViewModel @Inject constructor(
     private val finishLogIn: FinishLogIn,
     private val authOptions: AuthOptions,
     private val googleAuthOptionsBuilder: GoogleAuthOptionsBuilder,
-    private val stringProvider: StringProvider,
-    coroutineContextProvider: CoroutineContextProvider
-) : AbstractViewModel<LoginViewModel.ViewState, LoginViewModel.Event>(
-    ViewState()
-), CoroutineContextProvider by coroutineContextProvider {
+    coroutineContextProvider: CoroutineContextProvider,
+    private val externalAuthProvider: ExternalAuthProvider,
+) : ViewModel(), CoroutineContextProvider by coroutineContextProvider {
 
-    fun signIn() = launch {
-        update { it.copy(loading = true) }
+    private val _model = MutableStateFlow(Model())
+    val model: StateFlow<Model> = _model
 
-        val signInOptions = withContext(io) {
-            googleAuthOptionsBuilder.buildFromAuthOptions(authOptions)
-        }
+    private val _uiEffects = MutableSharedFlow<Effect.UIEffect>(extraBufferCapacity = 1)
+    val uiEffect: Flow<Effect.UIEffect> = _uiEffects
 
-        update { it.copy(loading = false) }
-        _event.tryEmit(Event.RequestAuth(signInOptions))
-    }
+    private val events = MutableSharedFlow<Event>()
+    private val effects = MutableSharedFlow<Effect>()
 
-    fun onExternalLogin() = launch {
-        update { it.copy(loading = true) }
-        runCatching {
-            withContext(io) {
-                finishLogIn()
-            }
-        }.fold({
-            update { it.copy(loading = false) }
-            _event.tryEmit(Event.NavigateToHome)
-        }, { error ->
-            if (error !is Exception) {
-                throw error
-            }
-            update { it.copy(loading = false) }
-            _event.tryEmit(
-                when (error) {
-                    is AuthException -> Event.ShowErrorMessage.LoginError(stringProvider.get(R.string.login_error))
-                    else -> Event.ShowErrorMessage.UnknownError(stringProvider.get(R.string.generic_error))
+    init {
+        viewModelScope.launch {
+            events.map {
+                update(_model.value, it)
+            }.collectLatest {
+                _model.value = it.first
+                it.second.forEach { effect ->
+                    effects.emit(effect)
                 }
-            )
-        })
-    }
-
-    data class ViewState(
-        val isLoggedIn: Boolean = false,
-        val loading: Boolean = false
-    )
-
-    sealed interface Event {
-
-        data class RequestAuth(val googleSignInOptions: GoogleSignInOptions) : Event
-        sealed class ShowErrorMessage(val message: String) : Event {
-            class LoginError(message: String) : ShowErrorMessage(message)
-            class UnknownError(message: String) : ShowErrorMessage(message)
+            }
         }
 
-        object NavigateToHome : Event
+        viewModelScope.launch {
+            effects.collectLatest {
+                when (it) {
+                    is Effect.UIEffect -> _uiEffects.emit(it)
+                    is Effect.RequestExternalAuth -> {
+                        onEvent(Event.OnExternalSignInFinished(externalAuthProvider.signIn()))
+                    }
+
+                    is Effect.FinishLogin -> runCatching {
+                        finishLogIn()
+                    }.fold({
+                        onEvent(Event.OnSignedIn)
+                    }, { error ->
+                        if (error !is Exception) {
+                            throw error
+                        }
+                        onEvent(Event.OnLoginError(error))
+                    })
+
+                    Effect.GetExternalSigningCredentials -> {
+                        onEvent(
+                            Event.OnExternalSignInOptionsFound(
+                                googleAuthOptionsBuilder.buildFromAuthOptions(
+                                    authOptions
+                                ),
+                                googleAuthOptionsBuilder.buildSignInRequest(authOptions)
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun onEvent(event: Event) {
+        viewModelScope.launch { events.emit(event) }
     }
 }

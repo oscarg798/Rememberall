@@ -4,7 +4,7 @@ import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.addtask.ui.AddtaskScreenConfiguration
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
 import com.oscarg798.remembrall.addtask.usecase.GetDisplayableDueDate
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel

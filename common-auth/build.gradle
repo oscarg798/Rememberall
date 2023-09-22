@@ -7,4 +7,8 @@ dependencies {
     api libs.android.gms.auth
 
     implementation libs.firebase.auth
+    implementation project(":config")
+    implementation project(":coroutinesutils")
+    implementation project(":auth")
+    implementation project(":user")
 }

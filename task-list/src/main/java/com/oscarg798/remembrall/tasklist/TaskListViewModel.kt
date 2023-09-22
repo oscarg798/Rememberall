@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.tasklist
 
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
@@ -14,7 +14,6 @@ import com.oscarg798.remembrall.tasklist.usecase.GetTaskGrouped
 import com.oscarg798.remembrall.tasklist.usecase.RemoveTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
@@ -24,10 +23,10 @@ class TaskListViewModel @Inject constructor(
     private val getInitialIndexPosition: GetInitialIndexPosition,
     private val dueDateFormatter: DueDateFormatter,
     private val getTaskUpdateListenerUseCase: GetTaskUpdateListenerUseCase,
-    coroutineContextProvider: CoroutineContextProvider
+    coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 ) : AbstractViewModel<TaskListViewModel.ViewState, TaskListViewModel.Event>(
     ViewState()
-), CoroutineContextProvider by coroutineContextProvider {
+), com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
 
     private var shouldUpdate = false
 

@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.oscarg798.remembrall.common.auth.AuthRepository
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.model.Config
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
@@ -44,7 +44,8 @@ object LoginModule {
     fun provideGson(): Gson = mockk()
 
     @Provides
-    fun provideCoroutineContextProvider() : CoroutineContextProvider = object: CoroutineContextProvider {
+    fun provideCoroutineContextProvider() : com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider = object:
+        com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider {
         override val io: CoroutineContext
             get() = Dispatchers.IO
         override val computation: CoroutineContext

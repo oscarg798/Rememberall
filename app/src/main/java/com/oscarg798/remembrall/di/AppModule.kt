@@ -12,8 +12,8 @@ import com.google.gson.Gson
 import com.oscarg798.remembrall.BuildConfig
 import com.oscarg798.remembrall.common.HomeActivityPendingIntentFinder
 import com.oscarg798.remembrall.common.IdentifierGenerator
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
-import com.oscarg798.remembrall.common.model.Config
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
+import com.oscarg798.remembrall.config.Config
 import com.oscarg798.remembrall.common.persistence.AppDatabase
 import com.oscarg798.remembrall.common.persistence.TaskDao
 import com.oscarg798.remembrall.common.provider.StringProvider
@@ -78,7 +78,7 @@ object AppModule {
     @Singleton
     fun providePreferenceRepository(
         localPreferenceRepository:
-            LocalPreferenceRepository
+        LocalPreferenceRepository
     ): PreferenceRepository =
         localPreferenceRepository
 
@@ -101,13 +101,16 @@ object AppModule {
     @Reusable
     fun providePendingIntentFinder(
         homeActivityPendingIntentFinder:
-            HomeActivityPendingIntentFinder
+        HomeActivityPendingIntentFinder
     ): PendingIntentFinder =
         homeActivityPendingIntentFinder
 
     @Provides
     @Reusable
-    fun provideConfig(): Config = Config(BuildConfig.GoogleClientId)
+    fun provideConfig(): Config = Config(
+        clientId = BuildConfig.GoogleClientId,
+        clientSecret = BuildConfig.GoogleClientSecret
+    )
 
     @Singleton
     @Provides

@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.checklist_add
 
 import com.oscarg798.remembrall.checklist_add.usecase.AddCheckList
 import com.oscarg798.remembrall.checklist_add.usecase.GetSelectedIcon
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch

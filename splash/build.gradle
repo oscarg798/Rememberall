@@ -5,6 +5,7 @@ dependencies {
     implementation libs.lottie.main
     implementation libs.lottie.compose
 
-    implementation project(path: ':common-auth')
+    implementation project(path: ':auth')
     implementation project(path: ':common-ui')
+    implementation project(path: ':coroutinesutils')
 }

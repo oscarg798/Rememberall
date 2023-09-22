@@ -1,21 +1,20 @@
 package com.oscarg798.remembrall.checklist
 
 import com.oscarg798.remembrall.checklist.usecase.GetChecklists
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_checklist.model.Checklist
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class ChecklistViewModel @Inject constructor(
     private val getChecklists: GetChecklists,
-    coroutineContextProvider: CoroutineContextProvider
+    coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 ) : AbstractViewModel<ChecklistViewModel.ViewState, ChecklistViewModel.Event>(ViewState()),
-    CoroutineContextProvider by coroutineContextProvider {
+    com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
 
 
     fun fetchChecklists() {

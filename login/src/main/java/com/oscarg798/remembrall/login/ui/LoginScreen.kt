@@ -1,7 +1,9 @@
 package com.oscarg798.remembrall.login.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender.SendIntentException
 import androidx.activity.compose.BackHandler
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContract
@@ -16,14 +18,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.app.ActivityCompat.startIntentSenderForResult
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.oscarg798.remembrall.login.LoginViewModel
 import com.oscarg798.remembrall.login.R
+import com.oscarg798.remembrall.login.domain.Effect
+import com.oscarg798.remembrall.login.domain.Event
 import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui_common.navigation.Router
 import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
@@ -32,26 +41,36 @@ import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBarTitle
 import com.oscarg798.remembrall.ui_common.ui.theming.registerActivityResultCallback
 
+
 fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
     composable(
         route = Router.Login.route,
         deepLinks = Router.Login.getDeepLinks()
     ) { backStackEntry ->
-
         val viewModel: LoginViewModel = hiltViewModel(backStackEntry)
-        val state by viewModel.state.collectAsState(LoginViewModel.ViewState())
-        val events by viewModel.events.collectAsState(initial = null)
-        val authLauncher = getAuthObserverLauncher { viewModel.onExternalLogin() }
+
+        val initialState = remember(viewModel) {
+            viewModel.model.value
+        }
+        val context = LocalContext.current
+        val state by viewModel.model.collectAsState(initialState)
+        val uiEffects by viewModel.uiEffect.collectAsState(initial = null)
         val snackbarHostState = remember { SnackbarHostState() }
         val navController = LocalNavControllerProvider.current
 
-        LaunchedEffect(key1 = events) {
-            val event = events ?: return@LaunchedEffect
+        LaunchedEffect(key1 = uiEffects) {
+            val effect = uiEffects ?: return@LaunchedEffect
 
-            when (event) {
-                is LoginViewModel.Event.RequestAuth -> authLauncher.launch(event.googleSignInOptions)
-                is LoginViewModel.Event.NavigateToHome -> Router.Home.navigate(navController)
-                is LoginViewModel.Event.ShowErrorMessage -> snackbarHostState.showSnackbar(event.message)
+            when (effect) {
+                Effect.UIEffect.NavigateBack -> navController.popBackStack()
+                Effect.UIEffect.NavigateToHome -> Router.Home.navigate(navController)
+                Effect.UIEffect.ShowErrorMessage.LoginError -> snackbarHostState.showSnackbar(
+                    context.getString(R.string.login_error)
+                )
+
+                Effect.UIEffect.ShowErrorMessage.UnknownError -> snackbarHostState.showSnackbar(
+                    context.getString(R.string.generic_error)
+                )
             }
         }
 
@@ -73,26 +92,11 @@ fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
                     text = stringResource(R.string.common_signin_button_text),
                     loading = state.loading
                 ) {
-                    viewModel.signIn()
+                    viewModel.onEvent(Event.SignIn)
                 }
             }
         }
 
         BackHandler { onFinishRequest() }
-    }
-
-@Composable
-private fun getAuthObserverLauncher(onAuth: () -> Unit) =
-    registerActivityResultCallback(object :
-        ActivityResultContract<GoogleSignInOptions, ActivityResult>() {
-        override fun createIntent(context: Context, input: GoogleSignInOptions): Intent {
-            return GoogleSignIn.getClient(context, input).signInIntent
-        }
-
-        override fun parseResult(resultCode: Int, intent: Intent?): ActivityResult {
-            return ActivityResult(resultCode, intent)
-        }
-    }) {
-        onAuth()
     }
 

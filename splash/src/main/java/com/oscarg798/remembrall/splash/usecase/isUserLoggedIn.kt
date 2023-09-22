@@ -1,9 +1,14 @@
 package com.oscarg798.remembrall.splash.usecase
 
+import com.oscarg798.remembrall.auth.Session
 import com.oscarg798.remembrall.common.auth.AuthRepository
 import javax.inject.Inject
 
-class isUserLoggedIn @Inject constructor(private val authRepository: AuthRepository) {
+internal interface IsUserLoggedIn : suspend () -> Boolean
 
-    operator fun invoke() = authRepository.isUserLoggedIn()
+internal class IsUserLoggedInImpl @Inject constructor(
+    private val session: Session
+) : IsUserLoggedIn {
+
+    override suspend fun invoke(): Boolean = session.getLoggedInState() is Session.State.LoggedIn
 }

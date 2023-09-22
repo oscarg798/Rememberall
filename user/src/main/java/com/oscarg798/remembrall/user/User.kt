@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.model
+package com.oscarg798.remembrall.user
 
 class User(
     val name: String,

@@ -5,7 +5,11 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-suspend fun <T> Task<T>.toSuspend(errorWrapper: (Exception?) -> Exception) =
+suspend fun <T> Task<T>.toSuspend(
+    errorWrapper: (Exception?) -> Exception = {
+        it ?: RuntimeException()
+    }
+) =
     suspendCancellableCoroutine<Task<T>> { continuation ->
         addOnCompleteListener { taskResult ->
             if (!continuation.isActive) {

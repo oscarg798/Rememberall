@@ -1,18 +1,16 @@
 package com.oscarg798.remembrall.taskdetail
 
 import androidx.lifecycle.viewModelScope
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_gettask.usecase.GetTaskById
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
-import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -21,10 +19,10 @@ class TaskDetailsViewModel @AssistedInject constructor(
     private val getTaskById: GetTaskById,
     private val dueDateFormatter: DueDateFormatter,
     private val getTaskUpdateListenerUseCase: GetTaskUpdateListenerUseCase,
-    coroutineContextProvider: CoroutineContextProvider
+    coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 ) : AbstractViewModel<TaskDetailsViewModel.ViewState, TaskDetailsViewModel.Event>(
     ViewState()
-), CoroutineContextProvider by coroutineContextProvider {
+), com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
 
     init {
         getTask()

@@ -7,12 +7,12 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 android {
 
-    compileSdk = 30
+    compileSdk = 33
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 30
+        targetSdk 33
         versionCode = 1
         versionName = "1.0"
     }
@@ -40,8 +40,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.6.0"
-        kotlinCompilerExtensionVersion '1.1.0-rc01'
+        kotlinCompilerExtensionVersion compose_ui_version
     }
 
     kotlinOptions {
@@ -76,7 +75,7 @@ dependencies {
 
     api libs.retrofit2.converter
     api libs.okhttp3.logging
-    api libs.okhttp3.okhttp
+    api libs.okhttp3.base
     api libs.gson
 
     implementation libs.hilt.android
@@ -92,6 +91,10 @@ dependencies {
     implementation platform(libs.firebase.boom)
 
     implementation libs.android.gms.auth
+
+    implementation project(":coroutinesutils")
+    implementation project(":config")
+    api project(":user")
 }
 
 repositories {

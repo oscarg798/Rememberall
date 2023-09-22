@@ -6,4 +6,5 @@ dependencies {
     implementation project(path: ':common-addedit')
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-ui')
+    implementation project(path: ':coroutinesutils')
 }

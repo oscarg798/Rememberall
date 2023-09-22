@@ -44,4 +44,6 @@ dependencies {
     implementation project(path: ':common-ui')
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-auth')
+    implementation project(path: ':coroutinesutils')
+    implementation project(path: ':auth')
 }

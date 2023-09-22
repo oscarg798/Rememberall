@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oscarg798.remembrall.common.coroutines.CoroutineContextProvider
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +32,7 @@ abstract class AbstractViewModel<ViewState, Event>(
     val events: Flow<Event>
         get() = _event
 
-    protected suspend fun update(reducer: (ViewState) -> ViewState) {
+    protected suspend fun update(reducer: (state: ViewState) -> ViewState) {
         mutex.withLock {
             _state.emit(
                 reducer(currentState())

@@ -129,7 +129,7 @@ private fun ShowAttendeesDialog(onAttendeeAdded: (String) -> Unit, state: Materi
             )
             input(
                 label = stringResource(R.string.add_attendees_input_label),
-                hint = stringResource(R.string.add_attendees_input_hint)
+                //hint = stringResource(R.string.add_attendees_input_hint)
             ) { attendee ->
                 onAttendeeAdded(attendee)
                 state.hide()

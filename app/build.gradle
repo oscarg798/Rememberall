@@ -14,17 +14,18 @@ apply from: "../config.gradle"
 
 android {
 
-    compileSdk = 31
+    compileSdk = targetAndCompileVersion
     buildToolsVersion = "31.0.0"
 
     defaultConfig {
         applicationId = "com.oscarg798.remembrall"
-        minSdk = 26
-        targetSdk = 31
+        minSdk = minSdkversion
+        targetSdk = targetAndCompileVersion
         versionCode = 1
         versionName = "1.0"
 
         buildConfigField "String", "GoogleClientId", "\"$googleCLientId\""
+        buildConfigField "String", "GoogleClientSecret", "\"$clientSecret\""
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -76,8 +77,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.6.0"
-        kotlinCompilerExtensionVersion '1.1.0-rc01'
+        kotlinCompilerExtensionVersion compose_ui_version
     }
 
     repositories {
@@ -132,28 +132,35 @@ dependencies {
 
     implementation libs.compose.dialogs
 
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.8.10'
     implementation libs.android.gms.auth
     implementation platform(libs.firebase.boom)
 
-    implementation project(path: ':common-ui')
+    implementation project(path: ':home')
+    implementation project(path: ':auth')
+    implementation project(path: ':user')
+    implementation project(path: ':login')
+    implementation project(path: ':oauth')
     implementation project(path: ':common')
-    implementation project(path: ':common-auth')
+    implementation project(path: ':splash')
+    implementation project(path: ":config")
+    implementation project(path: ':profile')
+    implementation project(path: ':task-add')
+    implementation project(path: ':common-ui')
     implementation project(path: ':task-list')
-    implementation project(path: ':common-gettask')
+    implementation project(path: ':task-edit')
+    implementation project(path: ':oauthimpl')
+    implementation project(path: ':common-auth')
     implementation project(path: ':task-detail')
+    implementation project(path: ':common-task')
+    implementation project(path: ':sessionImpl')
+    implementation project(path: ':checklist-add')
+    implementation project(path: ':common-gettask')
+    implementation project(path: ':common-addedit')
+    implementation project(path: ':checklist-list')
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-schedule')
-    implementation project(path: ':profile')
-    implementation project(path: ':splash')
-    implementation project(path: ':common-addedit')
-    implementation project(path: ':common-task')
-    implementation project(path: ':task-edit')
-    implementation project(path: ':task-add')
-    implementation project(path: ':login')
-    implementation project(path: ':home')
-    implementation project(path: ':checklist-list')
-    implementation project(path: ':checklist-add')
+    implementation project(path: ':coroutinesutils')
     implementation project(path: ':checklist-detail')
     implementation project(path: ':common-checklist')
 

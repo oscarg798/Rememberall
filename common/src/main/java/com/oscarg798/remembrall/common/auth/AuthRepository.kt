@@ -1,11 +1,11 @@
 package com.oscarg798.remembrall.common.auth
 
-import com.oscarg798.remembrall.common.model.User
+import com.oscarg798.remembrall.user.User
 
 
 interface AuthRepository {
 
-    fun getSignedInUser(): User
+    suspend fun getSignedInUser(): User
 
     suspend fun silentAuth(): User
 
@@ -13,5 +13,5 @@ interface AuthRepository {
 
     fun isUserLoggedIn(): Boolean
 
-    suspend fun finishLogIn()
+    suspend fun finishLogIn(idToken: String)
 }

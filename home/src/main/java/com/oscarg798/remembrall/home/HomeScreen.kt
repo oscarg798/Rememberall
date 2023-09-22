@@ -40,24 +40,8 @@ fun NavGraphBuilder.homeScreen(onFinishRequest: () -> Unit) = composable(
     deepLinks = Router.Home.getDeepLinks()
 ) { backStackEntry ->
 
-    val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
     val navController = LocalNavControllerProvider.current
 
-    val tabs = remember {
-        listOf(
-            TabItem(R.string.task_list_screen_title) {
-                TaskListScreen(
-                    backStackEntry
-                )
-            },
-            TabItem(R.string.checklist_title) {
-                CheckListScreen(
-                    backStackEntry
-                )
-            }
-        )
-    }
 
     RemembrallScaffold(
         topBar = {
@@ -73,10 +57,9 @@ fun NavGraphBuilder.homeScreen(onFinishRequest: () -> Unit) = composable(
             )
         }
     ) {
-        Column {
-            Tabs(pagerState, tabs, coroutineScope)
-            TabsContent(tabs = tabs, pagerState = pagerState)
-        }
+        TaskListScreen(
+            backStackEntry
+        )
     }
 
     BackHandler {
