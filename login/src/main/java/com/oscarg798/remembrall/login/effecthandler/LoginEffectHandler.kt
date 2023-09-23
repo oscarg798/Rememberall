@@ -3,14 +3,13 @@ package com.oscarg798.remembrall.login.effecthandler
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.login.domain.Effect
 import com.oscarg798.remembrall.login.domain.Event
+import com.oscarg798.remembrall.mobiusutils.EffectConsumer
+import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.MobiusCoroutines
 import com.spotify.mobius.Connectable
 import javax.inject.Inject
 
-internal interface LoginEffectHandlerProvider {
-
-    fun provide(uiEffectConsumer: suspend (Effect.UIEffect) -> Unit): Connectable<Effect, Event>
-}
+internal interface LoginEffectHandlerProvider: EffectHandlerProvider<Effect, Event>
 
 internal class LoginEffectHandlerProviderImpl @Inject constructor(
     private val coroutineContextProvider: CoroutineContextProvider,
@@ -18,7 +17,7 @@ internal class LoginEffectHandlerProviderImpl @Inject constructor(
     private val requestExternalAuthEffectHandler: RequestExternalAuthEffectHandler,
 ) : LoginEffectHandlerProvider {
 
-    override fun provide(uiEffectConsumer: suspend (Effect.UIEffect) -> Unit): Connectable<Effect, Event> {
+    override fun provide(uiEffectConsumer: EffectConsumer<Effect>): Connectable<Effect, Event> {
         return MobiusCoroutines.subtypeEffectHandler<Effect, Event>()
             .addFunction(finishLogInEffectHandler)
             .addFunction(requestExternalAuthEffectHandler)

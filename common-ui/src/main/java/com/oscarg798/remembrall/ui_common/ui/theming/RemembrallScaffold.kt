@@ -1,6 +1,7 @@
 package com.oscarg798.remembrall.ui_common.ui.theming
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.Text
@@ -41,7 +42,7 @@ fun RemembrallTopBar(
         title = title,
         actions = actions,
         navigationIcon = {
-            if (backButtonAction != null ) {
+            if (backButtonAction != null) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_arrow_back_24),
                     contentDescription = null,
@@ -59,7 +60,7 @@ fun RemembrallTopBar(
 fun RemembrallScaffold(
     topBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable (PaddingValues) -> Unit
 ) {
     RemembrallTheme {
         ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
@@ -68,7 +69,7 @@ fun RemembrallScaffold(
                 floatingActionButton = floatingActionButton,
                 modifier = Modifier.fillMaxHeight()
             ) {
-                content()
+                content(it)
             }
         }
     }

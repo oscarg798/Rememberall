@@ -14,10 +14,11 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun RemembrallPage(
     backgroundColor: Color = MaterialTheme.colorScheme.background,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Box(
-        Modifier
+        modifier
             .fillMaxSize()
             .background(
                 color = backgroundColor

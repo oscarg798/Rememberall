@@ -168,7 +168,7 @@ hilt-navigation = "androidx.hilt:hilt-navigation-fragment:1.0.0"
 hilt-work = "androidx.hilt:hilt-work:1.0.0"
 
 lottie-main = "com.airbnb.android:lottie:$lottie_version"
-lottie-compose = "com.airbnb.android:lottie-compose:6.0.0"
+lottie-compose = "com.airbnb.android:lottie-compose:6.1.0"
 
 arrow-sintax = "io.arrow-kt:arrow-syntax:0.13.2"
 arrow-meta = "io.arrow-kt:arrow-meta:0.13.2"

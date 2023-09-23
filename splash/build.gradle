@@ -4,8 +4,11 @@ dependencies {
 
     implementation libs.lottie.main
     implementation libs.lottie.compose
+    implementation libs.mobius.android
 
     implementation project(path: ':auth')
+    implementation project(path: ':rxutils')
     implementation project(path: ':common-ui')
+    implementation project(path: ':mobiusutils')
     implementation project(path: ':coroutinesutils')
 }

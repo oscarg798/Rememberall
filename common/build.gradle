@@ -82,7 +82,6 @@ dependencies {
     implementation libs.hilt.compose
     implementation libs.hilt.work
     implementation libs.hilt.compiler
-    implementation libs.hilt.dagger.compiler
     kapt(libs.hilt.dagger.compiler)
     kaptAndroidTest(libs.hilt.dagger.compiler)
 

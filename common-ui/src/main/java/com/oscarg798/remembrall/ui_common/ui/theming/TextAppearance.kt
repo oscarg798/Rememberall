@@ -24,13 +24,13 @@ interface FontSizes {
 
 val smallFontSizes = object : FontSizes {
     override val H1: TextUnit
-        get() = 24.sp
+        get() = 28.sp
     override val H2: TextUnit
-        get() = 20.sp
+        get() = 24.sp
     override val H3: TextUnit
-        get() = 14.sp
+        get() = 20.sp
     override val H4: TextUnit
-        get() = 12.sp
+        get() = 14.sp
     override val Body1: TextUnit
         get() = 12.sp
     override val Body2: TextUnit
@@ -43,13 +43,13 @@ val smallFontSizes = object : FontSizes {
 
 val normalFontSizes = object : FontSizes {
     override val H1: TextUnit
-        get() = 28.sp
+        get() = 32.sp
     override val H2: TextUnit
-        get() = 24.sp
+        get() = 28.sp
     override val H3: TextUnit
-        get() = 16.sp
+        get() = 24.sp
     override val H4: TextUnit
-        get() = 14.sp
+        get() = 18.sp
     override val Body1: TextUnit
         get() = 14.sp
     override val Body2: TextUnit

@@ -29,7 +29,7 @@ fun RemembrallTheme(content: @Composable () -> Unit) {
         if (isSmallScreen()) normalDimensions else smallDimensions,
     ) {
         MaterialTheme(
-            colorScheme = if (isSystemInDarkTheme()) DarkThemeColors  else LightThemeColors,
+            colorScheme = if (isSystemInDarkTheme()) DarkThemeColors else LightThemeColors,
             typography = getTypography(fontSizes)
         ) { content() }
     }
@@ -37,6 +37,10 @@ fun RemembrallTheme(content: @Composable () -> Unit) {
 
 @Composable
 private fun isSmallScreen() = LocalConfiguration.current.screenWidthDp > 360
+
+val MaterialTheme.dimensions
+    @Composable
+    get() = LocalAppDimens.current
 
 object RemembrallTheme {
 

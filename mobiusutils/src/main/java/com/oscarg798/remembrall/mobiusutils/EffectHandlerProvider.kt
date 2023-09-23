@@ -4,5 +4,5 @@ import com.spotify.mobius.Connectable
 
 interface EffectHandlerProvider<Effect, Event> {
 
-    fun provide(): Connectable<Effect, Event>
+    fun provide(uiEffectConsumer: EffectConsumer<Effect>): Connectable<Effect, Event>
 }

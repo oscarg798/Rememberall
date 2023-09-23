@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.oscarg798.remembrall.login.LoginViewModel
 import com.oscarg798.remembrall.login.R
 import com.oscarg798.remembrall.login.domain.Effect
 import com.oscarg798.remembrall.login.domain.Event
