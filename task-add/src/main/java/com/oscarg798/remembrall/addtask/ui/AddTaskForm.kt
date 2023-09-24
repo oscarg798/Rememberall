@@ -31,18 +31,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.oscarg798.remembrall.addtask.R
+import com.oscarg798.remembrall.addtask.domain.DueDate
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.common.extensions.horizontalToParent
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.ui_common.extensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.ui_common.ui.theming.colorScheme
+import java.time.LocalDateTime
 
 
 @Composable
@@ -52,6 +58,7 @@ internal fun AddTaskForm(
     description: String,
     selectingTaskPriority: Boolean,
     availableTaskPriorities: List<TaskPriority>,
+    dueDate: DueDate? = null,
     selectedPriority: TaskPriority? = null,
     onEvent: (Event) -> Unit
 ) {
@@ -68,7 +75,7 @@ internal fun AddTaskForm(
         ) {
             TextField(
                 value = title,
-                onValueChange = { Event.OnTitleChanged(it) },
+                onValueChange = { onEvent(Event.OnTitleChanged(it)) },
                 modifier = Modifier
                     .padding(0.dp)
                     .fillMaxWidth()
@@ -82,23 +89,23 @@ internal fun AddTaskForm(
                 maxLines = TitleMaxLines,
                 textStyle = titleStyle,
                 colors = TextFieldDefaults.textFieldColors(
-                    textColor = Color.White,
-                    disabledTextColor = Color.Gray,
+                    textColor = MaterialTheme.colorScheme.onSurface,
+                    disabledTextColor = SecondaryTextColor,
                     backgroundColor = Color.Transparent,
-                    cursorColor = Color.White,
-                    errorCursorColor = Color.White,
+                    cursorColor = MaterialTheme.colorScheme.onSurface,
+                    errorCursorColor = MaterialTheme.colorScheme.onSurface,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Gray,
-                    errorIndicatorColor = Color.Gray,
-                    placeholderColor = Color.Gray,
+                    disabledIndicatorColor = SecondaryTextColor,
+                    errorIndicatorColor = SecondaryTextColor,
+                    placeholderColor = SecondaryTextColor,
                     disabledPlaceholderColor = Color.DarkGray
                 )
             )
 
             TextField(
                 value = description,
-                onValueChange = { Event.OnTitleChanged(description) },
+                onValueChange = { onEvent(Event.OnDescriptionChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = MaterialTheme.typography.body1,
                 placeholder = {
@@ -108,20 +115,39 @@ internal fun AddTaskForm(
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    textColor = Color.White,
-                    disabledTextColor = Color.Gray,
+                    textColor = MaterialTheme.colorScheme.onSurface,
+                    disabledTextColor = SecondaryTextColor,
                     backgroundColor = Color.Transparent,
-                    cursorColor = Color.White,
-                    errorCursorColor = Color.White,
+                    cursorColor = MaterialTheme.colorScheme.onSurface,
+                    errorCursorColor = MaterialTheme.colorScheme.onSurface,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.DarkGray,
-                    errorIndicatorColor = Color.Gray,
-                    placeholderColor = Color.Gray,
-                    disabledPlaceholderColor = Color.Gray
+                    errorIndicatorColor = SecondaryTextColor,
+                    placeholderColor = SecondaryTextColor,
+                    disabledPlaceholderColor = SecondaryTextColor
                 )
             )
         }
+
+        dueDate?.let {
+            Text(
+                text = "You will be reminded on ${dueDate.displayableDate}",
+                modifier = Modifier.constrainAs(dateField) {
+                    end.linkTo(actionRow.end)
+                    start.linkTo(actionRow.start)
+                    bottom.linkTo(actionRow.top, margin = 8.dp)
+                },
+                style = MaterialTheme.typography.caption.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    fontStyle = FontStyle.Italic,
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
+                textAlign = TextAlign.Center,
+                maxLines = DueDateMaxLines
+            )
+        }
+
 
         ActionsRow(
             modifier = Modifier.constrainAs(actionRow) {
@@ -132,6 +158,7 @@ internal fun AddTaskForm(
             selectingTaskPriority = selectingTaskPriority,
             taskPriorities = availableTaskPriorities,
             selectedPriority = selectedPriority,
+            hasDueDateSelected = dueDate != null,
             onEvent = onEvent
         )
     }
@@ -142,24 +169,35 @@ private fun ActionsRow(
     taskPriorities: List<TaskPriority>,
     selectingTaskPriority: Boolean,
     selectedPriority: TaskPriority?,
+    hasDueDateSelected: Boolean,
     modifier: Modifier = Modifier,
     onEvent: (Event) -> Unit
 ) {
     Row(
         modifier
             .fillMaxWidth()
-            .background(color = ActionRowBackgroundColor, shape = CircleShape)
+            .background(color = MaterialTheme.colorScheme.surfaceVariant, shape = CircleShape)
             .padding(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
     ) {
         ActionButton(
             icon = R.drawable.ic_calendar,
+            tintColor = if (hasDueDateSelected) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            },
             onClick = { onEvent(Event.OnCalendarActionClicked) },
         )
 
         ActionButtonWithDropDown(
             icon = R.drawable.ic_tag,
             onClick = { onEvent(Event.OnTagActionClicked) },
+            tintColor = if (selectedPriority != null) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            },
             dropDownContent = {
 
                 TaskPriorityDropDown(
@@ -167,7 +205,7 @@ private fun ActionsRow(
                     priorities = taskPriorities,
                     selectedPriority = selectedPriority,
                     onEvent = onEvent,
-                    modifier = Modifier.background(ActionRowBackgroundColor)
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                 )
             }
         )
@@ -183,20 +221,22 @@ private fun ActionsRow(
 private fun ActionButton(
     @DrawableRes icon: Int,
     modifier: Modifier = Modifier,
+    tintColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
     IconButton(
         onClick = onClick,
         modifier = modifier
             .background(
-                color = ActionButtonBackgroundColor,
+                color = MaterialTheme.colorScheme.surface,
                 shape = CircleShape
             )
             .clip(CircleShape)
     ) {
         Icon(
-            painterResource(id = icon),
-            contentDescription = "Select a date for the note "
+            painter = painterResource(id = icon),
+            contentDescription = "Select a date for the note",
+            tint = tintColor
         )
     }
 }
@@ -206,18 +246,20 @@ private fun ActionButtonWithDropDown(
     @DrawableRes icon: Int,
     modifier: Modifier = Modifier,
     dropDownContent: @Composable () -> Unit,
+    tintColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
     IconButton(
         onClick = onClick,
         modifier = modifier.background(
-            color = ActionButtonBackgroundColor,
+            color = MaterialTheme.colorScheme.surface,
             shape = CircleShape
         )
     ) {
         Icon(
-            painterResource(id = icon),
-            contentDescription = "Select a date for the note "
+            painter = painterResource(id = icon),
+            contentDescription = "Select a date for the note",
+            tint = tintColor
         )
         dropDownContent()
     }
@@ -240,7 +282,7 @@ private fun TaskPriorityDropDown(
             key(priority) {
                 DropdownMenuItem(
                     onClick = { onEvent(Event.OnPriorityChanged(priority)) },
-                    modifier = Modifier.background(ActionRowBackgroundColor)
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     Text(
                         text = stringResource(id = priority.getLabel()),
@@ -270,7 +312,7 @@ private fun AddTaskPreview() {
     RemembrallTheme {
         AddTaskForm(modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF6750A4))
+            .background(MaterialTheme.colors.surface)
             .padding(16.dp),
             title = title.value,
             description = description.value,
@@ -281,6 +323,10 @@ private fun AddTaskPreview() {
             ),
             selectingTaskPriority = priorityBoxExpanded.value,
             selectedPriority = selectedPriority.value,
+            dueDate = DueDate(
+                LocalDateTime.now(),
+                "Mon, Sep 25 2023"
+            ),
             onEvent = {
                 when {
                     it is Event.OnTitleChanged -> title.value = it.title
@@ -301,7 +347,5 @@ private fun AddTaskPreview() {
     }
 }
 
-
-private val ActionButtonBackgroundColor = Color(0x50FFFFFF)
-private val ActionRowBackgroundColor = Color(0x50CCCCCC)
+private const val DueDateMaxLines = 2
 private const val TitleMaxLines = 4

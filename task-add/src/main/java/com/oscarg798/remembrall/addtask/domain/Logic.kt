@@ -15,15 +15,16 @@ internal fun update(
     Event.OnCloseClicked -> onCloseClicked()
     Event.OnTagActionClicked -> onTagActionClicked(model)
     is Event.OnTitleChanged -> onTitleChanged(model, event)
-    is Event.OnDueDateChanged -> onDueDateChanged(model, event)
+    is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
     Event.OnAttendeeActionClicked -> onAttendeesActionClicked()
     is Event.OnPriorityChanged -> onPriorityChanged(model, event)
     Event.OnCalendarActionClicked -> onCalendarActionClicked(model)
     is Event.OnDueDateFormatted -> onDueDateFormatted(model, event)
     is Event.OnAttendeesChanged -> onAttendeesChanges(model, event)
     is Event.OnDescriptionChanged -> onDescriptionChange(model, event)
+    is Event.OnTaskPrioritiesFound -> onTaskPrioritiesFound(model, event)
     Event.OnTaskPrioritySelectorDismissed -> onTaskPrioritySelectorDismissed()
-    is Event.OnDueDatePickerSelectedDateFound -> onDueDatePickerSelectedDateFound(event)
+    is Event.OnDueDatePickerInitialDateFound -> onDueDatePickerInitialDateFound(event)
 }
 
 private fun onBackClicked(): Upcoming = dispatch(setOf(Effect.UIEffect.Close))
@@ -48,17 +49,27 @@ private fun onDescriptionChange(model: Model, event: Event.OnDescriptionChanged)
 private fun onTagActionClicked(model: Model): Upcoming =
     dispatch(setOf(Effect.UIEffect.ShowPriorityPicker(model.availablePriorities)))
 
-private fun onDueDateChanged(model: Model, event: Event.OnDueDateChanged): Upcoming =
-    if (model.dueDate?.date == event.dueDate) {
-        dispatch(setOf(Effect.UIEffect.DismissDueDatePicker))
+private fun onDueDateDateAndTimeSelected(
+    model: Model,
+    event: Event.OnDueDateDateAndTimeSelected
+): Upcoming {
+    return if (model.dueDate?.date?.toLocalDate() == event.date &&
+        model.dueDate.date.toLocalTime() == event.time
+    ) {
+        dispatch(
+            setOf(
+                Effect.UIEffect.DismissDueDatePicker,
+            )
+        )
     } else {
         dispatch(
             setOf(
-                Effect.FormatDueDate(event.dueDate),
-                Effect.UIEffect.DismissDueDatePicker
+                Effect.FormatDueDate(event.date, event.time),
+                Effect.UIEffect.DismissDueDatePicker,
             )
         )
     }
+}
 
 private fun onPriorityChanged(model: Model, event: Event.OnPriorityChanged): Upcoming =
     if (model.priority == event.priority) {
@@ -66,7 +77,10 @@ private fun onPriorityChanged(model: Model, event: Event.OnPriorityChanged): Upc
     } else {
         next(
             model.copy(priority = event.priority),
-            setOf(Effect.UIEffect.DismissTaskPriorityPicker)
+            setOf(
+                Effect.UIEffect.DismissTaskPriorityPicker,
+                Effect.GetAvailableTaskPriorities(event.priority)
+            )
         )
     }
 
@@ -91,10 +105,18 @@ private fun onDueDateFormatted(model: Model, event: Event.OnDueDateFormatted): U
     }
 
 private fun onCalendarActionClicked(model: Model): Upcoming =
-    dispatch(setOf(Effect.GetDueDatePickerSelectedDate(model.dueDate)))
+    dispatch(setOf(Effect.GetDueDatePickerInitialDate(model.dueDate)))
 
-private fun onDueDatePickerSelectedDateFound(event: Event.OnDueDatePickerSelectedDateFound): Upcoming =
-    dispatch(setOf(Effect.UIEffect.ShowDueDatePicker(event.selectedDate)))
+private fun onDueDatePickerInitialDateFound(event: Event.OnDueDatePickerInitialDateFound): Upcoming =
+    dispatch(setOf(Effect.UIEffect.ShowDueDateDatePicker(event.initialDate)))
 
 private fun onTaskPrioritySelectorDismissed(): Upcoming =
     dispatch(setOf(Effect.UIEffect.DismissTaskPriorityPicker))
+
+private fun onTaskPrioritiesFound(model: Model, event: Event.OnTaskPrioritiesFound): Upcoming {
+    return if (model.availablePriorities == event.priorities) {
+        noChange()
+    } else {
+        next(model.copy(availablePriorities = event.priorities))
+    }
+}

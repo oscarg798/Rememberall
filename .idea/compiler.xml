@@ -2,6 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="remembrall.dateutils.main" target="1.8" />
+      <module name="remembrall.dateutils.test" target="1.8" />
+      <module name="remembrall.dateutilsimpl" target="11" />
       <module name="remembrall.user2" target="11" />
     </bytecodeTargetLevel>
   </component>

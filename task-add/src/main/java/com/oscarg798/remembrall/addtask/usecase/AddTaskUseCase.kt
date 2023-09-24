@@ -2,10 +2,10 @@ package com.oscarg798.remembrall.addtask.usecase
 
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common.repository.domain.TaskRepository
 import com.oscarg798.remembrall.common_addedit.usecase.AddTaskToCalendarUseCase
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import dagger.Reusable
 import javax.inject.Inject
 import java.time.LocalDateTime

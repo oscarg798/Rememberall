@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall
 
-import com.oscarg798.remembrall.addtask.usecase.GetDisplayableDueDate
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+import com.oscarg798.remembrall.addtask.usecase.FormatDueDateImpl
+
 import io.mockk.every
 import io.mockk.mockk
 import java.time.LocalDateTime
@@ -11,9 +11,9 @@ class GetDisplayableDueDateUseCase {
 
     @Test
     fun `given localdate when usecase executed then it should return displayable date`() {
-        val formatter: DueDateFormatter = mockk()
+        val formatter: DueDateFormatterImpl = mockk()
         every { formatter.toDisplayableDate(LocalDateTime.MIN) } answers { "1" }
-        val usecase = GetDisplayableDueDate(formatter)
+        val usecase = FormatDueDateImpl(formatter)
 
         assert(usecase.execute(LocalDateTime.MIN) == "1")
     }

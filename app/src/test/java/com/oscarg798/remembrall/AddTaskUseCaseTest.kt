@@ -6,7 +6,7 @@ import com.oscarg798.remembrall.common_calendar.exception.CalendarNotFoundExcept
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
 import com.oscarg798.remembrall.common.auth.AuthRepository
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+
 import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.CalendarSyncInformation
 import com.oscarg798.remembrall.common.model.Task
@@ -28,7 +28,7 @@ import java.util.regex.Pattern
 
 class AddTaskUseCaseTest {
 
-    private val dueDateFormatter: DueDateFormatter = mockk()
+    private val dueDateFormatter: DueDateFormatterImpl = mockk()
     private val taskRepository: TaskRepository = mockk()
     private val calendarRepository: CalendarRepository = mockk()
     private val authRepository: AuthRepository = mockk()

@@ -1,13 +1,13 @@
 package com.oscarg798.remembrall.edittask
 
-import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
 import com.oscarg798.remembrall.common.model.CalendarAttendee
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.model.TaskPriority
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import com.oscarg798.remembrall.edittask.usecase.EditTaskUseCase
 import com.oscarg798.remembrall.edittask.usecase.GetEditableTaskUseCase
 import dagger.assisted.Assisted

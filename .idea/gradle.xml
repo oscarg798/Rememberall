@@ -26,6 +26,8 @@
             <option value="$PROJECT_DIR$/common_calendar" />
             <option value="$PROJECT_DIR$/config" />
             <option value="$PROJECT_DIR$/coroutinesutils" />
+            <option value="$PROJECT_DIR$/date" />
+            <option value="$PROJECT_DIR$/dateimpl" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/mobiusutils" />

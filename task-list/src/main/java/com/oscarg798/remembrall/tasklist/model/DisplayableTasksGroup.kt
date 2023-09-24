@@ -1,7 +1,8 @@
 package com.oscarg798.remembrall.tasklist.model
 
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+
 import com.oscarg798.remembrall.common.model.DisplayableTask
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 
 data class DisplayableTasksGroup(
     val date: TaskGroup.TaskDate,

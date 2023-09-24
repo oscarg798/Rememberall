@@ -13,8 +13,6 @@ android {
     defaultConfig {
         minSdk = 26
         targetSdk 33
-        versionCode = 1
-        versionName = "1.0"
     }
 
     buildTypes {
@@ -66,6 +64,7 @@ dependencies {
     api libs.compose.tooling
     api libs.compose.foundation
     api libs.compose.material
+    api libs.compose.material3
     api libs.compose.icons
     api libs.compose.iconsExtended
     api libs.compose.animation
@@ -91,9 +90,10 @@ dependencies {
 
     implementation libs.android.gms.auth
 
-    implementation project(":coroutinesutils")
-    implementation project(":config")
     api project(":user")
+    implementation project(":config")
+    implementation project(":coroutinesutils")
+    implementation project(path: ':date')
 }
 
 repositories {

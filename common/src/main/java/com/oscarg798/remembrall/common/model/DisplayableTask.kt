@@ -1,6 +1,7 @@
 package com.oscarg798.remembrall.common.model
 
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+
 
 data class DisplayableTask(
     val id: String,

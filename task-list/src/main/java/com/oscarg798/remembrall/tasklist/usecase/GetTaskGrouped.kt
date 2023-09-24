@@ -1,11 +1,10 @@
 package com.oscarg798.remembrall.tasklist.usecase
 
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.Task
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import javax.inject.Inject
 import java.util.SortedMap
-import java.util.TreeMap
 
 class GetTaskGrouped @Inject constructor(
     private val getTaskUseCase: GetTaskUseCase,

@@ -1,13 +1,12 @@
 package com.oscarg798.remembrall.taskdetail
 
 import androidx.lifecycle.viewModelScope
-import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_gettask.usecase.GetTaskById
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

@@ -2,9 +2,10 @@ apply from: "../common.gradle"
 
 dependencies {
     implementation project(path: ':common')
+    implementation project(path: ':common-ui')
+    implementation project(path: ':date')
     implementation project(path: ':common-gettask')
     implementation project(path: ':common-addedit')
     implementation project(path: ':common_calendar')
-    implementation project(path: ':common-ui')
     implementation project(path: ':coroutinesutils')
 }

@@ -2,7 +2,9 @@ package com.oscarg798.remembrall.addtask.domain
 
 import androidx.compose.runtime.Stable
 import com.oscarg798.remembrall.common.model.TaskPriority
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @Stable
 internal data class Model(
@@ -29,25 +31,27 @@ internal sealed interface Event {
     object OnAttendeeActionClicked : Event
     object OnTaskPrioritySelectorDismissed : Event
     data class OnTitleChanged(val title: String) : Event
-    data class OnDueDateChanged(val dueDate: LocalDateTime) : Event
     data class OnDescriptionChanged(val description: String) : Event
     data class OnPriorityChanged(val priority: TaskPriority) : Event
     data class OnAttendeesChanged(val attendees: Set<String>) : Event
-    data class OnDueDatePickerSelectedDateFound(val selectedDate: LocalDateTime) : Event
+    data class OnTaskPrioritiesFound(val priorities: List<TaskPriority>) : Event
+    data class OnDueDatePickerInitialDateFound(val initialDate: LocalDateTime) : Event
+    data class OnDueDateDateAndTimeSelected(val date: LocalDate, val time: LocalTime) : Event
     data class OnDueDateFormatted(val date: LocalDateTime, val formattedDate: String) : Event
 }
 
 internal sealed interface Effect {
 
-    data class FormatDueDate(val dueDate: LocalDateTime) : Effect
-    data class GetDueDatePickerSelectedDate(val dueDate: DueDate?) : Effect
+    data class FormatDueDate(val date: LocalDate, val time: LocalTime) : Effect
+    data class GetDueDatePickerInitialDate(val dueDate: DueDate?) : Effect
+    data class GetAvailableTaskPriorities(val selectedPriority: TaskPriority? = null) : Effect
     sealed interface UIEffect : Effect {
         object Close : UIEffect
         object ShowAttendeesPicker : UIEffect
         object DismissDueDatePicker : UIEffect
         object DismissAttendeesPicker : UIEffect
         object DismissTaskPriorityPicker : UIEffect
-        data class ShowDueDatePicker(val selectedDate: LocalDateTime) : UIEffect
+        data class ShowDueDateDatePicker(val initialDateTime: LocalDateTime) : UIEffect
         data class ShowPriorityPicker(val priorities: List<TaskPriority>) : UIEffect
     }
 }

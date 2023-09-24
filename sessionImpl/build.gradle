@@ -37,7 +37,6 @@ dependencies {
     implementation libs.hilt.compose
     implementation libs.hilt.work
     implementation libs.hilt.compiler
-    implementation libs.hilt.dagger.compiler
     kapt(libs.hilt.dagger.compiler)
 
     implementation libs.android.gms.auth

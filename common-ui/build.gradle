@@ -3,5 +3,7 @@ apply from: "../common.gradle"
 dependencies {
     implementation project(path: ':common')
     api libs.accompanist.insets
+    implementation libs.compose.material
+    implementation libs.compose.material3
 }
 

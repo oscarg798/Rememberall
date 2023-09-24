@@ -6,8 +6,9 @@ dependencies {
     api libs.android.gms.auth
 
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.8.10'
-    implementation project(path: ':common_calendar')
     implementation project(path: ':common-ui')
+    implementation project(path: ':date')
+    implementation project(path: ':common_calendar')
 
     implementation libs.accompanist.pager
     implementation libs.accompanist.pagerIndicator

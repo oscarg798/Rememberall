@@ -1,8 +1,9 @@
 package com.oscarg798.remembrall.edittask.usecase
 
 import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+
 import com.oscarg798.remembrall.common.model.Task
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import javax.inject.Inject
 
 class UpdateCalendarTaskUseCase @Inject constructor(

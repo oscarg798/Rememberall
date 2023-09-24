@@ -1,10 +1,71 @@
-apply from: "../common.gradle"
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
 
+android {
+    namespace 'com.oscarg798.remembrall.addtask'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+        targetSdk targetAndCompileVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_ui_version
+    }
+
+    compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 dependencies {
+
+    implementation libs.compose.ui
+    implementation libs.hilt.compose
+    implementation libs.compose.icons
+    implementation libs.compose.tooling
+    implementation libs.compose.material
+    implementation libs.compose.compiler
+    implementation libs.compose.activity
+    implementation libs.compose.material3
+    implementation libs.compose.animation
+    implementation libs.compose.foundation
+    implementation libs.compose.iconsExtended
+    implementation libs.compose.runtimeLivedata
+    implementation libs.compose.constraintLayout
 
     implementation libs.mobius.android
 
+    coreLibraryDesugaring libs.android.tools.desugar
+
+    implementation libs.hilt.android
+    kapt(libs.hilt.dagger.compiler)
+
+    implementation project(path: ':date')
     implementation project(path: ':common')
+    implementation project(path: ':rxutils')
     implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':common-gettask')

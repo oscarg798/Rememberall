@@ -1,12 +1,12 @@
 package com.oscarg798.remembrall.tasklist
 
-import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
-import com.oscarg798.remembrall.common.formatter.DueDateFormatter
+
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
 import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
+import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import com.oscarg798.remembrall.tasklist.usecase.GetInitialIndexPosition
