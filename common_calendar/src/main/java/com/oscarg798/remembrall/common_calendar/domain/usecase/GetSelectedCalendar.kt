@@ -14,7 +14,7 @@ class GetSelectedCalendar @Inject constructor(
         return getSelectedCalendar(calendars = getCalendars())
     }
 
-    private fun getSelectedCalendar(calendars: Collection<Calendar>): Calendar {
+    private suspend fun getSelectedCalendar(calendars: Collection<Calendar>): Calendar {
         return runCatching {
             calendarRepository.getSelectedCalendar()
         }.getOrElse { cause ->

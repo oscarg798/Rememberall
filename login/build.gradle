@@ -1,7 +1,21 @@
-apply from: "../common.gradle"
-apply plugin: 'com.facebook.testing.screenshot'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.facebook.testing.screenshot'
+}
 
 android {
+    namespace 'com.oscarg798.remembrall.login'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+        targetSdk targetAndCompileVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
 
     defaultConfig {
         testInstrumentationRunner "com.oscarg798.remembrall.login.CustomTestRunner"
@@ -11,6 +25,21 @@ android {
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/AL2.0'
         exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_ui_version
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -26,14 +55,21 @@ project.afterEvaluate {
 
 dependencies {
 
-    implementation libs.material
-    implementation libs.androidx.coreKtx
-    implementation libs.androidx.appcompat
-    implementation libs.androix.activityx
-    implementation libs.material
+    implementation libs.compose.ui
+    implementation libs.hilt.compose
+    implementation libs.compose.icons
+    implementation libs.compose.tooling
+    implementation libs.compose.material
+    implementation libs.compose.compiler
+    implementation libs.compose.activity
+    implementation libs.compose.material3
+    implementation libs.compose.animation
+    implementation libs.compose.foundation
+    implementation libs.compose.iconsExtended
+    implementation libs.compose.runtimeLivedata
+    implementation libs.compose.constraintLayout
 
     implementation libs.firebase.auth
-
     implementation libs.mobius.android
 
     androidTestImplementation libs.androidx.test.junit
@@ -41,12 +77,15 @@ dependencies {
     androidTestImplementation libs.androidx.test.rules
     androidTestImplementation libs.mockk.android
     androidTestImplementation libs.hilt.androidTesting
+
+    implementation libs.hilt.android
+    kapt(libs.hilt.dagger.compiler)
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.40.5"
 
     implementation project(path: ':auth')
+    implementation project(":gmstaskutils")
     implementation project(path: ':rxutils')
     implementation project(path: ':common-ui')
-    implementation project(path: ':common-auth')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':common_calendar')
     implementation project(path: ':coroutinesutils')

@@ -1,69 +1,77 @@
 package com.oscarg798.remembrall.addtask.usecase
 
+import com.oscarg798.remembrall.addtask.domain.Effect
+import com.oscarg798.remembrall.addtask.domain.Event
+import com.oscarg798.remembrall.addtask.domain.ValidationError
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
+import com.oscarg798.remembrall.auth.Session
 import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
-import com.oscarg798.remembrall.common.model.TaskPriority
-import com.oscarg798.remembrall.common.repository.domain.TaskRepository
+import com.oscarg798.remembrall.task.TaskPriority
+import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.common_addedit.usecase.AddTaskToCalendarUseCase
 import com.oscarg798.remembrall.dateformatter.DueDateFormatter
-import dagger.Reusable
+import com.oscarg798.remembrall.user.User
 import javax.inject.Inject
-import java.time.LocalDateTime
 import java.util.regex.Pattern
 
-@Reusable
-class AddTaskUseCase @Inject constructor(
-    private val addTaskToCalendarUseCase: AddTaskToCalendarUseCase,
-    private val dueDateFormatter: DueDateFormatter,
+internal interface AddTaskUseCase : suspend (Effect.SaveTask) -> Event
+
+internal class AddTaskUseCaseImpl @Inject constructor(
+    private val session: Session,
+    private val emailPattern: Pattern,
     private val taskRepository: TaskRepository,
-    private val getSignedInUserUseCase: GetSignedInUserUseCase,
-    private val emailPattern: Pattern
-) {
+    private val dueDateFormatter: DueDateFormatter,
+    private val addTaskToCalendarUseCase: AddTaskToCalendarUseCase,
+) : AddTaskUseCase {
 
-    suspend fun execute(addTaskParam: AddTaskParam) {
-        if (addTaskParam.name == null || addTaskParam.name.length < RequiredNameLength) {
-            throw AddTaskException.MissingName
+    override suspend fun invoke(effect: Effect.SaveTask): Event {
+        if (effect.title.length < RequiredNameLength) {
+            return Event.OnValidationError(ValidationError.NameWrongLength)
         }
 
-        if (addTaskParam.priority == null) {
-            throw AddTaskException.MissingPriority
-        }
-
-        if (addTaskParam.dueDate == null) {
-            throw AddTaskException.MissingDueDate
-        }
-
-        if (addTaskParam.attendees != null && !addTaskParam.attendees.areAttendeesValid()) {
-            throw AddTaskException.AttendeesWrongFormat
+        if (!effect.attendees.areAttendeesValid()) {
+            return Event.OnValidationError(ValidationError.AttendeesNotValid)
         }
 
         val taskId = taskRepository.createTaskId()
 
-        val calendarSyncInformation = addTaskToCalendarUseCase.execute(
-            AddTaskToCalendarUseCase.AddTaskToCalendarParams(
-                taskId = taskId,
-                name = addTaskParam.name,
-                dueDate = addTaskParam.dueDate,
-                attendees = addTaskParam.attendees,
-                description = addTaskParam.description
+        val calendarSyncInformation = if (effect.dueDate != null) {
+            addTaskToCalendarUseCase.execute(
+                AddTaskToCalendarUseCase.AddTaskToCalendarParams(
+                    taskId = taskId,
+                    name = effect.title,
+                    dueDate = effect.dueDate.date,
+                    attendees = effect.attendees,
+                    description = effect.description
+                )
             )
-        )
+        } else null
 
         val task = taskRepository.addTask(
-            getSignedInUserUseCase.execute().email,
-            TaskRepository.AddTaskParam(
+            user = getUser().email,
+            addTaskParam = TaskRepository.AddTaskParam(
                 id = taskId,
-                name = addTaskParam.name,
-                priority = addTaskParam.priority,
-                description = addTaskParam.description,
-                dueDate = addTaskParam.dueDate.let {
-                    dueDateFormatter.toDueDateInMillis(addTaskParam.dueDate)
-                },
+                name = effect.title,
+                priority = effect.priority,
+                description = effect.description,
+                dueDate = effect.dueDate?.date?.let { dueDateFormatter.toDueDateInMillis(it) },
                 calendarSyncInformation = calendarSyncInformation
             )
         )
 
         taskRepository.onTaskUpdated(task)
+
+        return Event.OnTaskSaved
+    }
+
+    private suspend fun getUser(): User {
+        val session = session.getLoggedInState()
+
+        if (session !is Session.State.LoggedIn) {
+            throw IllegalStateException("Must be Logged In at this Point")
+        }
+
+        return session.user
     }
 
     private fun Set<String>.areAttendeesValid(): Boolean {
@@ -71,15 +79,6 @@ class AddTaskUseCase @Inject constructor(
             !emailPattern.matcher(it).matches()
         } == 0
     }
-
-    data class AddTaskParam(
-        val name: String? = null,
-        val description: String? = null,
-        val dueDate: LocalDateTime? = null,
-        val priority: TaskPriority? = null,
-        val attendees: Set<String>? = null
-
-    )
 }
 
 private const val RequiredNameLength = 3

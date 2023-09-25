@@ -60,6 +60,7 @@ fun RemembrallTopBar(
 fun RemembrallScaffold(
     topBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
+    snackbarHost: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
     RemembrallTheme {
@@ -67,7 +68,8 @@ fun RemembrallScaffold(
             Scaffold(
                 topBar = topBar,
                 floatingActionButton = floatingActionButton,
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier.fillMaxHeight(),
+                snackbarHost = snackbarHost
             ) {
                 content(it)
             }

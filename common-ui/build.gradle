@@ -5,5 +5,8 @@ dependencies {
     api libs.accompanist.insets
     implementation libs.compose.material
     implementation libs.compose.material3
+
+    //TODO remove this
+    implementation project(path: ':task')
 }
 

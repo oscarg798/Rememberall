@@ -3,8 +3,8 @@ package com.oscarg798.remembrall.schedule.usecase
 import android.util.Log
 import com.oscarg798.remembrall.schedule.R
 import com.oscarg798.remembrall.schedule.notification.NotificationScheduler
-import com.oscarg798.remembrall.common.model.Task
-import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.task.Task
+import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.common.provider.StringProvider
 import javax.inject.Inject
 

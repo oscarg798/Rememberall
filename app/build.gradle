@@ -136,6 +136,7 @@ dependencies {
     implementation libs.android.gms.auth
     implementation platform(libs.firebase.boom)
 
+    implementation project(path: ':task')
     implementation project(path: ':home')
     implementation project(path: ':auth')
     implementation project(path: ':user')
@@ -147,16 +148,17 @@ dependencies {
     implementation project(path: ":config")
     implementation project(path: ':profile')
     implementation project(path: ':rxutils')
+    implementation project(path: ':authimpl')
     implementation project(path: ':task-add')
     implementation project(path: ':dateimpl')
+    implementation project(path: ':taskimpl')
     implementation project(path: ':common-ui')
     implementation project(path: ':task-list')
     implementation project(path: ':task-edit')
     implementation project(path: ':oauthimpl')
-    implementation project(path: ':common-auth')
+    implementation project(path: ':authandroid')
     implementation project(path: ':task-detail')
     implementation project(path: ':common-task')
-    implementation project(path: ':sessionImpl')
     implementation project(path: ':checklist-add')
     implementation project(path: ':common-gettask')
     implementation project(path: ':common-addedit')
@@ -164,8 +166,10 @@ dependencies {
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':activityprovider')
     implementation project(path: ':checklist-detail')
     implementation project(path: ':common-checklist')
+    implementation project(path: ':activityproviderimpl')
 
     implementation libs.accompanist.pager
     implementation libs.accompanist.pagerIndicator

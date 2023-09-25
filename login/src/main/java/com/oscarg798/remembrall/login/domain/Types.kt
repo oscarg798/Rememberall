@@ -1,7 +1,5 @@
 package com.oscarg798.remembrall.login.domain
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.oscarg798.remembrall.auth.ExternalAuthProvider
 
 

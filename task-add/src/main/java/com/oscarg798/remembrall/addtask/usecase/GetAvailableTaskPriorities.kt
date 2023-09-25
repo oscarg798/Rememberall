@@ -3,7 +3,7 @@ package com.oscarg798.remembrall.addtask.usecase
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event.OnTaskPrioritiesFound
-import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.task.TaskPriority
 import javax.inject.Inject
 import kotlinx.coroutines.withContext
 
@@ -17,7 +17,7 @@ internal class GetAvailableTaskPrioritiesImpl @Inject constructor(
 
     override suspend fun invoke(effect: Effect.GetAvailableTaskPriorities): OnTaskPrioritiesFound =
         withContext(coroutinesContextProvider.computation) {
-            val priorities = TaskPriority.values().sortedWith { first, second ->
+            val priorities = com.oscarg798.remembrall.task.TaskPriority.values().sortedWith { first, second ->
                 first.compareTo(second)
             }
 

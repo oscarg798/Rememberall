@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.tasklist.model
 
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
-import com.oscarg798.remembrall.common.model.Task
+import com.oscarg798.remembrall.task.Task
 
 data class TaskGroup(
     val date: TaskDate,

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
 package com.oscarg798.remembrall.addtask.ui
 
 import androidx.annotation.DrawableRes
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -43,7 +40,7 @@ import com.oscarg798.remembrall.addtask.R
 import com.oscarg798.remembrall.addtask.domain.DueDate
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.common.extensions.horizontalToParent
-import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.ui_common.extensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
@@ -58,8 +55,10 @@ internal fun AddTaskForm(
     description: String,
     selectingTaskPriority: Boolean,
     availableTaskPriorities: List<TaskPriority>,
+    hasAttendees: Boolean,
     dueDate: DueDate? = null,
     selectedPriority: TaskPriority? = null,
+    enabled: Boolean = true,
     onEvent: (Event) -> Unit
 ) {
     ConstraintLayout(modifier) {
@@ -76,6 +75,7 @@ internal fun AddTaskForm(
             TextField(
                 value = title,
                 onValueChange = { onEvent(Event.OnTitleChanged(it)) },
+                enabled = enabled,
                 modifier = Modifier
                     .padding(0.dp)
                     .fillMaxWidth()
@@ -88,19 +88,7 @@ internal fun AddTaskForm(
                 },
                 maxLines = TitleMaxLines,
                 textStyle = titleStyle,
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = MaterialTheme.colorScheme.onSurface,
-                    disabledTextColor = SecondaryTextColor,
-                    backgroundColor = Color.Transparent,
-                    cursorColor = MaterialTheme.colorScheme.onSurface,
-                    errorCursorColor = MaterialTheme.colorScheme.onSurface,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = SecondaryTextColor,
-                    errorIndicatorColor = SecondaryTextColor,
-                    placeholderColor = SecondaryTextColor,
-                    disabledPlaceholderColor = Color.DarkGray
-                )
+                colors = TextFieldColors
             )
 
             TextField(
@@ -108,25 +96,14 @@ internal fun AddTaskForm(
                 onValueChange = { onEvent(Event.OnDescriptionChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = MaterialTheme.typography.body1,
+                enabled = enabled,
                 placeholder = {
                     Text(
                         "Tap here to start...",
                         style = MaterialTheme.typography.body1
                     )
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = MaterialTheme.colorScheme.onSurface,
-                    disabledTextColor = SecondaryTextColor,
-                    backgroundColor = Color.Transparent,
-                    cursorColor = MaterialTheme.colorScheme.onSurface,
-                    errorCursorColor = MaterialTheme.colorScheme.onSurface,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.DarkGray,
-                    errorIndicatorColor = SecondaryTextColor,
-                    placeholderColor = SecondaryTextColor,
-                    disabledPlaceholderColor = SecondaryTextColor
-                )
+                colors = TextFieldColors
             )
         }
 
@@ -159,6 +136,8 @@ internal fun AddTaskForm(
             taskPriorities = availableTaskPriorities,
             selectedPriority = selectedPriority,
             hasDueDateSelected = dueDate != null,
+            hasAttendees = hasAttendees,
+            enabled = enabled,
             onEvent = onEvent
         )
     }
@@ -170,7 +149,9 @@ private fun ActionsRow(
     selectingTaskPriority: Boolean,
     selectedPriority: TaskPriority?,
     hasDueDateSelected: Boolean,
+    hasAttendees: Boolean,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onEvent: (Event) -> Unit
 ) {
     Row(
@@ -181,6 +162,7 @@ private fun ActionsRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
     ) {
         ActionButton(
+            enabled = enabled,
             icon = R.drawable.ic_calendar,
             tintColor = if (hasDueDateSelected) {
                 MaterialTheme.colorScheme.primary
@@ -191,6 +173,7 @@ private fun ActionsRow(
         )
 
         ActionButtonWithDropDown(
+            enabled = enabled,
             icon = R.drawable.ic_tag,
             onClick = { onEvent(Event.OnTagActionClicked) },
             tintColor = if (selectedPriority != null) {
@@ -211,8 +194,21 @@ private fun ActionsRow(
         )
 
         ActionButton(
+            enabled = enabled,
             icon = R.drawable.ic_attendees,
             onClick = { onEvent(Event.OnAttendeeActionClicked) },
+            tintColor = if (hasAttendees) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            }
+        )
+
+        ActionButton(
+            enabled = enabled,
+            icon = R.drawable.ic_save,
+            tintColor = MaterialTheme.colorScheme.primary,
+            onClick = { onEvent(Event.OnSaveActionClicked) },
         )
     }
 }
@@ -220,11 +216,13 @@ private fun ActionsRow(
 @Composable
 private fun ActionButton(
     @DrawableRes icon: Int,
+    enabled: Boolean,
     modifier: Modifier = Modifier,
     tintColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
     IconButton(
+        enabled = enabled,
         onClick = onClick,
         modifier = modifier
             .background(
@@ -245,12 +243,14 @@ private fun ActionButton(
 private fun ActionButtonWithDropDown(
     @DrawableRes icon: Int,
     modifier: Modifier = Modifier,
+    enabled: Boolean,
     dropDownContent: @Composable () -> Unit,
     tintColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
     IconButton(
         onClick = onClick,
+        enabled = enabled,
         modifier = modifier.background(
             color = MaterialTheme.colorScheme.surface,
             shape = CircleShape
@@ -327,6 +327,7 @@ private fun AddTaskPreview() {
                 LocalDateTime.now(),
                 "Mon, Sep 25 2023"
             ),
+            hasAttendees = true,
             onEvent = {
                 when {
                     it is Event.OnTitleChanged -> title.value = it.title
@@ -347,5 +348,23 @@ private fun AddTaskPreview() {
     }
 }
 
+
+internal val TextFieldColors: androidx.compose.material.TextFieldColors
+    @Composable
+    get() = TextFieldDefaults.textFieldColors(
+        textColor = MaterialTheme.colorScheme.onSurface,
+        disabledTextColor = SecondaryTextColor,
+        backgroundColor = Color.Transparent,
+        cursorColor = MaterialTheme.colorScheme.onSurface,
+        errorCursorColor = MaterialTheme.colorScheme.onSurface,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.DarkGray,
+        errorIndicatorColor = SecondaryTextColor,
+        placeholderColor = SecondaryTextColor,
+        disabledPlaceholderColor = SecondaryTextColor,
+        focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
 private const val DueDateMaxLines = 2
 private const val TitleMaxLines = 4

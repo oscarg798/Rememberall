@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.common_addedit.usecase
 
-import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.task.TaskPriority
 import dagger.Reusable
 import javax.inject.Inject
 

@@ -6,6 +6,8 @@ import com.oscarg798.remembrall.addtask.domain.Model
 import com.oscarg798.remembrall.addtask.effecthandler.AddTaskEffectHandler
 import com.oscarg798.remembrall.addtask.effecthandler.UIEffectConsumer
 import com.oscarg798.remembrall.addtask.ui.LoopInjectorImpl
+import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
+import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCaseImpl
 import com.oscarg798.remembrall.addtask.usecase.CurrentDateProvider
 import com.oscarg798.remembrall.addtask.usecase.CurrentDateProviderImpl
 import com.oscarg798.remembrall.addtask.usecase.FormatDueDate
@@ -54,6 +56,9 @@ internal interface AddTaskModule {
 
     @Binds
     fun bindCurrentDateProvider(impl: CurrentDateProviderImpl): CurrentDateProvider
+
+    @Binds
+    fun bindAddTaskUseCase(impl: AddTaskUseCaseImpl): AddTaskUseCase
 
     companion object {
 

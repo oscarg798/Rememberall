@@ -51,6 +51,9 @@ dependencies {
     implementation libs.hilt.dagger.compiler
     kapt(libs.hilt.dagger.compiler)
 
+    implementation libs.android.gms.auth
+
+    implementation project(":auth")
     implementation project(":oauth")
     implementation project(":config")
     implementation project(":coroutinesutils")

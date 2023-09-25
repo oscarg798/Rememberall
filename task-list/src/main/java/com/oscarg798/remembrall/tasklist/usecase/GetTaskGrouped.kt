@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.tasklist.usecase
 
-import com.oscarg798.remembrall.common.model.Task
+import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import javax.inject.Inject
@@ -14,12 +14,12 @@ class GetTaskGrouped @Inject constructor(
     suspend operator fun invoke(): SortedMap<TaskGroup.MonthGroup, TaskGroup> {
         val tasks = getTaskUseCase.execute()
         val groups = HashMap<TaskGroup.MonthGroup, TaskGroup>()
-        tasks.forEach { task ->
+        tasks.filter { it.dueDate != null }.forEach { task ->
             val taskDate = TaskGroup.TaskDate(
-                day = dueDateFormatter.getDayNameFromDueDate(task.dueDate),
-                month = dueDateFormatter.getMonthFromDueDate(task.dueDate),
-                year = dueDateFormatter.getYearFromDueDate(task.dueDate),
-                dayNumber = dueDateFormatter.getDayFromDueDate(task.dueDate)
+                day = dueDateFormatter.getDayNameFromDueDate(task.dueDate!!),
+                month = dueDateFormatter.getMonthFromDueDate(task.dueDate!!),
+                year = dueDateFormatter.getYearFromDueDate(task.dueDate!!),
+                dayNumber = dueDateFormatter.getDayFromDueDate(task.dueDate!!)
             )
 
             val groupLabel = TaskGroup.MonthGroup(
@@ -49,7 +49,7 @@ class GetTaskGrouped @Inject constructor(
             }
         }
 
-        return  groups.toSortedMap() { first, second ->
+        return groups.toSortedMap() { first, second ->
             convertMonthStringToIntPosition(first).compareTo(convertMonthStringToIntPosition(second))
         }
     }

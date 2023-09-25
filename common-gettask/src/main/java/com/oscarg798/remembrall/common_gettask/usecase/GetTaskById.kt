@@ -1,8 +1,8 @@
 package com.oscarg798.remembrall.common_gettask.usecase
 
 import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
-import com.oscarg798.remembrall.common.model.Task
-import com.oscarg798.remembrall.common.repository.domain.TaskRepository
+import com.oscarg798.remembrall.task.Task
+import com.oscarg798.remembrall.task.TaskRepository
 import javax.inject.Inject
 
 class GetTaskById @Inject constructor(

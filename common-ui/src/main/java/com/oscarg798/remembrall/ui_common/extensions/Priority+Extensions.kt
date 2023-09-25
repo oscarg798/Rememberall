@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.ui_common.extensions
 
-import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.ui_common.R
 import com.oscarg798.remembrall.ui_common.ui.theming.TaskPriorityColorPalette
 

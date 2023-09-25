@@ -9,7 +9,9 @@ interface Session {
 
     fun streamLoggedInState(): Flow<State>
 
+    suspend fun logout()
 
+    suspend fun silentLoginIng(): Session.State.LoggedIn
 
     sealed interface State {
         object NoLogged : State

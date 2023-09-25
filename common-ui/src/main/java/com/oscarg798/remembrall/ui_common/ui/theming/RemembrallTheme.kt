@@ -42,9 +42,17 @@ val MaterialTheme.dimensions
     @Composable
     get() = LocalAppDimens.current
 
+val androidx.compose.material.MaterialTheme.dimensions
+    @Composable
+    get() = LocalAppDimens.current
+
+val MaterialTheme.typo
+    @Composable
+    get() = androidx.compose.material.MaterialTheme.typography
+
 val androidx.compose.material.MaterialTheme.colorScheme
     @Composable
-    get()= MaterialTheme.colorScheme
+    get() = MaterialTheme.colorScheme
 
 object RemembrallTheme {
 

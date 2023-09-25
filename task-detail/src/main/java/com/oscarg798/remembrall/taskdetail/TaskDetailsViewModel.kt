@@ -1,6 +1,7 @@
 package com.oscarg798.remembrall.taskdetail
 
 import androidx.lifecycle.viewModelScope
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
@@ -18,10 +19,10 @@ class TaskDetailsViewModel @AssistedInject constructor(
     private val getTaskById: GetTaskById,
     private val dueDateFormatter: DueDateFormatter,
     private val getTaskUpdateListenerUseCase: GetTaskUpdateListenerUseCase,
-    coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
+    coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<TaskDetailsViewModel.ViewState, TaskDetailsViewModel.Event>(
     ViewState()
-), com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
+), CoroutineContextProvider by coroutineContextProvider {
 
     init {
         getTask()

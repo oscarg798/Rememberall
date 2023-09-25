@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.common_addedit.usecase
 
 
-import com.oscarg798.remembrall.common.model.CalendarSyncInformation
+import com.oscarg798.remembrall.task.CalendarSyncInformation
 import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
 import com.oscarg798.remembrall.dateformatter.DueDateFormatter
 import javax.inject.Inject

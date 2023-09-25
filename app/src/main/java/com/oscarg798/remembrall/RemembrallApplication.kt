@@ -3,7 +3,6 @@ package com.oscarg798.remembrall
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.oscarg798.remembrall.common.ActivityProvider
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

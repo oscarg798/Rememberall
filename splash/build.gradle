@@ -1,10 +1,69 @@
-apply from: "../common.gradle"
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.oscarg798.remembrall.splash'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+        targetSdk targetAndCompileVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    defaultConfig {
+        testInstrumentationRunner "com.oscarg798.remembrall.login.CustomTestRunner"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_ui_version
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
 
 dependencies {
+    implementation libs.compose.ui
+    implementation libs.hilt.compose
+    implementation libs.compose.icons
+    implementation libs.compose.tooling
+    implementation libs.compose.material
+    implementation libs.compose.compiler
+    implementation libs.compose.activity
+    implementation libs.compose.material3
+    implementation libs.compose.animation
+    implementation libs.compose.foundation
+    implementation libs.compose.iconsExtended
+    implementation libs.compose.runtimeLivedata
+    implementation libs.compose.constraintLayout
 
     implementation libs.lottie.main
     implementation libs.lottie.compose
     implementation libs.mobius.android
+
+    implementation libs.hilt.android
+    kapt(libs.hilt.dagger.compiler)
 
     implementation project(path: ':auth')
     implementation project(path: ':rxutils')

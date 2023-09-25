@@ -36,7 +36,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.extensions.SingleLine
-import com.oscarg798.remembrall.common.model.CalendarAttendee
+import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.ui_common.R
 import com.oscarg798.remembrall.ui_common.extensions.getColor
@@ -44,6 +44,7 @@ import com.oscarg798.remembrall.ui_common.extensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
 
+@Deprecated("This must be elsewhere")
 @Composable
 fun TaskCard(
     task: DisplayableTask,
@@ -145,12 +146,15 @@ fun TaskBody(
     }
 
     Row(Modifier.fillMaxWidth()) {
-        TaskDueDate(
-            task = task,
-            Modifier
-                .padding(top = RemembrallTheme.dimens.ExtraSmall)
-                .weight(if (task.owned) 1f else .8f)
-        )
+        task.dueDate?.let {
+            TaskDueDate(
+                dueDate = it,
+                Modifier
+                    .padding(top = RemembrallTheme.dimens.ExtraSmall)
+                    .weight(if (task.owned) 1f else .8f)
+            )
+        }
+
 
         if (!task.owned) {
             Image(
@@ -190,15 +194,17 @@ private fun Attendees(attendees: Collection<CalendarAttendee>) {
 
 @Composable
 private fun TaskHeader(task: DisplayableTask) {
-
-    Text(
-        text = stringResource(task.priority.getLabel()),
-        style = MaterialTheme.typography.bodySmall.merge(
-            TextStyle(
-                color = task.priority.getColor()
+    task.priority?.let {
+        Text(
+            text = stringResource(it.getLabel()),
+            style = MaterialTheme.typography.bodySmall.merge(
+                TextStyle(
+                    color = it.getColor()
+                )
             )
         )
-    )
+    }
+
 
     Divider(
         color = SecondaryTextColor,
@@ -234,7 +240,7 @@ private fun TaskDescription(task: DisplayableTask, maxLines: Int = TaskDescripti
 }
 
 @Composable
-private fun TaskDueDate(task: DisplayableTask, modifier: Modifier) {
+private fun TaskDueDate(dueDate: String, modifier: Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start
@@ -247,7 +253,7 @@ private fun TaskDueDate(task: DisplayableTask, modifier: Modifier) {
         )
 
         Text(
-            text = task.dueDate,
+            text = dueDate,
             style = MaterialTheme.typography.labelMedium
                 .merge(TextStyle(color = MaterialTheme.colorScheme.secondary)),
             maxLines = SingleLine,

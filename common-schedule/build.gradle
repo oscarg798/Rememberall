@@ -3,6 +3,7 @@ apply from: "../common.gradle"
 dependencies {
 
     implementation libs.workManager.ktx
+    implementation project(":task")
 
     kapt libs.hilt.compiler
 }

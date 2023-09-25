@@ -1,6 +1,5 @@
 package com.oscarg798.remembrall.login.domain
 
-import com.oscarg798.remembrall.common_auth.exception.AuthException
 import com.spotify.mobius.Next
 import com.spotify.mobius.Next.dispatch
 import com.spotify.mobius.Next.next
@@ -13,7 +12,7 @@ internal fun update(
 ): UpComing = when (event) {
     Event.OnBackPresses -> onBackPressed()
     Event.SignIn -> onSignIn(model)
-    is Event.OnLoginError -> onLoginError(model, event)
+    is Event.OnLoginError -> onLoginError(model)
     Event.OnSignedIn -> onSignedIn(model)
     is Event.OnExternalSignInFinished -> onExternalSignInFinished(event)
 }
@@ -37,7 +36,7 @@ private fun onBackPressed(): UpComing {
 }
 
 private fun onSignIn(model: Model): UpComing {
-    val effects =setOf(Effect.RequestExternalAuth)
+    val effects = setOf(Effect.RequestExternalAuth)
     return if (model.loading) {
         dispatch(effects)
     } else {
@@ -50,13 +49,8 @@ private fun onSignIn(model: Model): UpComing {
     }
 }
 
-private fun onLoginError(model: Model, event: Event.OnLoginError): UpComing {
-    val effects = setOf(
-        when (event.error) {
-            is AuthException -> Effect.UIEffect.ShowErrorMessage.LoginError
-            else -> Effect.UIEffect.ShowErrorMessage.UnknownError
-        }
-    )
+private fun onLoginError(model: Model): UpComing {
+    val effects = setOf(Effect.UIEffect.ShowErrorMessage.LoginError)
 
     return if (model.loading) {
         next(model.copy(loading = false), effects)

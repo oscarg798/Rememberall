@@ -5,12 +5,10 @@ import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.oscarg798.remembrall.common.auth.AuthRepository
-import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.model.Config
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
-import com.oscarg798.remembrall.common_auth.model.AuthOptions
-import com.oscarg798.remembrall.common_auth.network.restclient.ExternalSignInClient
+import com.oscarg798.remembrall.auth.AuthOptions
 import com.oscarg798.remembrall.common_calendar.data.restclient.CalendarRestClient
 import dagger.Module
 import dagger.Provides

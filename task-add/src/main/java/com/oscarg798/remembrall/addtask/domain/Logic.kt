@@ -11,12 +11,14 @@ internal fun update(
     model: Model,
     event: Event
 ): Upcoming = when (event) {
+    Event.OnTaskSaved -> onBackClicked()
     Event.OnBackClicked -> onBackClicked()
     Event.OnCloseClicked -> onCloseClicked()
     Event.OnTagActionClicked -> onTagActionClicked(model)
     is Event.OnTitleChanged -> onTitleChanged(model, event)
-    is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
+    Event.OnSaveActionClicked -> onSaveActionClicked(model)
     Event.OnAttendeeActionClicked -> onAttendeesActionClicked()
+    is Event.OnValidationError -> onValidationError(model, event)
     is Event.OnPriorityChanged -> onPriorityChanged(model, event)
     Event.OnCalendarActionClicked -> onCalendarActionClicked(model)
     is Event.OnDueDateFormatted -> onDueDateFormatted(model, event)
@@ -25,6 +27,35 @@ internal fun update(
     is Event.OnTaskPrioritiesFound -> onTaskPrioritiesFound(model, event)
     Event.OnTaskPrioritySelectorDismissed -> onTaskPrioritySelectorDismissed()
     is Event.OnDueDatePickerInitialDateFound -> onDueDatePickerInitialDateFound(event)
+    is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
+}
+
+private fun onValidationError(model: Model, event: Event.OnValidationError): Upcoming {
+    return if (model.loading) {
+        next(model.copy(loading = false), setOf(Effect.UIEffect.ShowError(event.error)))
+    } else {
+        dispatch(setOf(Effect.UIEffect.ShowError(event.error)))
+    }
+}
+
+private fun onSaveActionClicked(model: Model): Upcoming {
+    return if (model.loading) {
+        noChange()
+    } else {
+
+        next(
+            model.copy(loading = true),
+            setOf(
+                Effect.SaveTask(
+                    title = model.title,
+                    description = model.description,
+                    dueDate = model.dueDate,
+                    priority = model.priority,
+                    attendees = model.attendees
+                )
+            )
+        )
+    }
 }
 
 private fun onBackClicked(): Upcoming = dispatch(setOf(Effect.UIEffect.Close))
@@ -85,11 +116,13 @@ private fun onPriorityChanged(model: Model, event: Event.OnPriorityChanged): Upc
     }
 
 private fun onAttendeesChanges(model: Model, event: Event.OnAttendeesChanged): Upcoming =
-    if (model.attendees == event.attendees) {
+    if (model.attendees.contains(event.attendee)) {
         dispatch(setOf(Effect.UIEffect.DismissAttendeesPicker))
     } else {
+        val attendees = model.attendees.toMutableSet()
+        attendees.add(event.attendee)
         next(
-            model.copy(attendees = event.attendees),
+            model.copy(attendees = attendees),
             setOf(Effect.UIEffect.DismissAttendeesPicker)
         )
     }

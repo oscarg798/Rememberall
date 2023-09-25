@@ -63,6 +63,8 @@ dependencies {
     implementation libs.hilt.android
     kapt(libs.hilt.dagger.compiler)
 
+    implementation project(path: ":auth")
+    implementation project(path: ':task')
     implementation project(path: ':date')
     implementation project(path: ':common')
     implementation project(path: ':rxutils')

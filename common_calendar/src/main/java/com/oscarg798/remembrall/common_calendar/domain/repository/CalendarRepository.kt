@@ -1,13 +1,13 @@
 package com.oscarg798.remembrall.common_calendar.domain.repository
 
 import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
-import com.oscarg798.remembrall.common.model.CalendarSyncInformation
+import com.oscarg798.remembrall.task.CalendarSyncInformation
 
 interface CalendarRepository {
 
-    fun getSelectedCalendar(): Calendar
+    suspend fun getSelectedCalendar(): Calendar
 
-    fun saveSelectedCalendar(calendar: Calendar)
+    suspend fun saveSelectedCalendar(calendar: Calendar)
 
     suspend fun getCalendars(): Collection<Calendar>
 
@@ -16,13 +16,13 @@ interface CalendarRepository {
         calendarEventId: String,
         calendarTask: CalendarTask,
         attendees: Set<String>?
-    ): CalendarSyncInformation
+    ): com.oscarg798.remembrall.task.CalendarSyncInformation
 
     suspend fun addTaskToCalendar(
         calendarId: String,
         calendarTask: CalendarTask,
         attendees: Set<String>?
-    ): CalendarSyncInformation
+    ): com.oscarg798.remembrall.task.CalendarSyncInformation
 
     class CalendarTask(
         val id: String,

@@ -10,7 +10,7 @@ class SetCalendarSelectedUseCase @Inject constructor(
     private val calendarRepository: CalendarRepository
 ) {
 
-    fun execute(calendar: Calendar) {
+    suspend fun execute(calendar: Calendar) {
         calendarRepository.saveSelectedCalendar(calendar)
     }
 }

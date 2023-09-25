@@ -4,8 +4,8 @@ dependencies {
     implementation libs.workManager.ktx
     implementation project(path: ':user')
 
+    implementation project(path: ':auth')
     implementation project(path: ':common-ui')
-    implementation project(path: ':common-auth')
     implementation project(path: ':common_calendar')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')

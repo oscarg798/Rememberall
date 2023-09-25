@@ -4,7 +4,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.QuerySnapshot
-import com.oscarg798.remembrall.common.toSuspend
 import com.oscarg798.remembrall.common_checklist.AddChecklistException
 import com.oscarg798.remembrall.common_checklist.UpdateChecklistException
 import com.oscarg798.remembrall.common_checklist.di.CheckListCollection
@@ -12,6 +11,7 @@ import com.oscarg798.remembrall.common_checklist.model.Checklist
 import com.oscarg798.remembrall.common_checklist.model.ChecklistDto
 import com.oscarg798.remembrall.common_checklist.model.ChecklistItem
 import com.oscarg798.remembrall.common_checklist.model.ChecklistItemDto
+import com.oscarg798.remembrall.gmstaskutils.toSuspend
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async

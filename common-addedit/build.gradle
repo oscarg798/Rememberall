@@ -9,6 +9,7 @@ dependencies {
     implementation project(path: ':common-ui')
     implementation project(path: ':date')
     implementation project(path: ':common_calendar')
+    implementation project(path: ':task')
 
     implementation libs.accompanist.pager
     implementation libs.accompanist.pagerIndicator

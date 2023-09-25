@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.oscarg798.remembrall.common.model.TaskPriority
+import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.common_addedit.R
 import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme

@@ -10,14 +10,17 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/activityprovider" />
+            <option value="$PROJECT_DIR$/activityproviderimpl" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/auth" />
+            <option value="$PROJECT_DIR$/authandroid" />
+            <option value="$PROJECT_DIR$/authimpl" />
             <option value="$PROJECT_DIR$/checklist-add" />
             <option value="$PROJECT_DIR$/checklist-detail" />
             <option value="$PROJECT_DIR$/checklist-list" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common-addedit" />
-            <option value="$PROJECT_DIR$/common-auth" />
             <option value="$PROJECT_DIR$/common-checklist" />
             <option value="$PROJECT_DIR$/common-gettask" />
             <option value="$PROJECT_DIR$/common-schedule" />
@@ -28,6 +31,7 @@
             <option value="$PROJECT_DIR$/coroutinesutils" />
             <option value="$PROJECT_DIR$/date" />
             <option value="$PROJECT_DIR$/dateimpl" />
+            <option value="$PROJECT_DIR$/gmstaskutils" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/mobiusutils" />
@@ -35,12 +39,13 @@
             <option value="$PROJECT_DIR$/oauthimpl" />
             <option value="$PROJECT_DIR$/profile" />
             <option value="$PROJECT_DIR$/rxutils" />
-            <option value="$PROJECT_DIR$/sessionImpl" />
             <option value="$PROJECT_DIR$/splash" />
+            <option value="$PROJECT_DIR$/task" />
             <option value="$PROJECT_DIR$/task-add" />
             <option value="$PROJECT_DIR$/task-detail" />
             <option value="$PROJECT_DIR$/task-edit" />
             <option value="$PROJECT_DIR$/task-list" />
+            <option value="$PROJECT_DIR$/taskimpl" />
             <option value="$PROJECT_DIR$/user" />
           </set>
         </option>

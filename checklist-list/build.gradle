@@ -3,6 +3,5 @@ apply from: "../common.gradle"
 dependencies {
     implementation project(path: ':common-ui')
     implementation project(path: ':common-checklist')
-    implementation project(path: ':common-auth')
     implementation project(path: ':coroutinesutils')
 }
