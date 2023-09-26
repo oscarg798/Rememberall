@@ -8,7 +8,6 @@ plugins {
     id 'com.google.gms.google-services'
 }
 apply plugin: 'kotlin-android'
-apply from: "../ktlint.gradle"
 apply from: "../signin.gradle"
 apply from: "../config.gradle"
 

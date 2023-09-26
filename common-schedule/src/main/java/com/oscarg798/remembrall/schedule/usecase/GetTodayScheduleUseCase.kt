@@ -3,9 +3,9 @@ package com.oscarg798.remembrall.schedule.usecase
 import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskRepository
+import java.util.Calendar
 import javax.inject.Inject
 import javax.inject.Singleton
-import java.util.Calendar
 
 @Singleton
 class GetTodayScheduleUseCase @Inject constructor(
@@ -27,9 +27,9 @@ class GetTodayScheduleUseCase @Inject constructor(
     suspend fun execute(): Collection<Task> {
         return taskRepository.getTasks(getSignedInUserUseCase.execute().email).filter {
             it.dueDate != null &&
-                    it.dueDate!! >= todayTime &&
-                    it.dueDate!! <= tomorrowTime &&
-                    !it.completed
+                it.dueDate!! >= todayTime &&
+                it.dueDate!! <= tomorrowTime &&
+                !it.completed
         }
     }
 }

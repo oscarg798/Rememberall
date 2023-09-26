@@ -36,8 +36,6 @@ internal interface TaskBindings {
         fun provideFireStoreCollection(firebaseFirestore: FirebaseFirestore): CollectionReference =
             firebaseFirestore.collection(CollectionName)
     }
-
-
 }
 
 private const val CollectionName = "tasks"

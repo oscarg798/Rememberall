@@ -14,9 +14,9 @@ internal class GetDueDatePickerInitialDateImpl @Inject constructor(
     override suspend fun invoke(
         effect: Effect.GetDueDatePickerInitialDate
     ): Event.OnDueDatePickerInitialDateFound = Event.OnDueDatePickerInitialDateFound(
-        if(effect.dueDate!=null){
+        if (effect.dueDate != null) {
             effect.dueDate.date
-        }else{
+        } else {
             currentDateProvider()
         }
     )

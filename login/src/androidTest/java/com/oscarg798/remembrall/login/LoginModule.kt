@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
+import com.oscarg798.remembrall.auth.AuthOptions
+import com.oscarg798.remembrall.calendarimpl.CalendarRestClient
 import com.oscarg798.remembrall.common.auth.AuthRepository
 import com.oscarg798.remembrall.common.model.Config
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
-import com.oscarg798.remembrall.auth.AuthOptions
-import com.oscarg798.remembrall.calendarimpl.CalendarRestClient
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -21,7 +21,6 @@ import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 
-
 @InstallIn(SingletonComponent::class)
 @Module
 object LoginModule {
@@ -30,19 +29,22 @@ object LoginModule {
     fun provideConfig(): Config = Config("123")
 
     @Provides
-    fun provideStringProvider(@ApplicationContext context: Context) : StringProvider = StringProviderImpl(context)
+    fun provideStringProvider(@ApplicationContext context: Context): StringProvider =
+        StringProviderImpl(context)
 
     @Provides
-    fun provideSharedPreferences() : SharedPreferences = mockk()
+    fun provideSharedPreferences(): SharedPreferences = mockk()
 
     @Provides
-    fun provideCalendarRestClient(): com.oscarg798.remembrall.calendarimpl.CalendarRestClient = mockk()
+    fun provideCalendarRestClient(): com.oscarg798.remembrall.calendarimpl.CalendarRestClient =
+        mockk()
 
     @Provides
     fun provideGson(): Gson = mockk()
 
     @Provides
-    fun provideCoroutineContextProvider() : com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider = object:
+    fun provideCoroutineContextProvider():
+        com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider = object :
         com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider {
         override val io: CoroutineContext
             get() = Dispatchers.IO
@@ -50,7 +52,6 @@ object LoginModule {
             get() = Dispatchers.Default
         override val main: CoroutineContext
             get() = Dispatchers.Main
-
     }
 
     @Singleton
@@ -71,9 +72,7 @@ object LoginModule {
     @Reusable
     fun provideGoogleAuthRepository(): AuthRepository = mockk()
 
-
     @Provides
     @Singleton
-    fun provideExternalSignInClient(
-    ): ExternalSignInClient = mockk(relaxed = true)
+    fun provideExternalSignInClient(): ExternalSignInClient = mockk(relaxed = true)
 }

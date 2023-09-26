@@ -150,4 +150,4 @@ internal fun getTypography(fontSizes: FontSizes): Typography = Typography(
 
 )
 
-val LocalFontAwesome = staticCompositionLocalOf<FontFamily> {  error("You must provide it first") }
+val LocalFontAwesome = staticCompositionLocalOf<FontFamily> { error("You must provide it first") }

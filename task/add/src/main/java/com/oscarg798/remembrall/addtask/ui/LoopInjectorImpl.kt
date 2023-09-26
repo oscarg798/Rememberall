@@ -18,7 +18,7 @@ internal class LoopInjectorImpl @Inject constructor(
     private val uiEffectConsumer: UIEffectConsumer,
     private val schedulersProvider: SchedulersProvider,
     private val addTaskEffectHandler: AddTaskEffectHandler,
-): LoopInjector<Model, Event, Effect> {
+) : LoopInjector<Model, Event, Effect> {
 
     override fun provide(
         initialModel: Model,

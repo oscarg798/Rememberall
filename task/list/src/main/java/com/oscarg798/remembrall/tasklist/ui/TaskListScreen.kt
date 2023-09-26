@@ -36,7 +36,8 @@ fun TaskListScreen(
                         putString(Router.TaskDetail.TaskIdArgument, it)
                     }
                 )
-            }, onAddButtonClicked = { viewModel.onAddClicked() }) { task, option ->
+            }, onAddButtonClicked = { viewModel.onAddClicked() }
+        ) { task, option ->
             viewModel.onOptionClicked(task, option)
         }
     }
@@ -50,7 +51,8 @@ fun TaskListScreen(
                 navController,
                 Bundle().apply {
                     putString(Router.Edit.TaskIdArgument, event.taskId)
-                })
+                }
+            )
         }
     }
 

@@ -1,10 +1,10 @@
 package com.oscarg798.remembrall.login.effecthandler
 
 import com.oscarg798.remembrall.login.domain.Effect
+import com.oscarg798.remembrall.login.domain.Effect.UIEffect
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
-import com.oscarg798.remembrall.login.domain.Effect.UIEffect
 
 internal fun interface UIEffectConsumer : EffectConsumer<Effect>
 

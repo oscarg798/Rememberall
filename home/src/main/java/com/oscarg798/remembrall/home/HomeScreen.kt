@@ -21,7 +21,6 @@ fun NavGraphBuilder.homeScreen(onFinishRequest: () -> Unit) = composable(
 
     val navController = LocalNavControllerProvider.current
 
-
     RemembrallScaffold(
         topBar = {
             RemembrallTopBar(
@@ -54,4 +53,3 @@ fun ToolbarRightAction(
         onProfileClicked = onProfileButtonClicked
     )
 }
-

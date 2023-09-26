@@ -29,7 +29,7 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
         }
     }
 
-    //TODO: Should we add a completed filter?
+    // TODO: Should we add a completed filter?
     override suspend fun getTask(id: String): TaskDto {
         val taskResult = withContext(coroutinesContextProvider.io) {
             taskCollection.document(id).get().toSuspend {
@@ -114,13 +114,16 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
         calendarSyncInformation?.let {
             pairs.add(
                 CalendarSyncInformationDto.ColumnNames.CalendarId to
-                        calendarSyncInformation.calendarId
+                    calendarSyncInformation.calendarId
             )
             pairs.add(
                 CalendarSyncInformationDto.ColumnNames.CalendarEventId to
-                        calendarSyncInformation.calendarEventId
+                    calendarSyncInformation.calendarEventId
             )
-            pairs.add(CalendarSyncInformationDto.ColumnNames.Synced to calendarSyncInformation.synced)
+            pairs.add(
+                CalendarSyncInformationDto.ColumnNames.Synced to
+                    calendarSyncInformation.synced
+            )
             calendarSyncInformation.attendees?.map { it.email }?.let { emails ->
                 pairs.add(CalendarSyncInformationDto.ColumnNames.Attendees to emails)
             }

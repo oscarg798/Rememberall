@@ -1,6 +1,5 @@
 package com.oscarg798.remembrall.splash.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider

@@ -4,6 +4,6 @@ sealed class AddTaskException : IllegalArgumentException() {
 
     object MissingName : AddTaskException()
     object MissingPriority : AddTaskException()
-    object MissingDueDate: AddTaskException()
+    object MissingDueDate : AddTaskException()
     object AttendeesWrongFormat : AddTaskException()
 }

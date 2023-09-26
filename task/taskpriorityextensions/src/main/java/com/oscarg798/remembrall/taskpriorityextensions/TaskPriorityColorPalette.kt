@@ -10,7 +10,6 @@ import com.oscarg798.remembrall.uicolor.RoseBud
 import com.oscarg798.remembrall.uicolor.Shamrock
 import com.oscarg798.remembrall.uicolor.SweetCorn
 
-
 internal sealed class TaskPriorityColorPalette(val color: Color, val background: Color) {
     object Urgent : TaskPriorityColorPalette(color = Amaranth, background = Froly)
     object High : TaskPriorityColorPalette(color = BurntSienna, background = RoseBud)

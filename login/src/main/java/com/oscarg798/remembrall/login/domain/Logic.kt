@@ -21,7 +21,6 @@ private fun onExternalSignInFinished(
     event: Event.OnExternalSignInFinished
 ): UpComing = dispatch(setOf(Effect.FinishLogin(event.result.token)))
 
-
 private fun onSignedIn(model: Model): UpComing {
     val effects = setOf(Effect.UIEffect.NavigateToHome)
     return if (model.loading) {

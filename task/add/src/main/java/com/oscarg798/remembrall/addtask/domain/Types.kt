@@ -75,5 +75,4 @@ internal sealed interface ValidationError {
 
     object NameWrongLength : ValidationError
     object AttendeesNotValid : ValidationError
-
 }

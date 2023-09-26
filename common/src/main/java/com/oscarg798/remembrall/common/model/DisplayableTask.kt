@@ -5,7 +5,6 @@ import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
 
-
 data class DisplayableTask(
     val id: String,
     val owned: Boolean,
@@ -16,7 +15,7 @@ data class DisplayableTask(
     val dueDate: String?,
     val attendees: Collection<CalendarAttendee>? = null,
 
-    ) {
+) {
 
     constructor(task: Task, dueDateFormatter: DateFormatter) : this(
         id = task.id,

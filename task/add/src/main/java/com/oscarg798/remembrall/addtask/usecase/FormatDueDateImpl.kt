@@ -1,11 +1,10 @@
 package com.oscarg798.remembrall.addtask.usecase
 
-
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.dateformatter.DateFormatter
-import javax.inject.Inject
 import java.time.LocalDateTime
+import javax.inject.Inject
 
 internal interface FormatDueDate : suspend (Effect.FormatDueDate) -> Event.OnDueDateFormatted
 

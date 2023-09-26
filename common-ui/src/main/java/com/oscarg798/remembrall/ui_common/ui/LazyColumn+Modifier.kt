@@ -18,7 +18,6 @@ fun Modifier.draggedItem(
             with(offset ?: 0f) {
                 if (orientation == Orientation.Vertical) {
                     translationY = this
-
                 } else {
                     translationX = this
                 }

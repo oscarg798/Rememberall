@@ -2,7 +2,6 @@ package com.oscarg798.remembrall.dateimpl
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import dagger.Reusable
-import javax.inject.Inject
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -10,6 +9,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 
 @Reusable
 class DateFormatterImpl @Inject constructor() : DateFormatter {
@@ -21,7 +21,7 @@ class DateFormatterImpl @Inject constructor() : DateFormatter {
     private val dateFormatter = SimpleDateFormat(DateTimePattern, locale)
     private val shortDateFormatter = SimpleDateFormat(DatePattern, locale)
     private val monthDateFormatter = SimpleDateFormat(MonthPattern, locale)
-    private val monthNumberFormatter = SimpleDateFormat(MonthNumberPattern, locale);
+    private val monthNumberFormatter = SimpleDateFormat(MonthNumberPattern, locale)
     private val yearDateFormatter = SimpleDateFormat(YearPattern, locale)
     private val dayDateFormatter = SimpleDateFormat(DayPattern, locale)
     private val dayNameFormatter = SimpleDateFormat(DayNamePattern, locale)

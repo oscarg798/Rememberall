@@ -42,11 +42,10 @@ import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.oscarg798.remembrall.ui_common.ui.theming.colorScheme
 import com.oscarg798.remembrall.ui_common.ui.theming.dimensions
+import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import java.time.LocalDateTime
-
 
 @Composable
 internal fun AddTaskForm(
@@ -272,7 +271,8 @@ private fun TaskPriorityDropDown(
     DropdownMenu(
         modifier = modifier,
         expanded = expanded,
-        onDismissRequest = { onEvent(Event.OnTaskPrioritySelectorDismissed) }) {
+        onDismissRequest = { onEvent(Event.OnTaskPrioritySelectorDismissed) }
+    ) {
 
         priorities.map { priority ->
             key(priority) {
@@ -294,7 +294,6 @@ private fun TaskPriorityDropDown(
                 }
             }
         }
-
     }
 }
 
@@ -306,10 +305,11 @@ private fun AddTaskPreview() {
     val priorityBoxExpanded = remember { mutableStateOf(false) }
     val selectedPriority = remember { mutableStateOf<TaskPriority?>(null) }
     RemembrallTheme {
-        AddTaskForm(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.surface)
-            .padding(16.dp),
+        AddTaskForm(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.surface)
+                .padding(16.dp),
             title = title.value,
             description = description.value,
             availableTaskPriorities = listOf(
@@ -343,7 +343,6 @@ private fun AddTaskPreview() {
         )
     }
 }
-
 
 internal val TextFieldColors: androidx.compose.material.TextFieldColors
     @Composable

@@ -9,17 +9,17 @@ import androidx.work.WorkManager
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.BuildConfig
 import com.oscarg798.remembrall.common.HomeActivityPendingIntentFinder
 import com.oscarg798.remembrall.common.IdentifierGenerator
-import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
-import com.oscarg798.remembrall.config.Config
 import com.oscarg798.remembrall.common.persistence.AppDatabase
 import com.oscarg798.remembrall.common.persistence.TaskDao
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
 import com.oscarg798.remembrall.common.repository.data.LocalPreferenceRepository
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
+import com.oscarg798.remembrall.config.Config
 import com.oscarg798.remembrall.rxutils.SchedulersProvider
 import com.oscarg798.remembrall.schedule.util.PendingIntentFinder
 import dagger.Module
@@ -54,14 +54,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSchedulerProvider() = object : SchedulersProvider{
+    fun provideSchedulerProvider() = object : SchedulersProvider {
         override val io: Scheduler
             get() = Schedulers.io()
         override val computation: Scheduler
             get() = Schedulers.computation()
         override val main: Scheduler
             get() = Dispatchers.Main.asScheduler()
-
     }
 
     @Provides
@@ -94,7 +93,7 @@ object AppModule {
     @Singleton
     fun providePreferenceRepository(
         localPreferenceRepository:
-        LocalPreferenceRepository
+            LocalPreferenceRepository
     ): PreferenceRepository =
         localPreferenceRepository
 
@@ -117,7 +116,7 @@ object AppModule {
     @Reusable
     fun providePendingIntentFinder(
         homeActivityPendingIntentFinder:
-        HomeActivityPendingIntentFinder
+            HomeActivityPendingIntentFinder
     ): PendingIntentFinder =
         homeActivityPendingIntentFinder
 

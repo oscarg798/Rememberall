@@ -44,8 +44,8 @@ fun NavGraphBuilder.profileScreen() =
                     title = {
                         RemembrallTopBarTitle(stringResource(R.string.profile_title))
                     }, backButtonAction = {
-                        navController.popBackStack()
-                    }
+                    navController.popBackStack()
+                }
                 )
             }
         ) {
@@ -68,6 +68,5 @@ fun NavGraphBuilder.profileScreen() =
             }
         }
     }
-
 
 const val UserNameId = "UserGivenName"

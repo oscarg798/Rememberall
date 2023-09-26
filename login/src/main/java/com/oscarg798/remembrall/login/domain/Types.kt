@@ -2,7 +2,6 @@ package com.oscarg798.remembrall.login.domain
 
 import com.oscarg798.remembrall.auth.ExternalAuthProvider
 
-
 internal data class Model(
     val isLoggedIn: Boolean = false,
     val loading: Boolean = false

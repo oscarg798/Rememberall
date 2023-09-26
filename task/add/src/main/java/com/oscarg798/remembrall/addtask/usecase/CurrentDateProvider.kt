@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.addtask.usecase
 
-import javax.inject.Inject
 import java.time.LocalDateTime
+import javax.inject.Inject
 
 internal interface CurrentDateProvider : () -> LocalDateTime
 

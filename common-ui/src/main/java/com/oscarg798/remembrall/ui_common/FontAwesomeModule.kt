@@ -27,7 +27,6 @@ object FontAwesomeModule {
         awesomeIconsInputStream.read(awesomeIconsByteArray, 0, awesomeIconsByteArray.size)
         val awesomeIconJson = String(awesomeIconsByteArray)
 
-
         return gson.fromJson(awesomeIconJson, AwesomeIconsJsonResponse::class.java).icons.toSet()
     }
 }

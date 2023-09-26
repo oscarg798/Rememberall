@@ -12,7 +12,7 @@ import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 @Composable
 internal fun LoadingProfileButton() {
     CircularProgressIndicator(
-        modifier = Modifier.padding( RemembrallTheme.dimens.ExtraSmall)
+        modifier = Modifier.padding(RemembrallTheme.dimens.ExtraSmall)
             .size(ProfileButtonSize),
         color = MaterialTheme.colorScheme.onSecondary
     )

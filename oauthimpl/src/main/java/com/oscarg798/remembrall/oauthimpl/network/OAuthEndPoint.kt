@@ -1,7 +1,6 @@
 package com.oscarg798.remembrall.oauthimpl.network
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.Field
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -11,7 +10,7 @@ internal interface OAuthEndPoint {
     @FormUrlEncoded
     @POST("oauth2/v4/token")
     suspend fun auth(
-       @FieldMap formValues: Map<String, String>
+        @FieldMap formValues: Map<String, String>
     ): AuthResponse
 
     data class AuthResponse(

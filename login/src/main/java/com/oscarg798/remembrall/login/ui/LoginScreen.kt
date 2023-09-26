@@ -83,4 +83,3 @@ fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
 
         BackHandler { onFinishRequest() }
     }
-

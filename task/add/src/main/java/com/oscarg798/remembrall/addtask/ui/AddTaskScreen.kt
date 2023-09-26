@@ -71,11 +71,11 @@ import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.addTaskScreen() =
     composable(Router.AddTask.route, deepLinks = getDeepLinks()) { backStackEntry ->
@@ -161,7 +161,8 @@ fun NavGraphBuilder.addTaskScreen() =
         RemembrallScaffold(
             topBar = {
                 AddTaskToolbar(
-                    onEvent = { viewModel.onEvent(it) }, modifier = Modifier
+                    onEvent = { viewModel.onEvent(it) },
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(
                             top = MaterialTheme.dimensions.Medium,
@@ -230,11 +231,11 @@ fun NavGraphBuilder.addTaskScreen() =
                     },
                     onAttendeeDeleted = {
                         viewModel.onEvent(Event.OnAttendeeRemoved(it))
-                    }) {
+                    }
+                ) {
                     viewModel.onEvent(Event.DismissAttendeePicker)
                 }
             }
-
         }
     }
 
@@ -423,11 +424,13 @@ private fun AddAttendeeField(
     ConstraintLayout(modifier) {
         val (input, button) = createRefs()
 
-        Column(Modifier.constrainAs(input) {
-            linkTo(parent.top, parent.bottom)
-            linkTo(parent.start, button.start)
-            width = Dimension.fillToConstraints
-        }) {
+        Column(
+            Modifier.constrainAs(input) {
+                linkTo(parent.top, parent.bottom)
+                linkTo(parent.start, button.start)
+                width = Dimension.fillToConstraints
+            }
+        ) {
             TextField(
                 value = editableAttendee,
                 isError = showError,
@@ -488,7 +491,8 @@ private fun AddAttendeeField(
 
 @Composable
 private fun AttendeeItem(
-    attendee: String, modifier: Modifier,
+    attendee: String,
+    modifier: Modifier,
     onClick: (String) -> Unit
 ) {
     ConstraintLayout(modifier) {
@@ -521,7 +525,6 @@ private fun AttendeeItem(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-
     }
 }
 
@@ -530,7 +533,6 @@ private fun AttendeeItem(
 private fun AddTaskToolbarPreview() {
     RemembrallTheme {
         AddTaskToolbar(Modifier.width(200.dp)) {
-
         }
     }
 }

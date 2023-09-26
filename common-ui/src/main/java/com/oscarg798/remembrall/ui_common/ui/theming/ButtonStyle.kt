@@ -7,7 +7,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun getButtonShape() = RoundedCornerShape( RemembrallTheme.dimens.Small)
+fun getButtonShape() = RoundedCornerShape(RemembrallTheme.dimens.Small)
 
 @Composable
 fun getButtonTextStyle() = MaterialTheme.typography.bodyMedium.merge(

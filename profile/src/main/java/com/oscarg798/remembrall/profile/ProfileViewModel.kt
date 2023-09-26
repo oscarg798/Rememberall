@@ -1,7 +1,6 @@
 package com.oscarg798.remembrall.profile
 
 import androidx.lifecycle.viewModelScope
-import com.remembrall.oscarg798.calendar.Calendar
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
@@ -10,6 +9,7 @@ import com.oscarg798.remembrall.profile.usecase.GetProfileInformationUseCase
 import com.oscarg798.remembrall.profile.usecase.LogOutUseCase
 import com.oscarg798.remembrall.profile.usecase.SaveNotificationValueUseCase
 import com.oscarg798.remembrall.profile.usecase.SetCalendarSelectedUseCase
+import com.remembrall.oscarg798.calendar.Calendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -24,7 +24,8 @@ class ProfileViewModel @Inject constructor(
     coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<ProfileViewModel.ViewState, ProfileViewModel.Event>(
     ViewState()
-), CoroutineContextProvider by coroutineContextProvider {
+),
+    CoroutineContextProvider by coroutineContextProvider {
 
     fun getProfileInformation() {
         launch {

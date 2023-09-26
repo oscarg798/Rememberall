@@ -23,7 +23,9 @@ import com.oscarg798.remembrall.ui_common.R
 fun RemembrallTopBarTitle(title: String) {
     Text(
         title,
-        style = MaterialTheme.typography.displayMedium.merge(TextStyle(color = MaterialTheme.colorScheme.onBackground)),
+        style = MaterialTheme.typography.displayMedium.merge(
+            TextStyle(color = MaterialTheme.colorScheme.onBackground)
+        ),
         maxLines = SingleLine
     )
 }
@@ -54,7 +56,6 @@ fun RemembrallTopBar(
         }
     )
 }
-
 
 @Composable
 fun RemembrallScaffold(

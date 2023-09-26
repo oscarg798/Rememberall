@@ -3,12 +3,12 @@ package com.oscarg798.remembrall.splash.di
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
-import com.oscarg798.remembrall.splash.effecthandler.SplashEffectHandler
 import com.oscarg798.remembrall.splash.domain.Effect
 import com.oscarg798.remembrall.splash.domain.Event
 import com.oscarg798.remembrall.splash.domain.Model
-import com.oscarg798.remembrall.splash.ui.LoopInjectorImpl
+import com.oscarg798.remembrall.splash.effecthandler.SplashEffectHandler
 import com.oscarg798.remembrall.splash.effecthandler.UIEffectConsumer
+import com.oscarg798.remembrall.splash.ui.LoopInjectorImpl
 import com.oscarg798.remembrall.splash.usecase.IsUserLoggedIn
 import com.oscarg798.remembrall.splash.usecase.IsUserLoggedInImpl
 import dagger.Binds

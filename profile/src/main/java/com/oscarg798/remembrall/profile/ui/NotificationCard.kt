@@ -19,14 +19,14 @@ internal fun NotificationCard(
 ) {
     Card(
         backgroundColor = MaterialTheme.colorScheme.surface,
-        modifier = Modifier.padding( RemembrallTheme.dimens.Medium)
+        modifier = Modifier.padding(RemembrallTheme.dimens.Medium)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "Daily agenda",
                 style = MaterialTheme.typography.bodyMedium
                     .merge(TextStyle(color = MaterialTheme.colorScheme.onBackground)),
-                modifier = Modifier.weight(0.8f).padding( RemembrallTheme.dimens.Medium)
+                modifier = Modifier.weight(0.8f).padding(RemembrallTheme.dimens.Medium)
             )
 
             Switch(

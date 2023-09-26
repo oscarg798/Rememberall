@@ -39,9 +39,9 @@ import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.tasklist.R
-import com.oscarg798.remembrall.ui_common.R as CommonUIR
 import com.oscarg798.remembrall.taskpriorityextensions.getColor
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
+import com.oscarg798.remembrall.ui_common.R as CommonUIR
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
@@ -183,7 +183,6 @@ private fun TaskBody(
             )
         }
 
-
         if (!task.owned) {
             Image(
                 painter = painterResource(id = R.drawable.ic_attendee),
@@ -232,7 +231,6 @@ private fun TaskHeader(task: DisplayableTask) {
             )
         )
     }
-
 
     Divider(
         color = SecondaryTextColor,
@@ -290,7 +288,6 @@ private fun TaskDueDate(dueDate: String, modifier: Modifier) {
         )
     }
 }
-
 
 sealed interface TaskCardOptions {
 

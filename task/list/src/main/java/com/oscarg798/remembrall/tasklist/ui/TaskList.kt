@@ -105,7 +105,6 @@ internal fun TaskList(
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -126,11 +125,19 @@ private fun DayGroupField(dayGroup: TaskGroup.DayGroup, modifier: Modifier = Mod
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
         Text(
             text = dayGroup.dayName,
-            style = MaterialTheme.typography.bodyLarge.merge(TextStyle(color = MaterialTheme.colorScheme.onBackground))
+            style = MaterialTheme.typography.bodyLarge.merge(
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            )
         )
         Text(
             text = dayGroup.dayNumber,
-            style = MaterialTheme.typography.bodyLarge.merge(TextStyle(color = MaterialTheme.colorScheme.onBackground))
+            style = MaterialTheme.typography.bodyLarge.merge(
+                TextStyle(
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            )
         )
     }
 }

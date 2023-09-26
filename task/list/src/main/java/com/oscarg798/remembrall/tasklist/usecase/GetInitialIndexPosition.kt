@@ -1,10 +1,9 @@
 package com.oscarg798.remembrall.tasklist.usecase
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
-
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
-import javax.inject.Inject
 import java.util.Calendar
+import javax.inject.Inject
 
 class GetInitialIndexPosition @Inject constructor(private val dueDateFormatter: DateFormatter) {
 

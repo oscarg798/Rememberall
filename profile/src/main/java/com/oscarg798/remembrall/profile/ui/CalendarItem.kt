@@ -18,11 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.remembrall.oscarg798.calendar.Calendar
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.profile.R
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
+import com.remembrall.oscarg798.calendar.Calendar
 
 @Composable
 fun CalendarItem(
@@ -40,7 +40,7 @@ fun CalendarItem(
                     .merge(TextStyle(color = MaterialTheme.colorScheme.onSurface)),
                 maxLines = SingleLine,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding( RemembrallTheme.dimens.Medium).weight(
+                modifier = Modifier.padding(RemembrallTheme.dimens.Medium).weight(
                     if (isSelected) {
                         0.8f
                     } else {
@@ -54,7 +54,7 @@ fun CalendarItem(
                     painter = painterResource(R.drawable.ic_check),
                     contentDescription = "",
                     modifier = Modifier
-                        .padding( RemembrallTheme.dimens.Medium)
+                        .padding(RemembrallTheme.dimens.Medium)
                         .weight(0.2f)
                         .size(SelectedCalendarIndicatorHeight)
                 )
@@ -65,8 +65,8 @@ fun CalendarItem(
             Divider(
                 modifier = Modifier
                     .padding(
-                        horizontal =  RemembrallTheme.dimens.Medium,
-                        vertical =  RemembrallTheme.dimens.ExtraSmall
+                        horizontal = RemembrallTheme.dimens.Medium,
+                        vertical = RemembrallTheme.dimens.ExtraSmall
                     )
                     .fillMaxWidth()
                     .width(DividerHeight),

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.recipegenius.authimpl'
+    namespace 'com.oscarg798.remembrall.authimpl'
     compileSdk targetAndCompileVersion
 
     defaultConfig {

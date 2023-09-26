@@ -71,7 +71,6 @@ private fun onTitleChanged(model: Model, event: Event.OnTitleChanged): Upcoming 
         next(model.copy(title = event.title))
     }
 
-
 private fun onDescriptionChange(model: Model, event: Event.OnDescriptionChanged): Upcoming =
     if (model.description == event.description) {
         noChange()
@@ -139,7 +138,9 @@ private fun onAttendeesActionClicked(): Upcoming =
     dispatch(setOf(Effect.UIEffect.ShowAttendeesPicker))
 
 private fun onDueDateFormatted(model: Model, event: Event.OnDueDateFormatted): Upcoming =
-    if (model.dueDate?.date != event.date && model.dueDate?.displayableDate == event.formattedDate) {
+    if (model.dueDate?.date != event.date &&
+        model.dueDate?.displayableDate == event.formattedDate
+    ) {
         noChange()
     } else {
         next(model.copy(dueDate = DueDate(event.date, event.formattedDate)))
@@ -148,8 +149,9 @@ private fun onDueDateFormatted(model: Model, event: Event.OnDueDateFormatted): U
 private fun onCalendarActionClicked(model: Model): Upcoming =
     dispatch(setOf(Effect.GetDueDatePickerInitialDate(model.dueDate)))
 
-private fun onDueDatePickerInitialDateFound(event: Event.OnDueDatePickerInitialDateFound): Upcoming =
-    dispatch(setOf(Effect.UIEffect.ShowDueDateDatePicker(event.initialDate)))
+private fun onDueDatePickerInitialDateFound(
+    event: Event.OnDueDatePickerInitialDateFound
+): Upcoming = dispatch(setOf(Effect.UIEffect.ShowDueDateDatePicker(event.initialDate)))
 
 private fun onTaskPrioritySelectorDismissed(): Upcoming =
     dispatch(setOf(Effect.UIEffect.DismissTaskPriorityPicker))

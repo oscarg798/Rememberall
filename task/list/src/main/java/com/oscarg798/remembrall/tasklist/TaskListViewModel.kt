@@ -1,16 +1,15 @@
 package com.oscarg798.remembrall.tasklist
 
-
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
-import com.oscarg798.remembrall.tasklist.usecase.GetTaskUpdateListenerUseCase
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import com.oscarg798.remembrall.tasklist.ui.TaskCardOptions
 import com.oscarg798.remembrall.tasklist.usecase.GetInitialIndexPosition
 import com.oscarg798.remembrall.tasklist.usecase.GetTaskGrouped
+import com.oscarg798.remembrall.tasklist.usecase.GetTaskUpdateListenerUseCase
 import com.oscarg798.remembrall.tasklist.usecase.RemoveTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -26,7 +25,8 @@ class TaskListViewModel @Inject constructor(
     coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 ) : AbstractViewModel<TaskListViewModel.ViewState, TaskListViewModel.Event>(
     ViewState()
-), com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
+),
+    com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
 
     private var shouldUpdate = false
 
@@ -71,7 +71,6 @@ class TaskListViewModel @Inject constructor(
         }
     }
 
-
     fun onOptionClicked(task: DisplayableTask, option: TaskCardOptions.Option) {
         when (option) {
             TaskCardOptions.Option.Edit -> _event.tryEmit(Event.NavigateToEdit(task.id))
@@ -100,6 +99,6 @@ class TaskListViewModel @Inject constructor(
     sealed class Event {
         object OpenProfile : Event()
         object ShowAddTaskForm : Event()
-        data class NavigateToEdit(val taskId: String): Event()
+        data class NavigateToEdit(val taskId: String) : Event()
     }
 }

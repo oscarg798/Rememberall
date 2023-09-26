@@ -51,7 +51,7 @@ data class TaskDto(
         dueDate = taskMap[ColumnNames.DueDate] as? Long
             ?: throw NullPointerException(
                 "Due data not found, " +
-                        "but seems it was synced with Calendar $taskMap"
+                    "but seems it was synced with Calendar $taskMap"
             ),
         calendarSyncInformation = if (taskMap.hasCalendarInformation()) {
             CalendarSyncInformationDto(taskMap)
@@ -87,9 +87,8 @@ data class TaskDto(
     companion object {
         private fun Map<String, Any>.hasCalendarInformation() =
             CalendarSyncInformationDto.ColumnNames.CalendarId in keys &&
-                    CalendarSyncInformationDto.ColumnNames.Synced in keys &&
-                    CalendarSyncInformationDto.ColumnNames.CalendarEventId in keys
-
+                CalendarSyncInformationDto.ColumnNames.Synced in keys &&
+                CalendarSyncInformationDto.ColumnNames.CalendarEventId in keys
     }
 }
 

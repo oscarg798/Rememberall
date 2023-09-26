@@ -49,7 +49,7 @@ sealed class Router(val route: String, val uriPattern: String) {
         const val TaskIdArgument = "TaskId"
     }
 
-    object ChecklistDetail : Router(ChecklistDetailRoute, ChecklistDetailUriPattern){
+    object ChecklistDetail : Router(ChecklistDetailRoute, ChecklistDetailUriPattern) {
 
         override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
             require(arguments != null && arguments.containsKey(ChecklistIdArgument))
@@ -77,9 +77,11 @@ sealed class Router(val route: String, val uriPattern: String) {
         )
     }
 
-    fun getDeepLinks(): List<NavDeepLink> = listOf(navDeepLink {
-        uriPattern = this@Router.uriPattern
-    })
+    fun getDeepLinks(): List<NavDeepLink> = listOf(
+        navDeepLink {
+            uriPattern = this@Router.uriPattern
+        }
+    )
 }
 
 private const val DeepLinkUri = "https://remembrall"
@@ -112,4 +114,5 @@ private const val AddCheckList = "checklist-add"
 private const val AddCheckListUriPattern = "$DeepLinkUri/$AddCheckList"
 
 private const val ChecklistDetailRoute = "checklist-detail"
-private const val ChecklistDetailUriPattern = "$DeepLinkUri/$ChecklistDetailRoute/{$ChecklistIdArgument}"
+private const val ChecklistDetailUriPattern = "$DeepLinkUri/$ChecklistDetailRoute/" +
+    "{$ChecklistIdArgument}"

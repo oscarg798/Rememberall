@@ -1,8 +1,8 @@
 package com.oscarg798.remembrall.profile.usecase
 
 import android.util.Log
-import com.oscarg798.remembrall.schedule.ScheduleWorkerScheduler
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
+import com.oscarg798.remembrall.schedule.ScheduleWorkerScheduler
 import javax.inject.Inject
 
 class SaveNotificationValueUseCase @Inject constructor(

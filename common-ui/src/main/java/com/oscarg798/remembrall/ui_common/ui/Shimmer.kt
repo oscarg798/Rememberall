@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.core.graphics.toColorInt
 
 @Composable
-fun  Shimmer(
+fun Shimmer(
     modifier: Modifier,
     cornerRadius: CornerRadius = CornerRadius.Zero,
     colors: List<Color> = ShaderColors

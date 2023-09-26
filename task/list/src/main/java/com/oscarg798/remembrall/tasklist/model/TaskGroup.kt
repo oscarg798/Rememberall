@@ -16,11 +16,11 @@ data class TaskGroup(
         val year: String
     )
 
-    data class DayGroup(val dayName: String, val dayNumber: String){
+    data class DayGroup(val dayName: String, val dayNumber: String) {
         override fun toString(): String = "$dayName $dayNumber"
     }
 
-    data class MonthGroup(val name: String, val value: String, val year: String){
+    data class MonthGroup(val name: String, val value: String, val year: String) {
         override fun toString() = "${name.capitalize(Locale.current)} $year"
     }
 }

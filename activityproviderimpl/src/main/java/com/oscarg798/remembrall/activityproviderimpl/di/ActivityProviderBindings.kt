@@ -19,5 +19,7 @@ internal interface ActivityProviderBindings {
 
     @Binds
     @Singleton
-    fun bindActivityLifecycleCallback(impl: ActivityProvider): Application.ActivityLifecycleCallbacks
+    fun bindActivityLifecycleCallback(
+        impl: ActivityProvider
+    ): Application.ActivityLifecycleCallbacks
 }

@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import com.remembrall.oscarg798.calendar.Calendar
 import com.oscarg798.remembrall.profile.R
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.remembrall.oscarg798.calendar.Calendar
 
 @Composable
 internal fun CalendarSelector(
@@ -23,12 +23,12 @@ internal fun CalendarSelector(
 ) {
     Column(
         Modifier
-            .padding(horizontal =  RemembrallTheme.dimens.Medium)
+            .padding(horizontal = RemembrallTheme.dimens.Medium)
     ) {
         Text(
             text = stringResource(R.string.profile_calendar_label),
             modifier = Modifier.padding(
-                vertical =  RemembrallTheme.dimens.Small
+                vertical = RemembrallTheme.dimens.Small
             ),
             style = MaterialTheme.typography.bodyMedium
                 .merge(TextStyle(color = MaterialTheme.colorScheme.onBackground))
@@ -36,7 +36,7 @@ internal fun CalendarSelector(
         Card(
             backgroundColor = MaterialTheme.colorScheme.surface,
             modifier = Modifier.padding(
-                vertical =  RemembrallTheme.dimens.Small
+                vertical = RemembrallTheme.dimens.Small
             ),
             shape = RoundedCornerShape(RemembrallTheme.dimens.Small)
         ) {

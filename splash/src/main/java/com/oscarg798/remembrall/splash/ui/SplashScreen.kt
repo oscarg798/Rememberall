@@ -1,7 +1,5 @@
 package com.oscarg798.remembrall.splash.ui
 
-import android.util.Log
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -9,7 +7,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,7 +19,6 @@ import com.oscarg798.remembrall.ui_common.navigation.Router
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import kotlinx.coroutines.Dispatchers
 
 fun NavGraphBuilder.splashScreen() = composable(
     Router.Splash.route,
@@ -56,7 +52,6 @@ fun NavGraphBuilder.splashScreen() = composable(
             if (model.loading) {
                 LoadingAnimation(modifier = Modifier.size(LoadingAnimationSize))
             }
-
         }
     }
 }

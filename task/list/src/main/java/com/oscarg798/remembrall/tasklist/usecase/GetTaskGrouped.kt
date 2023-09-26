@@ -1,10 +1,10 @@
 package com.oscarg798.remembrall.tasklist.usecase
 
-import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.dateformatter.DateFormatter
+import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
-import javax.inject.Inject
 import java.util.SortedMap
+import javax.inject.Inject
 
 class GetTaskGrouped @Inject constructor(
     private val getTaskUseCase: GetTaskUseCase,
@@ -50,7 +50,8 @@ class GetTaskGrouped @Inject constructor(
         }
 
         return groups.toSortedMap() { first, second ->
-            convertMonthStringToIntPosition(first).compareTo(convertMonthStringToIntPosition(second))
+            convertMonthStringToIntPosition(first)
+                .compareTo(convertMonthStringToIntPosition(second))
         }
     }
 
@@ -64,11 +65,11 @@ class GetTaskGrouped @Inject constructor(
         monthGroup: TaskGroup.MonthGroup,
     ): Int {
         return "${
-            if (monthGroup.value.length == 1) {
-                "0${monthGroup.value}"
-            } else {
-                monthGroup.value
-            }
+        if (monthGroup.value.length == 1) {
+            "0${monthGroup.value}"
+        } else {
+            monthGroup.value
+        }
         }${monthGroup.year}".toInt()
     }
 }

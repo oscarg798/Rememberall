@@ -45,6 +45,5 @@ internal interface LoginModule {
             extraBufferCapacity = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
-
     }
 }

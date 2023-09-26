@@ -1,6 +1,5 @@
 package com.oscarg798.remembrall.tasklist.model
 
-
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 
@@ -12,9 +11,12 @@ data class DisplayableTasksGroup(
     constructor(
         taskGroup: TaskGroup,
         dueDateFormatter: DateFormatter
-    ) : this(date = taskGroup.date, taskGroup.itemsByDay.map { entry ->
-        entry.key to entry.value.map { DisplayableTask(it, dueDateFormatter) }
-    }.toMap().toSortedMap { first, second ->
-        first.dayNumber.compareTo(second.dayNumber)
-    })
+    ) : this(
+        date = taskGroup.date,
+        taskGroup.itemsByDay.map { entry ->
+            entry.key to entry.value.map { DisplayableTask(it, dueDateFormatter) }
+        }.toMap().toSortedMap { first, second ->
+            first.dayNumber.compareTo(second.dayNumber)
+        }
+    )
 }

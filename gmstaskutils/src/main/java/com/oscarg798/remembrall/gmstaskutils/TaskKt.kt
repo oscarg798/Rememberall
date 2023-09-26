@@ -10,16 +10,16 @@ suspend fun <T> Task<T>.toSuspend(
         it ?: RuntimeException()
     }
 ) = suspendCancellableCoroutine<Task<T>> { continuation ->
-        addOnCompleteListener { taskResult ->
-            if (!continuation.isActive) {
-                return@addOnCompleteListener
-            }
-
-            if (!taskResult.isSuccessful) {
-                continuation.resumeWithException(errorWrapper(taskResult.exception))
-                return@addOnCompleteListener
-            }
-
-            continuation.resume(taskResult)
+    addOnCompleteListener { taskResult ->
+        if (!continuation.isActive) {
+            return@addOnCompleteListener
         }
+
+        if (!taskResult.isSuccessful) {
+            continuation.resumeWithException(errorWrapper(taskResult.exception))
+            return@addOnCompleteListener
+        }
+
+        continuation.resume(taskResult)
     }
+}

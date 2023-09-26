@@ -8,7 +8,6 @@ import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -19,10 +18,14 @@ class ScheduleWorkerReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         Log.i("Scheduler", "work scheduled ")
-        workManager.enqueue(OneTimeWorkRequestBuilder<ScheduleWorker>()
-            .setConstraints(Constraints.Builder().setRequiresCharging(false)
-                .setRequiresBatteryNotLow(false)
-                .build())
-            .build())
+        workManager.enqueue(
+            OneTimeWorkRequestBuilder<ScheduleWorker>()
+                .setConstraints(
+                    Constraints.Builder().setRequiresCharging(false)
+                        .setRequiresBatteryNotLow(false)
+                        .build()
+                )
+                .build()
+        )
     }
 }

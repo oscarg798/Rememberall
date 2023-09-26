@@ -59,8 +59,6 @@ internal fun EmptyTaskList(
             onAddButtonClicked()
         }
     }
-
-
 }
 
 private val EmptyStateIconSize = 50.dp

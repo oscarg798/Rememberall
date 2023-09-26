@@ -18,7 +18,6 @@ internal class FinishLogInEffectHandler @Inject constructor(
             if (it !is Exception) throw it
             Event.OnLoginError(it)
         })
-
     }
 
     private suspend fun getOrSelectCalendar() = runCatching {

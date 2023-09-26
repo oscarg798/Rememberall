@@ -54,7 +54,9 @@ sealed class TaskPriority : Comparable<TaskPriority> {
             .map { klass -> klass.objectInstance }
             .filterIsInstance<TaskPriority>()
 
-        fun fromName(priority: String): TaskPriority?= values().firstOrNull { it.javaClass.name == priority }
+        fun fromName(priority: String): TaskPriority? = values().firstOrNull {
+            it.javaClass.name == priority
+        }
     }
 }
 

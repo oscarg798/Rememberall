@@ -11,5 +11,4 @@ internal class IsUserLoggedInImpl @Inject constructor(
 ) : IsUserLoggedIn {
 
     override suspend fun invoke(): Event = Event.OnSessionStateObtained(session.getLoggedInState())
-
 }

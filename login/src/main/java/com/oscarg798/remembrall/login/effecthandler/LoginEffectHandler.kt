@@ -9,7 +9,7 @@ import com.oscarg798.remembrall.mobiusutils.MobiusCoroutines
 import com.spotify.mobius.Connectable
 import javax.inject.Inject
 
-internal interface LoginEffectHandlerProvider: EffectHandlerProvider<Effect, Event>
+internal interface LoginEffectHandlerProvider : EffectHandlerProvider<Effect, Event>
 
 internal class LoginEffectHandlerProviderImpl @Inject constructor(
     private val coroutineContextProvider: CoroutineContextProvider,

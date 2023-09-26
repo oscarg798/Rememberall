@@ -3,8 +3,8 @@ package com.oscarg798.remembrall.activityproviderimpl
 import android.app.Activity
 import android.os.Bundle
 import com.oscarg798.remembrall.activityprovider.ActivityProvider
-import javax.inject.Inject
 import java.lang.ref.WeakReference
+import javax.inject.Inject
 
 internal class ActivityProviderImpl @Inject constructor() : ActivityProvider {
     private var currentActivity: WeakReference<Activity> = WeakReference(null)

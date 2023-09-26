@@ -13,7 +13,7 @@ sealed interface Effect {
 
     object CheckSessionState : Effect
 
-    sealed interface UIEffect: Effect {
+    sealed interface UIEffect : Effect {
         object NavigateToLogin : UIEffect
         data class NavigateToHome(val x: Boolean) : UIEffect
     }

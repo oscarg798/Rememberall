@@ -17,7 +17,7 @@ internal fun LogOutButton(onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding( RemembrallTheme.dimens.Medium),
+            .padding(RemembrallTheme.dimens.Medium),
         shape = getButtonShape()
     ) {
         Text(text = "Lout Out", style = getButtonTextStyle())

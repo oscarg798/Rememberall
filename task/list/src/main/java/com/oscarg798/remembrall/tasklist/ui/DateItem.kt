@@ -33,20 +33,21 @@ fun DayItem(
     ) {
         Row(
             Modifier.padding(
-                horizontal =  RemembrallTheme.dimens.Small
+                horizontal = RemembrallTheme.dimens.Small
             )
         ) {
             Text(
                 text = name,
-                style = MaterialTheme.typography.bodyMedium.merge(TextStyle(color = com.oscarg798.remembrall.uicolor.SecondaryTextColor))
+                style =
+                MaterialTheme.typography.bodyMedium.merge(TextStyle(color = SecondaryTextColor))
             )
         }
 
         Row(
             Modifier
                 .padding(
-                    start =  RemembrallTheme.dimens.Small,
-                    end =  RemembrallTheme.dimens.Small
+                    start = RemembrallTheme.dimens.Small,
+                    end = RemembrallTheme.dimens.Small
                 )
                 .wrapContentSize()
         ) {
@@ -80,7 +81,7 @@ private fun getDayColor(isToday: Boolean) = if (isToday) {
 private fun getDividerColor(isToday: Boolean) = if (isToday) {
     MaterialTheme.colorScheme.secondary
 } else {
-   SecondaryTextColor
+    SecondaryTextColor
 }
 
 private fun getDividerHeight(isToday: Boolean) = if (isToday) {

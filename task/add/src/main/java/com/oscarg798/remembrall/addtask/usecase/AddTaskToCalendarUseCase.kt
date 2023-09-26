@@ -3,8 +3,8 @@ package com.oscarg798.remembrall.addtask.usecase
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.CalendarSyncInformation
 import com.remembrall.oscarg798.calendar.CalendarRepository
-import javax.inject.Inject
 import java.time.LocalDateTime
+import javax.inject.Inject
 
 class AddTaskToCalendarUseCase @Inject constructor(
     private val calendarRepository: CalendarRepository,
@@ -14,7 +14,7 @@ class AddTaskToCalendarUseCase @Inject constructor(
     suspend fun execute(
         params: AddTaskToCalendarParams,
 
-        ): CalendarSyncInformation {
+    ): CalendarSyncInformation {
         val selectedCalendar = calendarRepository.getSelectedCalendar()
 
         val startDate = dateFormatter.toCalendarTaskDate(params.dueDate)

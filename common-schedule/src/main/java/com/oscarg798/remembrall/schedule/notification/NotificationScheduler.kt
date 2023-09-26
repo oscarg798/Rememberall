@@ -11,7 +11,6 @@ import com.oscarg798.remembrall.schedule.util.PendingIntentFinder
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-
 class NotificationScheduler @Inject constructor(
     @ApplicationContext private val context: Context,
     private val pendingIntentFinder: PendingIntentFinder,
