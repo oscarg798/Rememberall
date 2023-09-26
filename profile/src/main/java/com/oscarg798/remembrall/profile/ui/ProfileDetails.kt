@@ -7,8 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import com.oscarg798.remembrall.common.extensions.SingleLine
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.extensions.SingleLine
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.remembrall.oscarg798.calendar.Calendar
 
 @Composable

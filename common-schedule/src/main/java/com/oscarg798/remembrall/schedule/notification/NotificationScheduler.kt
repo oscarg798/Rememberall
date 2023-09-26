@@ -5,9 +5,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.oscarg798.remembrall.schedule.R
 import com.oscarg798.remembrall.schedule.ScheduleWorker
 import com.oscarg798.remembrall.schedule.util.PendingIntentFinder
+import com.oscarg798.remembrall.ui.icons.R as IconsR
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -50,7 +50,7 @@ class NotificationScheduler @Inject constructor(
         NotificationCompat.Builder(context, ChannelId)
             .setContentTitle(type.title)
             .setAutoCancel(false)
-            .setSmallIcon(R.drawable.ic_agenda)
+            .setSmallIcon(IconsR.drawable.ic_agenda)
 
     private fun getPendingIntent() = pendingIntentFinder.getPendingIntent(context, NotificationId)
 

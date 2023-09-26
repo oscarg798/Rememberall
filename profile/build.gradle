@@ -2,12 +2,13 @@ apply from: "../common.gradle"
 
 dependencies {
     implementation libs.workManager.ktx
-    implementation project(path: ':user')
 
+    implementation project(path: ':ui')
+    implementation project(path: ':user')
     implementation project(path: ':auth')
-    implementation project(path: ':uicolor')
+    implementation project(path: ':ui:color')
     implementation project(path: ':calendar')
-    implementation project(path: ':common-ui')
+    implementation project(path: ':ui:icons')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
 }

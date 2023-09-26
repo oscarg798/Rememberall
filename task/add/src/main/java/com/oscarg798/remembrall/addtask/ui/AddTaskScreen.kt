@@ -58,14 +58,15 @@ import com.oscarg798.remembrall.addtask.R
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.ValidationError
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
-import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallPage
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.dimensions
-import com.oscarg798.remembrall.ui_common.ui.theming.typo
+import com.oscarg798.remembrall.ui.RemembrallButton
+import com.oscarg798.remembrall.ui.icons.R as IconsR
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
+import com.oscarg798.remembrall.ui.theming.RemembrallPage
+import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.theming.dimensions
+import com.oscarg798.remembrall.ui.theming.typo
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -293,14 +294,14 @@ private fun AddTaskToolbar(
         backgroundColor = Color.Transparent,
         contentColor = Color.Transparent,
         navigationIcon = {
-            ToolbarButton(icon = R.drawable.ic_back) {
+            ToolbarButton(icon = IconsR.drawable.ic_back) {
                 onEvent(Event.OnCloseClicked)
             }
         },
         elevation = 0.dp,
         title = {},
         actions = {
-            ToolbarButton(icon = R.drawable.ic_close) {
+            ToolbarButton(icon = IconsR.drawable.ic_close) {
                 onEvent(Event.OnCloseClicked)
             }
         }
@@ -481,7 +482,7 @@ private fun AddAttendeeField(
             }
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_save),
+                painter = painterResource(id = IconsR.drawable.ic_save),
                 contentDescription = "Add attendee",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -520,7 +521,7 @@ private fun AttendeeItem(
             },
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_delete),
+                painter = painterResource(id = IconsR.drawable.ic_delete),
                 contentDescription = "Delete attendee",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )

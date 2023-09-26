@@ -14,7 +14,6 @@
     <string name="remove_task_label">Remove</string>
     <string name="edit_task_label">Edit</string>
     <string name="profile_title">Profile</string>
-    <string name="login_title">Login</string>
     <string name="profile_calendar_label">Calendar for task creation</string>
     <string name="today_due_date_label">Today</string>
     <string name="expired_label">Already Expired</string>

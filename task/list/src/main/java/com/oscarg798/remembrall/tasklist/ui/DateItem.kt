@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
 @Composable

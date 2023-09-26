@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.oscarg798.remembrall.ui'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+        targetSdk targetAndCompileVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    defaultConfig {
+        testInstrumentationRunner "com.oscarg798.remembrall.login.CustomTestRunner"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_ui_version
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api libs.compose.ui
+    api libs.compose.icons
+    api libs.compose.tooling
+    api libs.compose.material
+    api libs.compose.compiler
+    api libs.compose.activity
+    api libs.compose.material3
+    api libs.compose.animation
+    api libs.compose.foundation
+    api libs.compose.iconsExtended
+    api libs.compose.runtimeLivedata
+    api libs.compose.constraintLayout
+
+    //TODO: Move this to Navigation
+    api libs.androidx.navigation.compose
+
+    api libs.accompanist.insets
+
+    implementation project(path: ':ui:color')
+    implementation project(path: ':ui:icons')
+}
+

@@ -11,8 +11,8 @@ import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
 import com.oscarg798.remembrall.login.ui.loginScreen
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.ui.splashScreen
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
 
 @ExperimentalPagerApi
 @Composable

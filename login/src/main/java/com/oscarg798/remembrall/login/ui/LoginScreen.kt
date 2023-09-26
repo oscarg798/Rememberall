@@ -19,12 +19,12 @@ import androidx.navigation.compose.composable
 import com.oscarg798.remembrall.login.R
 import com.oscarg798.remembrall.login.domain.Effect
 import com.oscarg798.remembrall.login.domain.Event
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
-import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBar
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBarTitle
+import com.oscarg798.remembrall.ui.RemembrallButton
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
+import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui.theming.RemembrallTopBar
+import com.oscarg798.remembrall.ui.theming.RemembrallTopBarTitle
 
 fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
     composable(

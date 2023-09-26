@@ -20,6 +20,7 @@
       <module name="remembrall.task-list" target="11" />
       <module name="remembrall.task.taskimpl" target="11" />
       <module name="remembrall.taskpriorityextensions" target="11" />
+      <module name="remembrall.uicolor" target="11" />
       <module name="remembrall.user2" target="11" />
     </bytecodeTargetLevel>
   </component>

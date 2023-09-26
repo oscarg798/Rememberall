@@ -81,14 +81,15 @@ dependencies {
     implementation libs.hilt.android
     kapt(libs.hilt.dagger.compiler)
 
+    implementation project(path: ':ui')
     implementation project(path: ":auth")
     implementation project(path: ':task')
     implementation project(path: ':date')
     implementation project(path: ':user')
     implementation project(path: ':rxutils')
-    implementation project(path: ':uicolor')
+    implementation project(path: ':ui:icons')
+    implementation project(path: ':ui:color')
     implementation project(path: ':calendar')
-    implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':task:taskpriorityextensions')

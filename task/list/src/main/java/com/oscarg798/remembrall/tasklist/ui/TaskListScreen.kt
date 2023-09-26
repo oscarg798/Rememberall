@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import com.oscarg798.remembrall.tasklist.TaskListViewModel
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
 
 @Composable
 fun TaskListScreen(

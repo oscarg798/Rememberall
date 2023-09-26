@@ -35,14 +35,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.tasklist.R
 import com.oscarg798.remembrall.taskpriorityextensions.getColor
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
-import com.oscarg798.remembrall.ui_common.R as CommonUIR
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.extensions.SingleLine
+import com.oscarg798.remembrall.ui.icons.R as IconsR
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
 @Composable
@@ -130,7 +130,7 @@ private fun TaskBody(
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Image(
-                    painter = painterResource(id = CommonUIR.drawable.ic_more),
+                    painter = painterResource(id = IconsR.drawable.ic_more),
                     contentDescription = "",
                     colorFilter = ColorFilter.tint(SecondaryTextColor),
                     modifier = Modifier
@@ -185,7 +185,7 @@ private fun TaskBody(
 
         if (!task.owned) {
             Image(
-                painter = painterResource(id = R.drawable.ic_attendee),
+                painter = painterResource(id = IconsR.drawable.ic_attendees),
                 contentDescription = "attendee indicator",
                 modifier = Modifier
                     .size(20.dp)
@@ -272,7 +272,7 @@ private fun TaskDueDate(dueDate: String, modifier: Modifier) {
         horizontalArrangement = Arrangement.Start
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_time),
+            painter = painterResource(id = IconsR.drawable.ic_time),
             contentDescription = "",
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
             modifier = Modifier.size(TaskDueIconSize)

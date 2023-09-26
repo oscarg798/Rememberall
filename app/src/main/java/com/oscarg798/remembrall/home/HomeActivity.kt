@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalPagerApi

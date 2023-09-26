@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.oscarg798.remembrall.profile.R
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.remembrall.oscarg798.calendar.Calendar
 
 @Composable

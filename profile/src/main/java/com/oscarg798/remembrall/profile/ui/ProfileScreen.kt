@@ -9,12 +9,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oscarg798.remembrall.profile.ProfileViewModel
 import com.oscarg798.remembrall.profile.R
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallPage
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBar
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTopBarTitle
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
+import com.oscarg798.remembrall.ui.theming.RemembrallPage
+import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui.theming.RemembrallTopBar
+import com.oscarg798.remembrall.ui.theming.RemembrallTopBarTitle
 
 fun NavGraphBuilder.profileScreen() =
     composable(

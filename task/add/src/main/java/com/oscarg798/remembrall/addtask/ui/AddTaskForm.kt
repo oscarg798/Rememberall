@@ -41,9 +41,10 @@ import com.oscarg798.remembrall.addtask.domain.DueDate
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.colorScheme
-import com.oscarg798.remembrall.ui_common.ui.theming.dimensions
+import com.oscarg798.remembrall.ui.icons.R as IconsR
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.theming.colorScheme
+import com.oscarg798.remembrall.ui.theming.dimensions
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import java.time.LocalDateTime
 
@@ -158,7 +159,7 @@ private fun ActionsRow(
     ) {
         ActionButton(
             enabled = enabled,
-            icon = R.drawable.ic_calendar,
+            icon = IconsR.drawable.ic_calendar,
             tintColor = if (hasDueDateSelected) {
                 MaterialTheme.colorScheme.primary
             } else {
@@ -169,7 +170,7 @@ private fun ActionsRow(
 
         ActionButtonWithDropDown(
             enabled = enabled,
-            icon = R.drawable.ic_tag,
+            icon = IconsR.drawable.ic_tag,
             onClick = { onEvent(Event.OnTagActionClicked) },
             tintColor = if (selectedPriority != null) {
                 MaterialTheme.colorScheme.primary
@@ -190,7 +191,7 @@ private fun ActionsRow(
 
         ActionButton(
             enabled = enabled,
-            icon = R.drawable.ic_attendees,
+            icon = IconsR.drawable.ic_attendees,
             onClick = { onEvent(Event.OnAttendeeActionClicked) },
             tintColor = if (hasAttendees) {
                 MaterialTheme.colorScheme.primary
@@ -201,7 +202,7 @@ private fun ActionsRow(
 
         ActionButton(
             enabled = enabled,
-            icon = R.drawable.ic_save,
+            icon = IconsR.drawable.ic_save,
             tintColor = MaterialTheme.colorScheme.primary,
             onClick = { onEvent(Event.OnSaveActionClicked) },
         )

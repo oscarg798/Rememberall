@@ -43,5 +43,5 @@ android {
 dependencies {
 
     implementation project(":task")
-    implementation project(path: ':uicolor')
+    implementation project(path: ':ui:color')
 }

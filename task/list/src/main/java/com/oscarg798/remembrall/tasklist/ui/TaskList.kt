@@ -25,9 +25,9 @@ import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.tasklist.TaskListViewModel
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
-import com.oscarg798.remembrall.ui_common.ui.AddButton
-import com.oscarg798.remembrall.ui_common.ui.Shimmer
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.AddButton
+import com.oscarg798.remembrall.ui.Shimmer
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
 internal fun TaskList(

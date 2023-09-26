@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.ui_common.ui.Shimmer
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.Shimmer
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
 internal fun LoadingProfile() {

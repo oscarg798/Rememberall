@@ -18,9 +18,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.extensions.SingleLine
-import com.oscarg798.remembrall.profile.R
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.extensions.SingleLine
+import com.oscarg798.remembrall.ui.icons.R as IconsR
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.remembrall.oscarg798.calendar.Calendar
 
@@ -51,7 +51,7 @@ fun CalendarItem(
 
             if (isSelected) {
                 Image(
-                    painter = painterResource(R.drawable.ic_check),
+                    painter = painterResource(IconsR.drawable.ic_check),
                     contentDescription = "",
                     modifier = Modifier
                         .padding(RemembrallTheme.dimens.Medium)

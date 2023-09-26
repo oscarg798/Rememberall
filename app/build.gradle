@@ -135,6 +135,7 @@ dependencies {
     implementation libs.android.gms.auth
     implementation platform(libs.firebase.boom)
 
+    implementation project(path: ':ui')
     implementation project(path: ':task')
     implementation project(path: ':home')
     implementation project(path: ':auth')
@@ -151,12 +152,13 @@ dependencies {
     implementation project(path: ':authimpl')
     implementation project(path: ':task:add')
     implementation project(path: ':dateimpl')
-    implementation project(path: ':common-ui')
+    implementation project(path: ':ui:icons')
+    implementation project(path: ':ui:color')
+    implementation project(path: ':taskimpl')
     implementation project(path: ':task:list')
     implementation project(path: ':oauthimpl')
     implementation project(path: ':authandroid')
     implementation project(path: ':calendarimpl')
-    implementation project(path: ':taskimpl')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':activityprovider')

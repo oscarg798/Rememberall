@@ -20,7 +20,6 @@
             <option value="$PROJECT_DIR$/calendarimpl" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common-schedule" />
-            <option value="$PROJECT_DIR$/common-ui" />
             <option value="$PROJECT_DIR$/config" />
             <option value="$PROJECT_DIR$/coroutinesutils" />
             <option value="$PROJECT_DIR$/date" />
@@ -39,7 +38,9 @@
             <option value="$PROJECT_DIR$/task/list" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/taskimpl" />
-            <option value="$PROJECT_DIR$/uicolor" />
+            <option value="$PROJECT_DIR$/ui" />
+            <option value="$PROJECT_DIR$/ui/color" />
+            <option value="$PROJECT_DIR$/ui/icons" />
             <option value="$PROJECT_DIR$/user" />
           </set>
         </option>

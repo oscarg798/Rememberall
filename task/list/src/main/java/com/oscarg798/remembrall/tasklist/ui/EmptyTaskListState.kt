@@ -18,8 +18,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.tasklist.R
-import com.oscarg798.remembrall.ui_common.ui.AddButton
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.AddButton
+import com.oscarg798.remembrall.ui.icons.R as IconsR
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
 internal fun EmptyTaskList(
@@ -35,7 +36,7 @@ internal fun EmptyTaskList(
                 .align(Alignment.Center)
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_agenda),
+                painter = painterResource(IconsR.drawable.ic_agenda),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(horizontal = RemembrallTheme.dimens.Medium)

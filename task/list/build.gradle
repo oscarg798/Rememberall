@@ -2,10 +2,11 @@ apply from: "../../common.gradle"
 
 dependencies {
 
+    implementation project(path: ':ui')
     implementation project(path: ':date')
     implementation project(path: ':task')
-    implementation project(path: ':uicolor')
-    implementation project(path: ':common-ui')
+    implementation project(path: ':ui:color')
+    implementation project(path: ':ui:icons')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':task:taskpriorityextensions')
 

@@ -3,7 +3,9 @@ apply from: "../common.gradle"
 dependencies {
 
     implementation libs.workManager.ktx
+
     implementation project(":task")
+    implementation project(":ui:icons")
 
     kapt libs.hilt.compiler
 }

@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.tasklist.R
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.icons.R as IconsR
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
 internal fun ProfileButton(
@@ -28,7 +28,7 @@ internal fun ProfileButton(
             .padding(RemembrallTheme.dimens.ExtraSmall)
     ) {
         Image(
-            painterResource(R.drawable.ic_user_profile), contentDescription = "",
+            painterResource(IconsR.drawable.ic_user_profile), contentDescription = "Go to profile",
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
             modifier = Modifier.size(30.dp)
         )

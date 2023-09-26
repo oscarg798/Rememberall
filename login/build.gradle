@@ -82,11 +82,11 @@ dependencies {
     kapt(libs.hilt.dagger.compiler)
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.40.5"
 
+    implementation project(path: ':ui')
     implementation project(path: ':auth')
     implementation project(":gmstaskutils")
     implementation project(path: ':rxutils')
     implementation project(path: ':calendar')
-    implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':coroutinesutils')
 }

@@ -14,11 +14,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.splash.domain.Effect
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallPage
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
+import com.oscarg798.remembrall.ui.theming.RemembrallPage
+import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 fun NavGraphBuilder.splashScreen() = composable(
     Router.Splash.route,

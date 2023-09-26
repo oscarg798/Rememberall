@@ -7,9 +7,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.oscarg798.remembrall.login.ui.loginScreen
-import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui_common.navigation.Router
-import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
+import com.oscarg798.remembrall.ui.navigation.Router
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
