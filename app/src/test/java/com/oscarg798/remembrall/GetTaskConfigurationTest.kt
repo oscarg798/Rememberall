@@ -2,7 +2,6 @@ package com.oscarg798.remembrall
 
 import com.oscarg798.remembrall.addtask.ui.AddtaskScreenConfiguration
 import com.oscarg798.remembrall.task.TaskPriority
-import com.oscarg798.remembrall.common_addedit.usecase.GetAvailablePrioritiesUseCase
 import org.junit.Test
 
 class GetTaskConfigurationTest {

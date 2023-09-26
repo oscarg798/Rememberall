@@ -4,11 +4,11 @@ package com.oscarg798.remembrall.tasklist
 import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
-import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
-import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
+import com.oscarg798.remembrall.tasklist.usecase.GetTaskUpdateListenerUseCase
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
+import com.oscarg798.remembrall.tasklist.ui.TaskCardOptions
 import com.oscarg798.remembrall.tasklist.usecase.GetInitialIndexPosition
 import com.oscarg798.remembrall.tasklist.usecase.GetTaskGrouped
 import com.oscarg798.remembrall.tasklist.usecase.RemoveTaskUseCase

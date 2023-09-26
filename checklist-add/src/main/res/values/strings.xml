@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="add_checklist_title">Add Checklist</string>
-    <string name="add_checklist_name_error">Name should be at least 3 characters long</string>
-    <string name="checklist_items_empty_error">You need to add at least 1 item</string>
-</resources>

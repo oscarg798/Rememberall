@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.model.DisplayableTask
-import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
 import com.oscarg798.remembrall.tasklist.TaskListViewModel
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup

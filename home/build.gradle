@@ -5,8 +5,7 @@ dependencies  {
     implementation libs.accompanist.pager
     implementation libs.accompanist.pagerIndicator
 
-    implementation project(path: ':common-ui')
     implementation project(path: ':task-list')
-    implementation project(path: ':checklist-list')
+    implementation project(path: ':common-ui')
 
 }

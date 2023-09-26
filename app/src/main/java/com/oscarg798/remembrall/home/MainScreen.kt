@@ -7,14 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.oscarg798.remembrall.addtask.ui.addTaskScreen
-import com.oscarg798.remembrall.checklist_add.ui.addCheckListScreen
-import com.oscarg798.remembrall.checklistdetail.ui.checklistDetailScreen
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
-import com.oscarg798.remembrall.edittask.ui.editTaskScreen
 import com.oscarg798.remembrall.login.ui.loginScreen
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.ui.splashScreen
-import com.oscarg798.remembrall.taskdetail.ui.taskDetailsScreen
 import com.oscarg798.remembrall.ui_common.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui_common.navigation.Router
 
@@ -31,10 +27,6 @@ fun MainScreen(onFinishRequest: () -> Unit) {
             loginScreen(onFinishRequest = onFinishRequest)
             addTaskScreen()
             profileScreen()
-            taskDetailsScreen(viewModelStore = viewModelStore)
-            editTaskScreen(viewModelStore = viewModelStore)
-            addCheckListScreen()
-            checklistDetailScreen()
         }
     }
 }

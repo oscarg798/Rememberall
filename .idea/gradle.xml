@@ -18,15 +18,8 @@
             <option value="$PROJECT_DIR$/authimpl" />
             <option value="$PROJECT_DIR$/calendar" />
             <option value="$PROJECT_DIR$/calendarimpl" />
-            <option value="$PROJECT_DIR$/checklist-add" />
-            <option value="$PROJECT_DIR$/checklist-detail" />
-            <option value="$PROJECT_DIR$/checklist-list" />
             <option value="$PROJECT_DIR$/common" />
-            <option value="$PROJECT_DIR$/common-addedit" />
-            <option value="$PROJECT_DIR$/common-checklist" />
-            <option value="$PROJECT_DIR$/common-gettask" />
             <option value="$PROJECT_DIR$/common-schedule" />
-            <option value="$PROJECT_DIR$/common-task" />
             <option value="$PROJECT_DIR$/common-ui" />
             <option value="$PROJECT_DIR$/config" />
             <option value="$PROJECT_DIR$/coroutinesutils" />
@@ -43,8 +36,6 @@
             <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/task" />
             <option value="$PROJECT_DIR$/task-add" />
-            <option value="$PROJECT_DIR$/task-detail" />
-            <option value="$PROJECT_DIR$/task-edit" />
             <option value="$PROJECT_DIR$/task-list" />
             <option value="$PROJECT_DIR$/taskimpl" />
             <option value="$PROJECT_DIR$/taskpriorityextensions" />

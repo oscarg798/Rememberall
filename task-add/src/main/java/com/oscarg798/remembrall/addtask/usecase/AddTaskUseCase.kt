@@ -5,7 +5,6 @@ import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.ValidationError
 import com.oscarg798.remembrall.auth.Session
 import com.oscarg798.remembrall.task.TaskRepository
-import com.oscarg798.remembrall.common_addedit.usecase.AddTaskToCalendarUseCase
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.user.User
 import javax.inject.Inject

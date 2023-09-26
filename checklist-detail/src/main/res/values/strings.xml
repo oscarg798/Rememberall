@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="error_updating_checklist_message">Error updating checklist details</string>
-    <string name="save_content_description">save</string>
-</resources>

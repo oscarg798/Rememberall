@@ -2,12 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="remembrall.checklist-add" target="11" />
+      <module name="remembrall.checklist-detail" target="11" />
+      <module name="remembrall.checklist-list" target="11" />
+      <module name="remembrall.common-addedit" target="11" />
       <module name="remembrall.common-auth" target="11" />
+      <module name="remembrall.common-checklist" target="11" />
+      <module name="remembrall.common-gettask" target="11" />
+      <module name="remembrall.common-task" target="11" />
       <module name="remembrall.common_calendar" target="11" />
       <module name="remembrall.dateutils.main" target="1.8" />
       <module name="remembrall.dateutils.test" target="1.8" />
       <module name="remembrall.dateutilsimpl" target="11" />
       <module name="remembrall.sessionImpl" target="11" />
+      <module name="remembrall.task-detail" target="11" />
+      <module name="remembrall.task-edit" target="11" />
       <module name="remembrall.user2" target="11" />
     </bytecodeTargetLevel>
   </component>

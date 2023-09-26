@@ -72,6 +72,8 @@ dependencies {
     implementation libs.compose.runtimeLivedata
     implementation libs.compose.constraintLayout
 
+    implementation libs.compose.dialogs
+
     implementation libs.mobius.android
 
     coreLibraryDesugaring libs.android.tools.desugar
@@ -85,10 +87,9 @@ dependencies {
     implementation project(path: ':user')
     implementation project(path: ':rxutils')
     implementation project(path: ':uicolor')
+    implementation project(path: ':calendar')
     implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
-    implementation project(path: ':common-gettask')
-    implementation project(path: ':common-addedit')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':taskpriorityextensions')
 }
