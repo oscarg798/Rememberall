@@ -17,6 +17,9 @@
       <module name="remembrall.sessionImpl" target="11" />
       <module name="remembrall.task-detail" target="11" />
       <module name="remembrall.task-edit" target="11" />
+      <module name="remembrall.task-list" target="11" />
+      <module name="remembrall.task.taskimpl" target="11" />
+      <module name="remembrall.taskpriorityextensions" target="11" />
       <module name="remembrall.user2" target="11" />
     </bytecodeTargetLevel>
   </component>

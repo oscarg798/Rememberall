@@ -35,10 +35,10 @@
             <option value="$PROJECT_DIR$/rxutils" />
             <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/task" />
-            <option value="$PROJECT_DIR$/task-add" />
-            <option value="$PROJECT_DIR$/task-list" />
+            <option value="$PROJECT_DIR$/task/add" />
+            <option value="$PROJECT_DIR$/task/list" />
+            <option value="$PROJECT_DIR$/task/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/taskimpl" />
-            <option value="$PROJECT_DIR$/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/uicolor" />
             <option value="$PROJECT_DIR$/user" />
           </set>

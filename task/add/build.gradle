@@ -91,5 +91,5 @@ dependencies {
     implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':coroutinesutils')
-    implementation project(path: ':taskpriorityextensions')
+    implementation project(path: ':task:taskpriorityextensions')
 }
