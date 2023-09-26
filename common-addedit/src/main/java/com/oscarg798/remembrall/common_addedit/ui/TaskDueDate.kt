@@ -25,7 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common_addedit.R
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker

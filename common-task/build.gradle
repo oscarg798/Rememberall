@@ -3,6 +3,8 @@ apply from: "../common.gradle"
 dependencies {
     implementation(project(":common-ui"))
     implementation project(path: ':task')
+    implementation project(path: ':uicolor')
+    implementation project(path: ':taskpriorityextensions')
     implementation libs.firebase.firestore
     implementation "io.grpc:grpc-okhttp:1.32.2"
 }

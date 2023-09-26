@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.dateimpl.di
 
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
-import com.oscarg798.remembrall.dateimpl.DueDateFormatterImpl
+import com.oscarg798.remembrall.dateformatter.DateFormatter
+import com.oscarg798.remembrall.dateimpl.DateFormatterImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 internal interface DueDateFormatterBinding {
 
     @Binds
-    fun bindDueDateFormatter(impl: DueDateFormatterImpl): DueDateFormatter
+    fun bindDueDateFormatter(impl: DateFormatterImpl): DateFormatter
 }

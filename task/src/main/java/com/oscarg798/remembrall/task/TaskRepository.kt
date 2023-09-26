@@ -26,6 +26,7 @@ interface TaskRepository {
         val priority: TaskPriority?,
         val calendarSyncInformation: CalendarSyncInformation?,
         val dueDate: Long?,
-        val description: String? = null
+        val description: String? = null,
+        val createdAt: Long?
     )
 }

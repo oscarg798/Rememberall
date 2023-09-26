@@ -7,7 +7,7 @@ import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_gettask.usecase.GetTaskById
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DateFormatter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 class TaskDetailsViewModel @AssistedInject constructor(
     @Assisted private val taskId: String,
     private val getTaskById: GetTaskById,
-    private val dueDateFormatter: DueDateFormatter,
+    private val dueDateFormatter: DateFormatter,
     private val getTaskUpdateListenerUseCase: GetTaskUpdateListenerUseCase,
     coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<TaskDetailsViewModel.ViewState, TaskDetailsViewModel.Event>(

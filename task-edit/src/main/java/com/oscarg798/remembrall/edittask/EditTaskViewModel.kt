@@ -7,7 +7,7 @@ import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.edittask.usecase.EditTaskUseCase
 import com.oscarg798.remembrall.edittask.usecase.GetEditableTaskUseCase
 import dagger.assisted.Assisted
@@ -20,7 +20,7 @@ class EditTaskViewModel @AssistedInject constructor(
     @Assisted private val taskId: String,
     private val getEditableTaskUseCase: GetEditableTaskUseCase,
     private val getSignedInUserUseCase: GetSignedInUserUseCase,
-    private val dueDateFormatter: DueDateFormatter,
+    private val dueDateFormatter: DateFormatter,
     private val editTaskUseCase: EditTaskUseCase,
     coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<EditTaskViewModel.ViewState, EditTaskViewModel.Event>(
@@ -184,7 +184,7 @@ class EditTaskViewModel @AssistedInject constructor(
                     ?: throw IllegalStateException("Edit is not allowed on non editable state")
 
                 val updatedTask = currentEditableTask.task.copy(
-                    dueDate = dueDateFormatter.toDueDateInMillis(dueDate)
+                    dueDate = dueDateFormatter.toMillis(dueDate)
                 )
 
                 it.copy(

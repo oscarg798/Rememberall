@@ -1,25 +1,23 @@
-package com.oscarg798.remembrall.ui_common.ui.theming
+package com.oscarg798.remembrall.uicolor
 
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
-private val Selago = Color(0xffF0F4FD)
-private val Indigo = Color(0xff5C54C7)
-private val MineShaft = Color(0xff212121)
-private val BurntSienna = Color(0xfff16d56)
-private val BlueMarguerite = Color(0xff6b64cc)
-private val DownRiver = Color(0xff0C1F4B)
-private val SilverSand = Color(0xFFC0BFBF)
-private val Shamrock = Color(0xff2cbd99)
-private val Gorse = Color(0xFFFFEB3B)
-private val Amaranth = Color(0xFFE91E63)
-private val RoseBud = Color(0xffF7AEA1)
-private val Froly = Color(0xFFf7b7cd)
-private val SweetCorn = Color(0xfffaf7d9)
-private val Riptide = Color(0xFf87E8D0)
+val Selago = Color(0xffF0F4FD)
+val Indigo = Color(0xff5C54C7)
+val MineShaft = Color(0xff212121)
+val BurntSienna = Color(0xfff16d56)
+val BlueMarguerite = Color(0xff6b64cc)
+val DownRiver = Color(0xff0C1F4B)
+val SilverSand = Color(0xFFC0BFBF)
+val Shamrock = Color(0xff2cbd99)
+val Gorse = Color(0xFFFFEB3B)
+val Amaranth = Color(0xFFE91E63)
+val RoseBud = Color(0xffF7AEA1)
+val Froly = Color(0xFFf7b7cd)
+val SweetCorn = Color(0xfffaf7d9)
+val Riptide = Color(0xFf87E8D0)
 
 val md_theme_light_primary = Color(0xFF6750A4)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
@@ -131,41 +129,4 @@ val DarkThemeColors = darkColorScheme(
     inverseSurface = md_theme_dark_inverseSurface,
 )
 
-val LightColors = lightColors(
-    primary = Indigo,
-    primaryVariant = BurntSienna,
-    secondary = Indigo,
-    secondaryVariant = BlueMarguerite,
-    background = Selago,
-    surface = Color.White,
-    error = BurntSienna,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onBackground = DownRiver,
-    onSurface = MineShaft,
-    onError = Color.White
-)
-
-val DarkColors = darkColors(
-    primary = Color(0xffD0BDFF),
-    primaryVariant = Color(0xff5121B8),
-    secondary = Color(0xffCBC2DC),
-    secondaryVariant = Color(0xff494458),
-    background = Color(0xff1C1B1E),
-    surface = Color(0x801C1B1E),
-    error = Color(0xffBA1B1B),
-    onPrimary = Color(0xff370095),
-    onSecondary = Color(0xff332D41),
-    onBackground = Color(0xffE6E1E6),
-    onSurface = Color(0xffE6E1E6),
-    onError = Color.White
-)
-
 val SecondaryTextColor = SilverSand
-
-sealed class TaskPriorityColorPalette(val color: Color, val background: Color) {
-    object Urgent : TaskPriorityColorPalette(color = Amaranth, background = Froly)
-    object High : TaskPriorityColorPalette(color = BurntSienna, background = RoseBud)
-    object Medium : TaskPriorityColorPalette(color = Gorse, background = SweetCorn)
-    object Low : TaskPriorityColorPalette(color = Shamrock, background = Riptide)
-}

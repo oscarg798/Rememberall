@@ -23,6 +23,18 @@ android {
         }
     }
 
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type",
+                            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                            "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
+                            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                            "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding false
         dataBinding false
@@ -38,6 +50,10 @@ android {
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/gradle/incremental.annotation.processors'
     }
 }
 dependencies {
@@ -66,12 +82,14 @@ dependencies {
     implementation project(path: ":auth")
     implementation project(path: ':task')
     implementation project(path: ':date')
-    implementation project(path: ':common')
+    implementation project(path: ':user')
     implementation project(path: ':rxutils')
+    implementation project(path: ':uicolor')
     implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':common-gettask')
     implementation project(path: ':common-addedit')
     implementation project(path: ':common_calendar')
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':taskpriorityextensions')
 }

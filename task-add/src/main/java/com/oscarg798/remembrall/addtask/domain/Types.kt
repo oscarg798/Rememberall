@@ -29,12 +29,14 @@ internal sealed interface Event {
     object OnCloseClicked : Event
     object OnTagActionClicked : Event
     object OnSaveActionClicked : Event
+    object DismissAttendeePicker : Event
     object OnCalendarActionClicked : Event
     object OnAttendeeActionClicked : Event
     object OnTaskPrioritySelectorDismissed : Event
     data class OnTitleChanged(val title: String) : Event
-    data class OnAttendeesChanged(val attendee: String) : Event
-    data class OnValidationError(val error: ValidationError): Event
+    data class OnAttendeeAdded(val attendee: String) : Event
+    data class OnAttendeeRemoved(val attendee: String) : Event
+    data class OnValidationError(val error: ValidationError) : Event
     data class OnDescriptionChanged(val description: String) : Event
     data class OnPriorityChanged(val priority: TaskPriority) : Event
     data class OnTaskPrioritiesFound(val priorities: List<TaskPriority>) : Event

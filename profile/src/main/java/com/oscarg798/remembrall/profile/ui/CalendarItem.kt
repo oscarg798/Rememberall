@@ -22,7 +22,7 @@ import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.profile.R
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
 @Composable
 fun CalendarItem(

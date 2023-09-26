@@ -38,11 +38,11 @@ import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.common.model.DisplayableTask
+import com.oscarg798.remembrall.taskpriorityextensions.getColor
+import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui_common.R
-import com.oscarg798.remembrall.ui_common.extensions.getColor
-import com.oscarg798.remembrall.ui_common.extensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
 @Deprecated("This must be elsewhere")
 @Composable
@@ -207,7 +207,7 @@ private fun TaskHeader(task: DisplayableTask) {
 
 
     Divider(
-        color = SecondaryTextColor,
+        color = com.oscarg798.remembrall.uicolor.SecondaryTextColor,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = RemembrallTheme.dimens.ExtraSmall)
@@ -233,7 +233,7 @@ private fun TaskDescription(task: DisplayableTask, maxLines: Int = TaskDescripti
     Text(
         text = description,
         style = MaterialTheme.typography.bodySmall
-            .merge(TextStyle(color = SecondaryTextColor)),
+            .merge(TextStyle(color = com.oscarg798.remembrall.uicolor.SecondaryTextColor)),
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis
     )

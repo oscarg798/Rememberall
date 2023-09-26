@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.common.model
 
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
@@ -18,7 +18,7 @@ data class DisplayableTask(
 
     ) {
 
-    constructor(task: Task, dueDateFormatter: DueDateFormatter) : this(
+    constructor(task: Task, dueDateFormatter: DateFormatter) : this(
         id = task.id,
         owned = task.owned,
         name = task.name,

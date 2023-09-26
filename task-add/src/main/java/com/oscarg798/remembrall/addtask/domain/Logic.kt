@@ -17,12 +17,14 @@ internal fun update(
     Event.OnTagActionClicked -> onTagActionClicked(model)
     is Event.OnTitleChanged -> onTitleChanged(model, event)
     Event.OnSaveActionClicked -> onSaveActionClicked(model)
+    Event.DismissAttendeePicker -> onDismissAttendeePicker()
+    is Event.OnAttendeeAdded -> onAttendeeAdded(model, event)
     Event.OnAttendeeActionClicked -> onAttendeesActionClicked()
     is Event.OnValidationError -> onValidationError(model, event)
     is Event.OnPriorityChanged -> onPriorityChanged(model, event)
+    is Event.OnAttendeeRemoved -> onAttendeeRemoved(model, event)
     Event.OnCalendarActionClicked -> onCalendarActionClicked(model)
     is Event.OnDueDateFormatted -> onDueDateFormatted(model, event)
-    is Event.OnAttendeesChanged -> onAttendeesChanges(model, event)
     is Event.OnDescriptionChanged -> onDescriptionChange(model, event)
     is Event.OnTaskPrioritiesFound -> onTaskPrioritiesFound(model, event)
     Event.OnTaskPrioritySelectorDismissed -> onTaskPrioritySelectorDismissed()
@@ -115,16 +117,22 @@ private fun onPriorityChanged(model: Model, event: Event.OnPriorityChanged): Upc
         )
     }
 
-private fun onAttendeesChanges(model: Model, event: Event.OnAttendeesChanged): Upcoming =
+private fun onAttendeeAdded(model: Model, event: Event.OnAttendeeAdded): Upcoming =
     if (model.attendees.contains(event.attendee)) {
-        dispatch(setOf(Effect.UIEffect.DismissAttendeesPicker))
+        noChange()
     } else {
         val attendees = model.attendees.toMutableSet()
         attendees.add(event.attendee)
-        next(
-            model.copy(attendees = attendees),
-            setOf(Effect.UIEffect.DismissAttendeesPicker)
-        )
+        next(model.copy(attendees = attendees))
+    }
+
+private fun onAttendeeRemoved(model: Model, event: Event.OnAttendeeRemoved): Upcoming =
+    if (!model.attendees.contains(event.attendee)) {
+        noChange()
+    } else {
+        val attendees = model.attendees.toMutableSet()
+        attendees.remove(event.attendee)
+        next(model.copy(attendees = attendees))
     }
 
 private fun onAttendeesActionClicked(): Upcoming =
@@ -153,3 +161,6 @@ private fun onTaskPrioritiesFound(model: Model, event: Event.OnTaskPrioritiesFou
         next(model.copy(availablePriorities = event.priorities))
     }
 }
+
+private fun onDismissAttendeePicker(): Upcoming =
+    dispatch(setOf(Effect.UIEffect.DismissAttendeesPicker))

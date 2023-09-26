@@ -1,10 +1,7 @@
-package com.oscarg798.remembrall.ui_common.extensions
+package com.oscarg798.remembrall.taskpriorityextensions
 
 import com.oscarg798.remembrall.task.TaskPriority
-import com.oscarg798.remembrall.ui_common.R
-import com.oscarg798.remembrall.ui_common.ui.theming.TaskPriorityColorPalette
 
-// TODO move this to its own module
 fun TaskPriority.getLabel() = when (this) {
     TaskPriority.High -> R.string.priority_high_label
     TaskPriority.Low -> R.string.priority_low_label

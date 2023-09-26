@@ -28,6 +28,7 @@ internal class AddTaskEffectHandler @Inject constructor(
             .addFunction(getAvailableTaskPriorities)
             .addFunction(getDueDatePickerInitialDate)
             .addConsumer<Effect.UIEffect.Close>(uiEffectConsumer)
+            .addConsumer<Effect.UIEffect.ShowError>(uiEffectConsumer)
             .addConsumer<Effect.UIEffect.ShowPriorityPicker>(uiEffectConsumer)
             .addConsumer<Effect.UIEffect.ShowAttendeesPicker>(uiEffectConsumer)
             .addConsumer<Effect.UIEffect.DismissDueDatePicker>(uiEffectConsumer)

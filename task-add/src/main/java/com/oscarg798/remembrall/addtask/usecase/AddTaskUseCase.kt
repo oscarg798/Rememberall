@@ -3,13 +3,10 @@ package com.oscarg798.remembrall.addtask.usecase
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.ValidationError
-import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.auth.Session
-import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
-import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.common_addedit.usecase.AddTaskToCalendarUseCase
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.user.User
 import javax.inject.Inject
 import java.util.regex.Pattern
@@ -20,7 +17,8 @@ internal class AddTaskUseCaseImpl @Inject constructor(
     private val session: Session,
     private val emailPattern: Pattern,
     private val taskRepository: TaskRepository,
-    private val dueDateFormatter: DueDateFormatter,
+    private val dateProvider: CurrentDateProvider,
+    private val dueDateFormatter: DateFormatter,
     private val addTaskToCalendarUseCase: AddTaskToCalendarUseCase,
 ) : AddTaskUseCase {
 
@@ -54,8 +52,9 @@ internal class AddTaskUseCaseImpl @Inject constructor(
                 name = effect.title,
                 priority = effect.priority,
                 description = effect.description,
-                dueDate = effect.dueDate?.date?.let { dueDateFormatter.toDueDateInMillis(it) },
-                calendarSyncInformation = calendarSyncInformation
+                dueDate = effect.dueDate?.date?.let { dueDateFormatter.toMillis(it) },
+                calendarSyncInformation = calendarSyncInformation,
+                createdAt = dueDateFormatter.toMillis(dateProvider())
             )
         )
 

@@ -8,4 +8,10 @@
     <string name="attendee_dialog_title">Add Attendees</string>
     <string name="attendees_error_message">Attendees must be email address</string>
     <string name="name_error_message">Name must be at least 3 characters long</string>
+    <string name="priority_high_label">High</string>
+    <string name="priority_urgent_label">Urgent</string>
+    <string name="priority_medium_label">Medium</string>
+    <string name="priority_low_label">Low</string>
+    <string name="description_hint">Tap here to start...</string>
+    <string name="title_hint">Awesome Title</string>
 </resources>

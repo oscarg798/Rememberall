@@ -4,6 +4,7 @@ dependencies {
 
     implementation project(path: ':date')
     implementation project(path: ':task')
+    implementation project(path: ':uicolor')
     implementation project(path: ':common-ui')
     implementation project(path: ':common-task')
     implementation project(path: ':coroutinesutils')

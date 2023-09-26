@@ -39,12 +39,12 @@ import androidx.constraintlayout.compose.Dimension
 import com.oscarg798.remembrall.addtask.R
 import com.oscarg798.remembrall.addtask.domain.DueDate
 import com.oscarg798.remembrall.addtask.domain.Event
-import com.oscarg798.remembrall.common.extensions.horizontalToParent
 import com.oscarg798.remembrall.task.TaskPriority
-import com.oscarg798.remembrall.ui_common.extensions.getLabel
+import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
+import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.oscarg798.remembrall.ui_common.ui.theming.colorScheme
+import com.oscarg798.remembrall.ui_common.ui.theming.dimensions
 import java.time.LocalDateTime
 
 
@@ -62,13 +62,13 @@ internal fun AddTaskForm(
     onEvent: (Event) -> Unit
 ) {
     ConstraintLayout(modifier) {
-        val (textFields, dateField, actionRow) = createRefs()
+        val (textFields, actionRow) = createRefs()
         val titleStyle = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.SemiBold)
         Column(
             Modifier.constrainAs(textFields) {
-                horizontalToParent()
+                linkTo(start = parent.start, end = parent.end)
                 top.linkTo(parent.top)
-                bottom.linkTo(dateField.top)
+                bottom.linkTo(actionRow.top)
                 height = Dimension.fillToConstraints
             },
         ) {
@@ -82,7 +82,7 @@ internal fun AddTaskForm(
                     .wrapContentHeight(),
                 placeholder = {
                     Text(
-                        "Awesome Title",
+                        stringResource(R.string.title_hint),
                         style = titleStyle
                     )
                 },
@@ -90,6 +90,21 @@ internal fun AddTaskForm(
                 textStyle = titleStyle,
                 colors = TextFieldColors
             )
+
+            dueDate?.let {
+                Text(
+                    text = dueDate.displayableDate,
+                    modifier = Modifier
+                        .padding(start = MaterialTheme.dimensions.Medium),
+                    style = MaterialTheme.typography.caption.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        fontStyle = FontStyle.Italic,
+                        color = SecondaryTextColor
+                    ),
+                    textAlign = TextAlign.Start,
+                    maxLines = DueDateMaxLines
+                )
+            }
 
             TextField(
                 value = description,
@@ -99,7 +114,7 @@ internal fun AddTaskForm(
                 enabled = enabled,
                 placeholder = {
                     Text(
-                        "Tap here to start...",
+                        stringResource(R.string.description_hint),
                         style = MaterialTheme.typography.body1
                     )
                 },
@@ -107,28 +122,9 @@ internal fun AddTaskForm(
             )
         }
 
-        dueDate?.let {
-            Text(
-                text = "You will be reminded on ${dueDate.displayableDate}",
-                modifier = Modifier.constrainAs(dateField) {
-                    end.linkTo(actionRow.end)
-                    start.linkTo(actionRow.start)
-                    bottom.linkTo(actionRow.top, margin = 8.dp)
-                },
-                style = MaterialTheme.typography.caption.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSurface
-                ),
-                textAlign = TextAlign.Center,
-                maxLines = DueDateMaxLines
-            )
-        }
-
-
         ActionsRow(
             modifier = Modifier.constrainAs(actionRow) {
-                horizontalToParent()
+                linkTo(parent.start, parent.end)
                 bottom.linkTo(parent.bottom)
                 width = Dimension.fillToConstraints
             },
@@ -356,15 +352,16 @@ internal val TextFieldColors: androidx.compose.material.TextFieldColors
         disabledTextColor = SecondaryTextColor,
         backgroundColor = Color.Transparent,
         cursorColor = MaterialTheme.colorScheme.onSurface,
-        errorCursorColor = MaterialTheme.colorScheme.onSurface,
+        errorCursorColor = MaterialTheme.colorScheme.onError,
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.DarkGray,
-        errorIndicatorColor = SecondaryTextColor,
+        errorIndicatorColor = MaterialTheme.colorScheme.onError,
         placeholderColor = SecondaryTextColor,
         disabledPlaceholderColor = SecondaryTextColor,
         focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
         unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
     )
+
 private const val DueDateMaxLines = 2
 private const val TitleMaxLines = 4

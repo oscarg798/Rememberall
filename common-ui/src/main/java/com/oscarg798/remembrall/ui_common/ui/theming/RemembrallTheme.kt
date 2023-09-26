@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
+import com.oscarg798.remembrall.uicolor.DarkThemeColors
+import com.oscarg798.remembrall.uicolor.LightThemeColors
 
 @Composable
 fun ProvideThemeConfig(

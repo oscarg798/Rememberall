@@ -46,6 +46,8 @@
             <option value="$PROJECT_DIR$/task-edit" />
             <option value="$PROJECT_DIR$/task-list" />
             <option value="$PROJECT_DIR$/taskimpl" />
+            <option value="$PROJECT_DIR$/taskpriorityextensions" />
+            <option value="$PROJECT_DIR$/uicolor" />
             <option value="$PROJECT_DIR$/user" />
           </set>
         </option>

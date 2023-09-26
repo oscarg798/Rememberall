@@ -107,6 +107,10 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
             pairs.add(TaskDto.ColumnNames.Priority to priority.javaClass.name)
         }
 
+        createdAt?.let {
+            pairs.add(TaskDto.ColumnNames.CreatedAt to createdAt)
+        }
+
         calendarSyncInformation?.let {
             pairs.add(
                 CalendarSyncInformationDto.ColumnNames.CalendarId to

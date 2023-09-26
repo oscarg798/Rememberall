@@ -26,9 +26,9 @@ import androidx.constraintlayout.compose.ConstraintSet
 import com.oscarg798.remembrall.common.extensions.AlignToStart
 import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.common_addedit.R
-import com.oscarg798.remembrall.ui_common.extensions.getBackgroundColor
-import com.oscarg798.remembrall.ui_common.extensions.getColor
-import com.oscarg798.remembrall.ui_common.extensions.getLabel
+import com.oscarg798.remembrall.taskpriorityextensions.getBackgroundColor
+import com.oscarg798.remembrall.taskpriorityextensions.getColor
+import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
 
 @Composable

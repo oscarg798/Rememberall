@@ -3,13 +3,13 @@ package com.oscarg798.remembrall.common_addedit.usecase
 
 import com.oscarg798.remembrall.task.CalendarSyncInformation
 import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DateFormatter
 import javax.inject.Inject
 import java.time.LocalDateTime
 
 class AddTaskToCalendarUseCase @Inject constructor(
     private val calendarRepository: CalendarRepository,
-    private val dueDateFormatter: DueDateFormatter
+    private val dueDateFormatter: DateFormatter
 ) {
 
     suspend fun execute(

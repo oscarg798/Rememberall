@@ -1,40 +1,55 @@
 package com.oscarg798.remembrall.addtask.ui
 
+import android.util.Patterns
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -49,16 +64,15 @@ import com.oscarg798.remembrall.ui_common.ui.RemembrallButton
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
-import com.oscarg798.remembrall.ui_common.ui.theming.colorScheme
 import com.oscarg798.remembrall.ui_common.ui.theming.dimensions
 import com.oscarg798.remembrall.ui_common.ui.theming.typo
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.input
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -78,8 +92,9 @@ fun NavGraphBuilder.addTaskScreen() =
         val dueDateDatePickerState = rememberMaterialDialogState()
         val dueDateTimePickerState = rememberMaterialDialogState()
         var pickersInitialDateTime by remember { mutableStateOf<LocalDateTime?>(null) }
-        val attendeeDialogState = rememberMaterialDialogState()
         var selectedDueDateDate by remember { mutableStateOf<LocalDate?>(null) }
+        val attendeesBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        var showAttendeesBottomSheet by remember { mutableStateOf(false) }
 
         LaunchedEffect(key1 = uiEffects) {
             val uiEffect = uiEffects ?: return@LaunchedEffect
@@ -87,9 +102,10 @@ fun NavGraphBuilder.addTaskScreen() =
             when (uiEffect) {
                 Effect.UIEffect.Close -> navController.popBackStack()
                 Effect.UIEffect.DismissAttendeesPicker -> {
-                    if (attendeeDialogState.showing) {
-                        attendeeDialogState.hide()
+                    if (attendeesBottomSheetState.currentValue == SheetValue.Expanded) {
+                        attendeesBottomSheetState.hide()
                     }
+                    showAttendeesBottomSheet = false
                 }
 
                 Effect.UIEffect.DismissDueDatePicker -> {
@@ -106,8 +122,14 @@ fun NavGraphBuilder.addTaskScreen() =
 
                 Effect.UIEffect.DismissTaskPriorityPicker -> selectingTaskPriority = false
                 Effect.UIEffect.ShowAttendeesPicker -> {
-                    if (!attendeeDialogState.showing) {
-                        attendeeDialogState.show()
+                    if (attendeesBottomSheetState.currentValue != SheetValue.Expanded
+                    ) {
+                        attendeesBottomSheetState.expand()
+                        showAttendeesBottomSheet = true
+                    }
+
+                    if (!showAttendeesBottomSheet) {
+                        showAttendeesBottomSheet = true
                     }
                 }
 
@@ -127,6 +149,7 @@ fun NavGraphBuilder.addTaskScreen() =
                         when (uiEffect.error) {
                             ValidationError.AttendeesNotValid ->
                                 context.getString(R.string.attendees_error_message)
+
                             ValidationError.NameWrongLength ->
                                 context.getString(R.string.name_error_message)
                         }
@@ -138,7 +161,7 @@ fun NavGraphBuilder.addTaskScreen() =
         RemembrallScaffold(
             topBar = {
                 AddTaskToolbar(
-                    onEvent = {}, modifier = Modifier
+                    onEvent = { viewModel.onEvent(it) }, modifier = Modifier
                         .fillMaxWidth()
                         .padding(
                             top = MaterialTheme.dimensions.Medium,
@@ -163,14 +186,6 @@ fun NavGraphBuilder.addTaskScreen() =
                     hasAttendees = model.attendees.isNotEmpty(),
                     enabled = !model.loading,
                     onEvent = { viewModel.onEvent(it) }
-                )
-
-                AttendeeDialog(
-                    dialogState = attendeeDialogState,
-                    attendees = model.attendees,
-                    onAttendeeAdded = {
-                        viewModel.onEvent(Event.OnAttendeesChanged(it))
-                    }
                 )
 
                 pickersInitialDateTime?.let { initialDateTime ->
@@ -202,6 +217,24 @@ fun NavGraphBuilder.addTaskScreen() =
                     }
                 }
             }
+
+            AnimatedVisibility(
+                visible = showAttendeesBottomSheet,
+                enter = slideInVertically(tween(durationMillis = 1_000))
+            ) {
+                AttendeesBottomSheet(
+                    state = attendeesBottomSheetState,
+                    attendees = model.attendees,
+                    onAttendeeAdded = {
+                        viewModel.onEvent(Event.OnAttendeeAdded(it))
+                    },
+                    onAttendeeDeleted = {
+                        viewModel.onEvent(Event.OnAttendeeRemoved(it))
+                    }) {
+                    viewModel.onEvent(Event.DismissAttendeePicker)
+                }
+            }
+
         }
     }
 
@@ -250,81 +283,6 @@ private fun DueDateTimePicker(
 }
 
 @Composable
-private fun AttendeeDialog(
-    dialogState: MaterialDialogState,
-    attendees: Set<String>,
-    onAttendeeAdded: (String) -> Unit
-) {
-    var attendee by remember { mutableStateOf("") }
-    MaterialDialog(
-        dialogState = dialogState,
-        backgroundColor = MaterialTheme.colorScheme.surface,
-        buttons = {
-            positiveButton(
-                stringResource(R.string.save_attendee_button_label),
-                onClick = {
-                    onAttendeeAdded(attendee)
-                    attendee = ""
-                }, textStyle = MaterialTheme.typo.body1.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            )
-        }) {
-        Column(
-            Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.ExtraSmall)
-        ) {
-            Text(
-                text = stringResource(R.string.attendee_dialog_title),
-                style = MaterialTheme.typo.body1.copy(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier.padding(MaterialTheme.dimensions.Medium)
-            )
-
-            TextField(
-                value = attendee,
-                placeholder = {
-                    Text(text = stringResource(R.string.attendee_hint))
-                },
-                onValueChange = { newValue ->
-                    attendee = newValue
-                },
-                colors = TextFieldColors
-            )
-
-            if (attendees.isNotEmpty()) {
-                Column(
-                    modifier = Modifier
-                        .padding(MaterialTheme.dimensions.Medium)
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.attendee_dialog_attendees_subtitle),
-                        style = MaterialTheme.typo.body2.copy(
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.SemiBold
-                        ),
-                    )
-                    Text(
-                        text = attendees.joinToString(stringResource(R.string.attendess_separator)),
-                        style = MaterialTheme.typo.caption.copy(
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontStyle = FontStyle.Italic
-                        ),
-                    )
-                }
-
-            }
-
-        }
-
-    }
-}
-
-@Composable
 private fun AddTaskToolbar(
     modifier: Modifier = Modifier,
     onEvent: (Event) -> Unit
@@ -369,6 +327,204 @@ private fun ToolbarButton(
     }
 }
 
+@Composable
+private fun AttendeesBottomSheet(
+    state: SheetState,
+    modifier: Modifier = Modifier,
+    attendees: Set<String>,
+    onAttendeeDeleted: (String) -> Unit,
+    onAttendeeAdded: (String) -> Unit,
+    onDismissRequest: () -> Unit
+) {
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(key1 = Unit) { focusRequester.requestFocus() }
+    ModalBottomSheet(
+        modifier = modifier,
+        sheetState = state,
+        shape = if (state.hasExpandedState) {
+            BottomSheetDefaults.ExpandedShape
+        } else {
+            BottomSheetDefaults.HiddenShape
+        },
+        onDismissRequest = onDismissRequest,
+        containerColor = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.dimensions.Medium)
+        ) {
+            Text(
+                text = "Attendees",
+                style = MaterialTheme.typo.h6.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = SingleLine,
+                overflow = TextOverflow.Ellipsis,
+            )
+
+            Spacer(modifier = Modifier.width(MaterialTheme.dimensions.Small))
+
+            AddAttendeeField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                onClick = {
+                    onAttendeeAdded(it)
+                }
+            )
+
+            Spacer(modifier = Modifier.width(MaterialTheme.dimensions.ExtraSmall))
+
+            if (attendees.isNotEmpty()) {
+                Text(
+                    text = "Already added:",
+                    style = MaterialTheme.typo.body1.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(MaterialTheme.dimensions.Small)
+                )
+            }
+
+            attendees.forEach {
+                key(it) {
+                    AttendeeItem(
+                        attendee = it,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = MaterialTheme.dimensions.Medium),
+                        onClick = onAttendeeDeleted
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(MaterialTheme.dimensions.Small))
+
+            RemembrallButton(text = "Close", Modifier.fillMaxWidth()) {
+                onDismissRequest()
+            }
+        }
+    }
+}
+
+@Composable
+private fun AddAttendeeField(
+    modifier: Modifier,
+    onClick: (String) -> Unit
+) {
+    var editableAttendee by remember { mutableStateOf("") }
+    val coroutineScope = rememberCoroutineScope()
+    var showError by remember { mutableStateOf(false) }
+
+    ConstraintLayout(modifier) {
+        val (input, button) = createRefs()
+
+        Column(Modifier.constrainAs(input) {
+            linkTo(parent.top, parent.bottom)
+            linkTo(parent.start, button.start)
+            width = Dimension.fillToConstraints
+        }) {
+            TextField(
+                value = editableAttendee,
+                isError = showError,
+                onValueChange = {
+                    editableAttendee = it
+                },
+                colors = TextFieldColors,
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = {
+                    Text(
+                        "jhon@doe.com",
+                        style = MaterialTheme.typo.body1
+                    )
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Email
+                ),
+                singleLine = true
+            )
+
+            if (showError) {
+                Text(
+                    text = "must be a valid email",
+                    style = MaterialTheme.typo.caption.copy(
+                        color = MaterialTheme.colorScheme.error,
+                        fontStyle = FontStyle.Italic
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        IconButton(
+            modifier = Modifier.constrainAs(button) {
+                linkTo(input.top, input.bottom)
+                end.linkTo(parent.end)
+            },
+            onClick = {
+                coroutineScope.launch(Dispatchers.Main.immediate) {
+                    if (Patterns.EMAIL_ADDRESS.matcher(editableAttendee).matches()) {
+                        showError = false
+                        onClick(editableAttendee)
+                        editableAttendee = ""
+                    } else {
+                        showError = true
+                    }
+                }
+            }
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_save),
+                contentDescription = "Add attendee",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun AttendeeItem(
+    attendee: String, modifier: Modifier,
+    onClick: (String) -> Unit
+) {
+    ConstraintLayout(modifier) {
+        val (text, icon) = createRefs()
+
+        Text(
+            text = attendee,
+            style = MaterialTheme.typo.body1.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+            modifier = Modifier.constrainAs(text) {
+                linkTo(parent.top, parent.bottom)
+                linkTo(parent.start, icon.start)
+                width = Dimension.fillToConstraints
+            },
+            maxLines = SingleLine,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        IconButton(
+            onClick = { onClick(attendee) },
+            modifier = Modifier.constrainAs(icon) {
+                linkTo(text.top, text.bottom)
+                end.linkTo(parent.end)
+            },
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_delete),
+                contentDescription = "Delete attendee",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+    }
+}
+
 @Preview
 @Composable
 private fun AddTaskToolbarPreview() {
@@ -378,3 +534,5 @@ private fun AddTaskToolbarPreview() {
         }
     }
 }
+
+private const val SingleLine = 1

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="priority_high_label">High</string>
+    <string name="priority_urgent_label">Urgent</string>
+    <string name="priority_medium_label">Medium</string>
+    <string name="priority_low_label">Low</string>
+</resources>

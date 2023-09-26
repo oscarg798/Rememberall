@@ -1,9 +1,7 @@
 package com.oscarg798.remembrall.taskimpl.model
 
-import com.oscarg798.remembrall.task.CalendarSyncInformation
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
-import java.io.Serializable
 
 data class TaskDto(
     val id: String,
@@ -13,7 +11,8 @@ data class TaskDto(
     val priority: TaskPriority?,
     val dueDate: Long?,
     val completed: Boolean = false,
-    val calendarSyncInformation: CalendarSyncInformationDto?
+    val calendarSyncInformation: CalendarSyncInformationDto?,
+    val createdAt: Long? = null
 ) {
 
     constructor(task: Task) : this(
@@ -26,23 +25,8 @@ data class TaskDto(
         calendarSyncInformation = task.calendarSyncInformation?.let {
             CalendarSyncInformationDto(it)
         },
-        dueDate = task.dueDate
-    )
-
-    constructor(
-        task: Task,
-        taskCalendarSyncInformation: CalendarSyncInformation?
-    ) : this(
-        id = task.id,
-        owner = task.owner,
-        name = task.name,
-        description = task.description,
-        priority = task.priority,
-        completed = task.completed,
-        calendarSyncInformation = taskCalendarSyncInformation?.let {
-            CalendarSyncInformationDto(taskCalendarSyncInformation)
-        },
-        dueDate = task.dueDate
+        dueDate = task.dueDate,
+        createdAt = task.createAt
     )
 
     constructor(
@@ -73,7 +57,8 @@ data class TaskDto(
             CalendarSyncInformationDto(taskMap)
         } else {
             null
-        }
+        },
+        createdAt = taskMap[ColumnNames.CreatedAt] as? Long
     )
 
     fun toTask(owned: Boolean = OwnershipUnknownAtThisPoint) = Task(
@@ -85,7 +70,8 @@ data class TaskDto(
         completed = completed,
         calendarSyncInformation = calendarSyncInformation?.toCalendarSyncInformation(),
         dueDate = dueDate,
-        owned = owned
+        owned = owned,
+        createAt = createdAt
     )
 
     object ColumnNames {
@@ -95,6 +81,7 @@ data class TaskDto(
         const val Completed = "completed"
         const val DueDate = "dueDate"
         const val Owner = "user"
+        const val CreatedAt = "createdAt"
     }
 
     companion object {

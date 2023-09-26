@@ -6,7 +6,7 @@ import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.common_task.GetTaskUpdateListenerUseCase
 import com.oscarg798.remembrall.common_task.ui.TaskCardOptions
-import com.oscarg798.remembrall.dateformatter.DueDateFormatter
+import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.tasklist.model.TaskGroup
 import com.oscarg798.remembrall.tasklist.usecase.GetInitialIndexPosition
@@ -21,7 +21,7 @@ class TaskListViewModel @Inject constructor(
     private val removeTaskUseCase: RemoveTaskUseCase,
     private val getTaskGrouped: GetTaskGrouped,
     private val getInitialIndexPosition: GetInitialIndexPosition,
-    private val dueDateFormatter: DueDateFormatter,
+    private val dueDateFormatter: DateFormatter,
     private val getTaskUpdateListenerUseCase: GetTaskUpdateListenerUseCase,
     coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 ) : AbstractViewModel<TaskListViewModel.ViewState, TaskListViewModel.Event>(

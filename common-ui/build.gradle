@@ -8,5 +8,6 @@ dependencies {
 
     //TODO remove this
     implementation project(path: ':task')
+    implementation project(path: ':uicolor')
 }
 

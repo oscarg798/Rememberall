@@ -9,5 +9,6 @@ data class Task(
     val calendarSyncInformation: CalendarSyncInformation?,
     val dueDate: Long?,
     val completed: Boolean = false,
-    val description: String?
+    val description: String?,
+    val createAt: Long? = null
 )

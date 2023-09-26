@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.ui_common.ui.theming.SecondaryTextColor
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
 @Composable
 fun DayItem(
@@ -38,7 +38,7 @@ fun DayItem(
         ) {
             Text(
                 text = name,
-                style = MaterialTheme.typography.bodyMedium.merge(TextStyle(color = SecondaryTextColor))
+                style = MaterialTheme.typography.bodyMedium.merge(TextStyle(color = com.oscarg798.remembrall.uicolor.SecondaryTextColor))
             )
         }
 
@@ -80,7 +80,7 @@ private fun getDayColor(isToday: Boolean) = if (isToday) {
 private fun getDividerColor(isToday: Boolean) = if (isToday) {
     MaterialTheme.colorScheme.secondary
 } else {
-    SecondaryTextColor
+   SecondaryTextColor
 }
 
 private fun getDividerHeight(isToday: Boolean) = if (isToday) {
