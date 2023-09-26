@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall
 
-import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
-import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
+import com.remembrall.oscarg798.calendar.Calendar
+import com.remembrall.oscarg798.calendar.CalendarRepository
 import com.oscarg798.remembrall.common_calendar.exception.CalendarNotFoundException
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
@@ -28,7 +28,7 @@ class AddTaskUseCaseTest {
 
     private val dueDateFormatter: DueDateFormatterImpl = mockk()
     private val taskRepository: TaskRepository = mockk()
-    private val calendarRepository: CalendarRepository = mockk()
+    private val calendarRepository: com.remembrall.oscarg798.calendar.CalendarRepository = mockk()
     private val authRepository: AuthRepository = mockk()
     private val emailPattern: Pattern = mockk()
     private val matchers: Matcher = mockk()
@@ -293,7 +293,13 @@ class AddTaskUseCaseTest {
 
     @Test
     fun `given params with name, priority, description, attendees, and due date, user signed in, selected calendar when usecase executed then it should be added and synced`() {
-        every { calendarRepository.getSelectedCalendar() } answers { Calendar("1", "2", true) }
+        every { calendarRepository.getSelectedCalendar() } answers {
+            com.remembrall.oscarg798.calendar.Calendar(
+                "1",
+                "2",
+                true
+            )
+        }
         every { dueDateFormatter.toDueDateInMillis(LocalDateTime.MIN) } answers { 1L }
         every { dueDateFormatter.toCalendarTaskDate(any()) } answers { "ffe" }
         every { authRepository.getSignedInUser() } answers { mockk() }

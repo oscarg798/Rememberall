@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.profile.usecase
 
-import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
-import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
+import com.remembrall.oscarg798.calendar.Calendar
+import com.remembrall.oscarg798.calendar.CalendarRepository
 import dagger.Reusable
 import javax.inject.Inject
 

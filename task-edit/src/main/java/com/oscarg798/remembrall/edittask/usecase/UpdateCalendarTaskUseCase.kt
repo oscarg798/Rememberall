@@ -1,6 +1,6 @@
 package com.oscarg798.remembrall.edittask.usecase
 
-import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
+import com.remembrall.oscarg798.calendar.CalendarRepository
 
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.dateformatter.DateFormatter

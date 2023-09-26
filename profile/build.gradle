@@ -5,9 +5,9 @@ dependencies {
     implementation project(path: ':user')
 
     implementation project(path: ':auth')
-    implementation project(path: ':common-ui')
     implementation project(path: ':uicolor')
-    implementation project(path: ':common_calendar')
+    implementation project(path: ':calendar')
+    implementation project(path: ':common-ui')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
 }

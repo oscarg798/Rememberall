@@ -9,7 +9,7 @@ import com.oscarg798.remembrall.common.model.Config
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
 import com.oscarg798.remembrall.auth.AuthOptions
-import com.oscarg798.remembrall.common_calendar.data.restclient.CalendarRestClient
+import com.oscarg798.remembrall.calendarimpl.CalendarRestClient
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -36,7 +36,7 @@ object LoginModule {
     fun provideSharedPreferences() : SharedPreferences = mockk()
 
     @Provides
-    fun provideCalendarRestClient(): CalendarRestClient = mockk()
+    fun provideCalendarRestClient(): com.oscarg798.remembrall.calendarimpl.CalendarRestClient = mockk()
 
     @Provides
     fun provideGson(): Gson = mockk()

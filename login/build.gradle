@@ -85,8 +85,8 @@ dependencies {
     implementation project(path: ':auth')
     implementation project(":gmstaskutils")
     implementation project(path: ':rxutils')
+    implementation project(path: ':calendar')
     implementation project(path: ':common-ui')
     implementation project(path: ':mobiusutils')
-    implementation project(path: ':common_calendar')
     implementation project(path: ':coroutinesutils')
 }

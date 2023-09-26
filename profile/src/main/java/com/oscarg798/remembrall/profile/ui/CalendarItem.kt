@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
+import com.remembrall.oscarg798.calendar.Calendar
 import com.oscarg798.remembrall.common.extensions.SingleLine
 import com.oscarg798.remembrall.profile.R
 import com.oscarg798.remembrall.ui_common.ui.theming.RemembrallTheme

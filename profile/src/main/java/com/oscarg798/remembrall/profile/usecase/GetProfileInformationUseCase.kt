@@ -1,28 +1,30 @@
 package com.oscarg798.remembrall.profile.usecase
 
-import com.oscarg798.remembrall.common_calendar.domain.usecase.GetCalendars
-import com.oscarg798.remembrall.common_calendar.domain.usecase.GetSelectedCalendar
-import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
+import com.oscarg798.remembrall.auth.Session
 import com.oscarg798.remembrall.common.repository.domain.PreferenceRepository
 import com.oscarg798.remembrall.profile.model.ProfileInformation
+import com.remembrall.oscarg798.calendar.CalendarRepository
 import javax.inject.Inject
 
 class GetProfileInformationUseCase @Inject constructor(
-    private val getSignedInUserUseCase: GetSignedInUserUseCase,
-    private val getSelectedCalendar: GetSelectedCalendar,
-    private val getCalendars: GetCalendars,
+    private val session: Session,
+    private val calendarRepository: CalendarRepository,
     private val preferenceRepository: PreferenceRepository
 ) {
 
     suspend fun execute(): ProfileInformation {
-        val user = getSignedInUserUseCase.execute()
-        val selectedCalendar = getSelectedCalendar()
+        val user = (session.getLoggedInState() as? Session.State.LoggedIn)?.user
+            ?: throw IllegalStateException(
+                "Can not get profile information without an user logged in"
+            )
+
+        val selectedCalendar = calendarRepository.getSelectedCalendar()
 
         return ProfileInformation(
-            user,
-            getCalendars(),
-            selectedCalendar.id,
-            preferenceRepository.getNotificationValue()
+            user = user,
+            calendars = calendarRepository.getCalendars(),
+            selectedCalendar = selectedCalendar.id,
+            notificationsEnabled = preferenceRepository.getNotificationValue()
         )
     }
 }

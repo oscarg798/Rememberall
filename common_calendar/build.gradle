@@ -1,7 +1,0 @@
-apply from: "../common.gradle"
-
-dependencies {
-    implementation libs.gson
-    implementation project(path: ':task')
-    implementation project(path: ':coroutinesutils')
-}

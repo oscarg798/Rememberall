@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.profile
 
 import androidx.lifecycle.viewModelScope
-import com.oscarg798.remembrall.common_calendar.domain.model.Calendar
+import com.remembrall.oscarg798.calendar.Calendar
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch

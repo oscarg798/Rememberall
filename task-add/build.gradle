@@ -89,7 +89,6 @@ dependencies {
     implementation project(path: ':mobiusutils')
     implementation project(path: ':common-gettask')
     implementation project(path: ':common-addedit')
-    implementation project(path: ':common_calendar')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':taskpriorityextensions')
 }

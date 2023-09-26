@@ -9,7 +9,7 @@ java {
 }
 
 dependencies {
-    implementation project(":user")
+    api project(":user")
     implementation libs.coroutines.core
 }
 

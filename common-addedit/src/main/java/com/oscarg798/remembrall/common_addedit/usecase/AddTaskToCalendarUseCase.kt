@@ -1,9 +1,9 @@
 package com.oscarg798.remembrall.common_addedit.usecase
 
 
-import com.oscarg798.remembrall.task.CalendarSyncInformation
-import com.oscarg798.remembrall.common_calendar.domain.repository.CalendarRepository
 import com.oscarg798.remembrall.dateformatter.DateFormatter
+import com.oscarg798.remembrall.task.CalendarSyncInformation
+import com.remembrall.oscarg798.calendar.CalendarRepository
 import javax.inject.Inject
 import java.time.LocalDateTime
 

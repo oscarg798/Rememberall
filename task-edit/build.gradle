@@ -4,9 +4,9 @@ dependencies {
     implementation project(path: ':date')
     implementation project(path: ':task')
     implementation project(path: ':common')
+    implementation project(path: ':calendar')
     implementation project(path: ':common-ui')
     implementation project(path: ':common-gettask')
     implementation project(path: ':common-addedit')
-    implementation project(path: ':common_calendar')
     implementation project(path: ':coroutinesutils')
 }
