@@ -20,7 +20,8 @@ class RemembrallApplication : Application(), Configuration.Provider {
         registerActivityLifecycleCallbacks(activityCallbacks)
     }
 
-    override fun getWorkManagerConfiguration() = Configuration.Builder()
-        .setWorkerFactory(workerFactory)
-        .build()
+    override val workManagerConfiguration: Configuration
+        get() =  Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }

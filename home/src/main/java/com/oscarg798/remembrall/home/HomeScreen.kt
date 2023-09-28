@@ -6,7 +6,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.oscarg798.remembrall.tasklist.ui.TaskListScreen
+import com.oscarg798.remembrall.list.ui.TaskListScreen
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold

@@ -1,16 +1,16 @@
-package com.oscarg798.remembrall.tasklist
+package com.oscarg798.remembrall.list
 
-import com.oscarg798.remembrall.common.model.DisplayableTask
+import com.oscarg798.remembrall.list.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
 import com.oscarg798.remembrall.dateformatter.DateFormatter
-import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
-import com.oscarg798.remembrall.tasklist.model.TaskGroup
-import com.oscarg798.remembrall.tasklist.ui.TaskCardOptions
-import com.oscarg798.remembrall.tasklist.usecase.GetInitialIndexPosition
-import com.oscarg798.remembrall.tasklist.usecase.GetTaskGrouped
-import com.oscarg798.remembrall.tasklist.usecase.GetTaskUpdateListenerUseCase
-import com.oscarg798.remembrall.tasklist.usecase.RemoveTaskUseCase
+import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
+import com.oscarg798.remembrall.list.model.TaskGroup
+import com.oscarg798.remembrall.list.ui.TaskCardOptions
+import com.oscarg798.remembrall.list.usecase.GetInitialIndexPosition
+import com.oscarg798.remembrall.list.usecase.GetTaskGrouped
+import com.oscarg798.remembrall.list.usecase.GetTaskUpdateListenerUseCase
+import com.oscarg798.remembrall.list.usecase.RemoveTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.withContext

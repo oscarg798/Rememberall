@@ -1,5 +1,8 @@
 apply from: "../common.gradle"
 
+android{
+    namespace "com.oscarg798.remembrall.home"
+}
 dependencies  {
 
     implementation libs.accompanist.pager

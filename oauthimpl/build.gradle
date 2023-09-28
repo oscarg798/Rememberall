@@ -19,21 +19,22 @@ android {
     }
 
     buildTypes {
+        debug {}
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
         freeCompilerArgs = ["-Xallow-result-return-type",
                             "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                             "-Xopt-in=kotlinx.coroutines.FlowPreview",
                             "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
-        jvmTarget = "1.8"
+       
     }
 }
 

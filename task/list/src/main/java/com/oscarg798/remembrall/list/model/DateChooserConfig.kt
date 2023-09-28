@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.model
+package com.oscarg798.remembrall.list.model
 
 data class DateChooserConfig(
     val currentDate: String,

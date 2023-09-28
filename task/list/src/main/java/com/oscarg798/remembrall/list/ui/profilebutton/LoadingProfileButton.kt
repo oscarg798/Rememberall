@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.ui.profilebutton
+package com.oscarg798.remembrall.list.ui.profilebutton
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size

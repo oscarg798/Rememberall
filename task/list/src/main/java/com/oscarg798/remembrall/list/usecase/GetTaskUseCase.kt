@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.usecase
+package com.oscarg798.remembrall.list.usecase
 
 import com.oscarg798.remembrall.common.auth.GetSignedInUserUseCase
 import com.oscarg798.remembrall.task.Task

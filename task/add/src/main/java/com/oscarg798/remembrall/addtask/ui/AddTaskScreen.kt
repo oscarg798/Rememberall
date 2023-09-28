@@ -60,6 +60,7 @@ import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.ValidationError
 import com.oscarg798.remembrall.ui.RemembrallButton
 import com.oscarg798.remembrall.ui.icons.R as IconsR
+import androidx.compose.ui.tooling.preview.Devices
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
@@ -349,7 +350,7 @@ private fun AttendeesBottomSheet(
             BottomSheetDefaults.HiddenShape
         },
         onDismissRequest = onDismissRequest,
-        containerColor = MaterialTheme.colorScheme.surfaceVariant
+        containerColor = MaterialTheme.colorScheme.surface
     ) {
         Column(
             Modifier
@@ -359,7 +360,7 @@ private fun AttendeesBottomSheet(
             Text(
                 text = "Attendees",
                 style = MaterialTheme.typo.h6.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurface
                 ),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -384,7 +385,7 @@ private fun AttendeesBottomSheet(
                 Text(
                     text = "Already added:",
                     style = MaterialTheme.typo.body1.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurface
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -525,6 +526,18 @@ private fun AttendeeItem(
                 contentDescription = "Delete attendee",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+    }
+}
+
+@Preview(device = Devices.NEXUS_5)
+@Composable
+private fun AttendeesBottomSheetPreview() {
+    RemembrallTheme {
+        AttendeesBottomSheet(state = rememberModalBottomSheetState(), attendees = setOf(
+            "oscarg79@gmail.com"
+        ), onAttendeeDeleted = {}, onAttendeeAdded = {}) {
+
         }
     }
 }

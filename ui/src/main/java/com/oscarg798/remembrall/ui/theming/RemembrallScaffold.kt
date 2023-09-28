@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.oscarg798.remembrall.ui.R
+import com.oscarg798.remembrall.ui.icons.R as IconsR
 
 @Composable
 fun RemembrallTopBarTitle(title: String) {
@@ -46,7 +47,7 @@ fun RemembrallTopBar(
         navigationIcon = {
             if (backButtonAction != null) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
+                    painter = painterResource(IconsR.drawable.ic_back),
                     contentDescription = null,
                     modifier = Modifier.clickable {
                         backButtonAction()

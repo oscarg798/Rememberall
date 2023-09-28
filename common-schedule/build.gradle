@@ -1,5 +1,9 @@
 apply from: "../common.gradle"
 
+android{
+    namespace "com.oscarg798.remembrall.schedule"
+}
+
 dependencies {
 
     implementation libs.workManager.ktx

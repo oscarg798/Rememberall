@@ -30,6 +30,24 @@ internal fun update(
     Event.OnTaskPrioritySelectorDismissed -> onTaskPrioritySelectorDismissed()
     is Event.OnDueDatePickerInitialDateFound -> onDueDatePickerInitialDateFound(event)
     is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
+    Event.OnCalendarActionLongClicked -> onCalendarActionLongClicked(model)
+    Event.OnTagActionLongClicked -> onTagActionLongClicked(model)
+}
+
+private fun onTagActionLongClicked(model: Model): Upcoming {
+    return if(model.priority ==null){
+        noChange()
+    }else{
+        next(model.copy(priority = null))
+    }
+}
+
+private fun onCalendarActionLongClicked(model: Model): Upcoming {
+    return if (model.dueDate == null) {
+        noChange()
+    } else {
+        next(model.copy(dueDate = null))
+    }
 }
 
 private fun onValidationError(model: Model, event: Event.OnValidationError): Upcoming {

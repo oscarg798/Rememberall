@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.ui
+package com.oscarg798.remembrall.list.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,10 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.model.DisplayableTask
-import com.oscarg798.remembrall.tasklist.TaskListViewModel
-import com.oscarg798.remembrall.tasklist.model.DisplayableTasksGroup
-import com.oscarg798.remembrall.tasklist.model.TaskGroup
+import com.oscarg798.remembrall.list.model.DisplayableTask
+import com.oscarg798.remembrall.list.TaskListViewModel
+import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
+import com.oscarg798.remembrall.list.model.TaskGroup
 import com.oscarg798.remembrall.ui.AddButton
 import com.oscarg798.remembrall.ui.Shimmer
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme

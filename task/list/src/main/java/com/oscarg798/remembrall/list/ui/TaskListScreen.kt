@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.ui
+package com.oscarg798.remembrall.list.ui
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable
@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
-import com.oscarg798.remembrall.tasklist.TaskListViewModel
+import com.oscarg798.remembrall.list.TaskListViewModel
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 

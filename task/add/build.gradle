@@ -32,7 +32,7 @@ android {
                             "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
                             "-Xopt-in=kotlinx.coroutines.FlowPreview",
                             "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
-        jvmTarget = "1.8"
+       
     }
 
     buildFeatures {
@@ -42,14 +42,14 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion compose_ui_version
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
 
     compileOptions {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     packagingOptions {
@@ -58,20 +58,7 @@ android {
 }
 dependencies {
 
-    implementation libs.compose.ui
     implementation libs.hilt.compose
-    implementation libs.compose.icons
-    implementation libs.compose.tooling
-    implementation libs.compose.material
-    implementation libs.compose.compiler
-    implementation libs.compose.activity
-    implementation libs.compose.material3
-    implementation libs.compose.animation
-    implementation libs.compose.foundation
-    implementation libs.compose.iconsExtended
-    implementation libs.compose.runtimeLivedata
-    implementation libs.compose.constraintLayout
-
     implementation libs.compose.dialogs
 
     implementation libs.mobius.android

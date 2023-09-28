@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.common.model
+package com.oscarg798.remembrall.list.model
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.CalendarAttendee
@@ -8,19 +8,19 @@ import com.oscarg798.remembrall.task.TaskPriority
 data class DisplayableTask(
     val id: String,
     val owned: Boolean,
-    val name: String,
-    val description: String?,
-    val priority: TaskPriority?,
+    val title: String,
+    val description: String? = null,
+    val priority: TaskPriority? = null,
     val completed: Boolean = false,
-    val dueDate: String?,
+    val dueDate: String? = null,
     val attendees: Collection<CalendarAttendee>? = null,
 
-) {
+    ) {
 
     constructor(task: Task, dueDateFormatter: DateFormatter) : this(
         id = task.id,
         owned = task.owned,
-        name = task.name,
+        title = task.name,
         description = task.description,
         priority = task.priority ?: TaskPriority.Low,
         completed = task.completed,

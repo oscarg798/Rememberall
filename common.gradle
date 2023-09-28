@@ -2,17 +2,16 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
 
-    compileSdk = 33
-    buildToolsVersion = "31.0.0"
+    compileSdk = targetAndCompileVersion
+    buildToolsVersion = defaultBuildToolsVersion
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 33
+        minSdk = minSdkversion
+        targetSdk = targetAndCompileVersion
         versionCode = 1
         versionName = "1.0"
     }
@@ -25,12 +24,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     buildFeatures {
@@ -40,7 +39,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion compose_ui_version
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
 
     kotlinOptions {
@@ -51,7 +50,7 @@ android {
                             "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                             "-Xopt-in=kotlinx.coroutines.FlowPreview",
                             "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
-        jvmTarget = "1.8"
+       
     }
 
 }

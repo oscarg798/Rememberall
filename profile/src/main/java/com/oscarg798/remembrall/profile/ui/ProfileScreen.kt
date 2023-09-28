@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oscarg798.remembrall.profile.ProfileViewModel
-import com.oscarg798.remembrall.profile.R
+import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
@@ -42,7 +42,7 @@ fun NavGraphBuilder.profileScreen() =
             topBar = {
                 RemembrallTopBar(
                     title = {
-                        RemembrallTopBarTitle(stringResource(R.string.profile_title))
+                        RemembrallTopBarTitle(stringResource(CommonR.string.profile_title))
                     }, backButtonAction = {
                     navController.popBackStack()
                 }

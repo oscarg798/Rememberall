@@ -73,7 +73,7 @@ fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 RemembrallButton(
-                    text = stringResource(R.string.common_signin_button_text),
+                    text = stringResource(R.string.login_title),
                     loading = state.loading
                 ) {
                     viewModel.onEvent(Event.SignIn)

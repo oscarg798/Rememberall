@@ -2,10 +2,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
-enableFeaturePreview("VERSION_CATALOGS")
 
 rootProject.name = "remembrall"
 include(":app")

@@ -1,8 +1,8 @@
-package com.oscarg798.remembrall.tasklist.usecase
+package com.oscarg798.remembrall.list.usecase
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.Task
-import com.oscarg798.remembrall.tasklist.model.TaskGroup
+import com.oscarg798.remembrall.list.model.TaskGroup
 import java.util.SortedMap
 import javax.inject.Inject
 

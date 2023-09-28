@@ -14,7 +14,6 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -42,9 +41,25 @@ import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui.icons.R as IconsR
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.LocalMinimumInteractiveComponentEnforcement
+import androidx.compose.material.minimumInteractiveComponentSize
+import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.semantics.Role
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.ui.theming.colorScheme
 import com.oscarg798.remembrall.ui.theming.dimensions
+import com.oscarg798.remembrall.ui.theming.typo
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import java.time.LocalDateTime
 
@@ -63,7 +78,7 @@ internal fun AddTaskForm(
 ) {
     ConstraintLayout(modifier) {
         val (textFields, actionRow) = createRefs()
-        val titleStyle = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.SemiBold)
+        val titleStyle = MaterialTheme.typo.h4.copy(fontWeight = FontWeight.SemiBold)
         Column(
             Modifier.constrainAs(textFields) {
                 linkTo(start = parent.start, end = parent.end)
@@ -96,7 +111,7 @@ internal fun AddTaskForm(
                     text = dueDate.displayableDate,
                     modifier = Modifier
                         .padding(start = MaterialTheme.dimensions.Medium),
-                    style = MaterialTheme.typography.caption.copy(
+                    style = MaterialTheme.typo.caption.copy(
                         fontWeight = FontWeight.SemiBold,
                         fontStyle = FontStyle.Italic,
                         color = SecondaryTextColor
@@ -110,12 +125,12 @@ internal fun AddTaskForm(
                 value = description,
                 onValueChange = { onEvent(Event.OnDescriptionChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
-                textStyle = MaterialTheme.typography.body1,
+                textStyle = MaterialTheme.typo.body1,
                 enabled = enabled,
                 placeholder = {
                     Text(
                         stringResource(R.string.description_hint),
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typo.body1
                     )
                 },
                 colors = TextFieldColors
@@ -165,6 +180,7 @@ private fun ActionsRow(
             } else {
                 MaterialTheme.colorScheme.onSurface
             },
+            onLongClicked = { onEvent(Event.OnCalendarActionLongClicked) },
             onClick = { onEvent(Event.OnCalendarActionClicked) },
         )
 
@@ -177,8 +193,10 @@ private fun ActionsRow(
             } else {
                 MaterialTheme.colorScheme.onSurface
             },
+            onLongClicked = {
+                onEvent(Event.OnTagActionLongClicked)
+            },
             dropDownContent = {
-
                 TaskPriorityDropDown(
                     expanded = selectingTaskPriority,
                     priorities = taskPriorities,
@@ -215,17 +233,14 @@ private fun ActionButton(
     enabled: Boolean,
     modifier: Modifier = Modifier,
     tintColor: Color = MaterialTheme.colorScheme.onSurface,
+    onLongClicked: () -> Unit = {},
     onClick: () -> Unit
 ) {
-    IconButton(
+    ActionButtonContainer(
+        modifier = modifier,
         enabled = enabled,
-        onClick = onClick,
-        modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.surface,
-                shape = CircleShape
-            )
-            .clip(CircleShape)
+        onLongClicked = onLongClicked,
+        onClick = onClick
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -242,15 +257,14 @@ private fun ActionButtonWithDropDown(
     enabled: Boolean,
     dropDownContent: @Composable () -> Unit,
     tintColor: Color = MaterialTheme.colorScheme.onSurface,
+    onLongClicked: () -> Unit = {},
     onClick: () -> Unit
 ) {
-    IconButton(
-        onClick = onClick,
+    ActionButtonContainer(
+        modifier = modifier,
         enabled = enabled,
-        modifier = modifier.background(
-            color = MaterialTheme.colorScheme.surface,
-            shape = CircleShape
-        )
+        onLongClicked = onLongClicked,
+        onClick = onClick
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -258,6 +272,40 @@ private fun ActionButtonWithDropDown(
             tint = tintColor
         )
         dropDownContent()
+    }
+}
+
+@Composable
+private fun ActionButtonContainer(
+    modifier: Modifier,
+    enabled: Boolean,
+    onLongClicked: () -> Unit,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val haptic = LocalHapticFeedback.current
+
+    Box(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.surface,
+                shape = CircleShape
+            )
+            .clip(CircleShape)
+            .minimumInteractiveComponentSize()
+            .combinedClickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(bounded = false, radius = 24.dp),
+                onClick = onClick,
+                enabled = enabled,
+                onLongClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    onLongClicked()
+                }
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        content()
     }
 }
 
@@ -283,8 +331,8 @@ private fun TaskPriorityDropDown(
                 ) {
                     Text(
                         text = stringResource(id = priority.getLabel()),
-                        style = MaterialTheme.typography.body2.copy(
-                            color = Color.Black,
+                        style = MaterialTheme.typo.body2.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontWeight = if (selectedPriority == priority) {
                                 FontWeight.Bold
                             } else {
@@ -309,7 +357,7 @@ private fun AddTaskPreview() {
         AddTaskForm(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(16.dp),
             title = title.value,
             description = description.value,

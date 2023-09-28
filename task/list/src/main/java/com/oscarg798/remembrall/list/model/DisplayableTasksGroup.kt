@@ -1,6 +1,5 @@
-package com.oscarg798.remembrall.tasklist.model
+package com.oscarg798.remembrall.list.model
 
-import com.oscarg798.remembrall.common.model.DisplayableTask
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 
 data class DisplayableTasksGroup(

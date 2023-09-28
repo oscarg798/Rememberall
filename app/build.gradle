@@ -3,7 +3,6 @@ plugins {
     id "kotlin-android"
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
 }
@@ -13,8 +12,10 @@ apply from: "../config.gradle"
 
 android {
 
+    namespace 'com.oscarg798.remembrall'
     compileSdk = targetAndCompileVersion
-    buildToolsVersion = "31.0.0"
+    buildToolsVersion = defaultBuildToolsVersion
+    android.buildFeatures.buildConfig true
 
     defaultConfig {
         applicationId = "com.oscarg798.remembrall"
@@ -47,8 +48,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
@@ -59,7 +60,8 @@ android {
                             "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                             "-Xopt-in=kotlinx.coroutines.FlowPreview",
                             "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
-        jvmTarget = "1.8"
+
+        jvmTarget = '17'
     }
 
     testOptions {
@@ -76,7 +78,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion compose_ui_version
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
 
     repositories {
@@ -86,6 +88,11 @@ android {
                 includeModule("org.jetbrains.kotlinx", "kotlinx-collections-immutable-jvm")
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     packagingOptions {
@@ -131,7 +138,7 @@ dependencies {
 
     implementation libs.compose.dialogs
 
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.8.10'
+    implementation libs.kotlin.reflect
     implementation libs.android.gms.auth
     implementation platform(libs.firebase.boom)
 

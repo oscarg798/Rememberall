@@ -3,6 +3,7 @@ package com.oscarg798.remembrall.schedule.usecase
 import android.util.Log
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.schedule.R
+import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.schedule.notification.NotificationScheduler
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
@@ -34,25 +35,25 @@ class VerifyAgendaUseCase @Inject constructor(
         val taskCountByPriority = getTaskCountByPriorityLabel(tasks)
 
         return NotificationScheduler.Type.BigText(
-            title = stringProvider.get(R.string.big_notification_title),
-            content = stringProvider.get(R.string.busy_agenda_notification_content),
+            title = stringProvider.get(CommonR.string.big_notification_title),
+            content = stringProvider.get(CommonR.string.busy_agenda_notification_content),
             subtext = String.format(
-                stringProvider.get(R.string.busy_agenda_notification_subtext),
+                stringProvider.get(CommonR.string.busy_agenda_notification_subtext),
                 tasks.size.toString()
             ),
-            subTitle = stringProvider.get(R.string.busy_agenda_notification_subtitle),
+            subTitle = stringProvider.get(CommonR.string.busy_agenda_notification_subtitle),
             bigText = String.format(
-                stringProvider.get(R.string.busy_agenda_notification_big_text),
+                stringProvider.get(CommonR.string.busy_agenda_notification_big_text),
                 taskCountByPriority
             )
         )
     }
 
     private fun getSmallNotificationType() = NotificationScheduler.Type.Small(
-        title = stringProvider.get(R.string.small_notification_title),
-        content = stringProvider.get(R.string.free_agenda_notification_content),
-        subtext = stringProvider.get(R.string.free_agenda_notification_subtext),
-        subTitle = stringProvider.get(R.string.free_agenda_notification_subtitle)
+        title = stringProvider.get(CommonR.string.small_notification_title),
+        content = stringProvider.get(CommonR.string.free_agenda_notification_content),
+        subtext = stringProvider.get(CommonR.string.free_agenda_notification_subtext),
+        subTitle = stringProvider.get(CommonR.string.free_agenda_notification_subtitle)
     )
 
     private fun getTaskCountByPriorityLabel(
@@ -76,22 +77,22 @@ class VerifyAgendaUseCase @Inject constructor(
         taskCount: Int
     ) = if (taskCount != NoTaskByPriorityCount) {
         String.format(
-            stringProvider.get(R.string.tasks_by_priority_bullet_point),
+            stringProvider.get(CommonR.string.tasks_by_priority_bullet_point),
             taskCount.toString(),
             stringProvider.get(getPriorityLabel(priority))
         )
     } else {
         String.format(
-            stringProvider.get(R.string.no_tasks_by_priority_bullet_point),
+            stringProvider.get(CommonR.string.no_tasks_by_priority_bullet_point),
             stringProvider.get(getPriorityLabel(priority))
         )
     }
 
     private fun getPriorityLabel(priority: TaskPriority) = when (priority) {
-        TaskPriority.High -> R.string.high_task_priority_label
-        TaskPriority.Low -> R.string.low_task_priority_label
-        TaskPriority.Medium -> R.string.medium_task_priority_label
-        TaskPriority.Urgent -> R.string.urgent_task_priority_label
+        TaskPriority.High -> CommonR.string.high_task_priority_label
+        TaskPriority.Low -> CommonR.string.low_task_priority_label
+        TaskPriority.Medium -> CommonR.string.medium_task_priority_label
+        TaskPriority.Urgent -> CommonR.string.urgent_task_priority_label
     }
 }
 

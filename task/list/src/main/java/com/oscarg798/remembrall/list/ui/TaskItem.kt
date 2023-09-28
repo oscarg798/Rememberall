@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.ui
+package com.oscarg798.remembrall.list.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Card as Card3
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,15 +36,32 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.common.model.DisplayableTask
+import com.oscarg798.remembrall.list.model.DisplayableTask
 import com.oscarg798.remembrall.task.CalendarAttendee
-import com.oscarg798.remembrall.tasklist.R
+import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.taskpriorityextensions.getColor
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui.extensions.SingleLine
 import com.oscarg798.remembrall.ui.icons.R as IconsR
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.material3.Icon
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.theming.dimensions
+import com.oscarg798.remembrall.ui.theming.typo
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
+import java.util.UUID
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 @Composable
 internal fun TaskItem(
@@ -244,7 +262,7 @@ private fun TaskHeader(task: DisplayableTask) {
 @Composable
 private fun TaskTitle(task: DisplayableTask, modifier: Modifier = Modifier) {
     Text(
-        text = task.name,
+        text = task.title,
         style = MaterialTheme.typography.titleMedium
             .merge(TextStyle(color = MaterialTheme.colorScheme.onSurface)),
         maxLines = SingleLine,
@@ -298,10 +316,164 @@ sealed interface TaskCardOptions {
         @StringRes
         val title: Int
     ) {
-        object Remove : Option(R.string.remove_task_label)
-        object Edit : Option(R.string.edit_task_label)
+        object Remove : Option(CommonR.string.remove_task_label)
+        object Edit : Option(CommonR.string.edit_task_label)
     }
 }
+
+@Composable
+private fun TaskItem2(
+    task: DisplayableTask,
+    modifier: Modifier
+) {
+    Card3(
+        modifier = modifier
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.dimensions.Medium)
+        ) {
+
+            Text(
+                text = task.title,
+                style = MaterialTheme.typo.h4.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
+
+            task.description?.let {
+                Text(
+                    text = task.description,
+                    style = MaterialTheme.typo.body1.copy(
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                    maxLines = 5,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            task.dueDate?.let {
+                TextIconField(
+                    text = it,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .align(Alignment.End)
+                )
+            }
+
+
+        }
+    }
+}
+
+@Composable
+private fun TextIconField(
+    text: String,
+    modifier: Modifier,
+    iconRes: Int? = null,
+) {
+    ConstraintLayout(modifier) {
+        val (textField, icon) = createRefs()
+        Text(
+            text = text, style = MaterialTheme.typo.caption.copy(
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontStyle = FontStyle.Italic
+            ), modifier = Modifier.constrainAs(textField) {
+                linkTo(parent.top, parent.bottom)
+                start.linkTo(parent.start)
+                width = Dimension.wrapContent
+
+            }
+        )
+
+        iconRes?.let {
+            Icon(
+                painter = painterResource(id = iconRes),
+                contentDescription = "priority icon",
+                modifier = Modifier.constrainAs(icon) {
+                    linkTo(textField.top, textField.bottom)
+                    start.linkTo(textField.end)
+                }
+            )
+        }
+
+    }
+}
+
+@Composable
+private fun TaskList2(
+    tasks: List<DisplayableTask>,
+    modifier: Modifier
+) {
+    LazyVerticalStaggeredGrid(
+        modifier = modifier,
+        columns = StaggeredGridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.Medium),
+        verticalItemSpacing = MaterialTheme.dimensions.Medium
+    ) {
+        items(tasks, key = { it.id }) {
+            TaskItem2(task = it, modifier = Modifier.fillMaxWidth())
+        }
+    }
+
+}
+
+@Preview(device = Devices.NEXUS_5)
+@Composable
+private fun TaskListPreview() {
+    val data = remember { generateRandomData() }
+    RemembrallTheme {
+        TaskList2(
+            data,
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        )
+    }
+}
+
+private fun generateRandomData(): List<DisplayableTask> {
+    val items = Random.nextInt(5, 20)
+    return (0..items).map {
+        DisplayableTask(
+            id = UUID.randomUUID().toString(),
+            owned = Random.nextBoolean(),
+            title = LoremIpsum(Random.nextInt(1, 5)).values.joinToString(" "),
+            description = LoremIpsum(Random.nextInt(20, 100)).values.joinToString(" "),
+            dueDate = if (Random.nextBoolean()) "Sunday 23 Dec, 22" else null
+        )
+    }
+
+}
+
+@Preview
+@Composable
+private fun TaskItemPreview() {
+    RemembrallTheme {
+        Box {
+            TaskItem2(
+                task = DisplayableTask(
+                    id = "1",
+                    owned = true,
+                    title = "Call someone",
+                    description = """We should be calling this afternoon so we can check all details please do it 
+                        otherwise we will need to call tomorrow, and if we do not call tomorrow otherwise 
+                        will have to call they day after tomorrow and so on, until we might endup not
+                        calling at all. Can you imagine such as tragedy 
+          """.trimIndent().replace("\n", ""),
+                    dueDate = "Monday 29 Sep, 23"
+                ),
+                modifier = Modifier,
+            )
+        }
+
+    }
+}
+
 
 private const val TaskDescriptionMaxLines = 2
 private val HorizontalDividerHeight = 1.dp

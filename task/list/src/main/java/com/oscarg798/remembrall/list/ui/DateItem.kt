@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.ui
+package com.oscarg798.remembrall.list.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

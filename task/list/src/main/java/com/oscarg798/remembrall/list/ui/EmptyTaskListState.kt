@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.tasklist.ui
+package com.oscarg798.remembrall.list.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.tasklist.R
+import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.ui.AddButton
 import com.oscarg798.remembrall.ui.icons.R as IconsR
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
@@ -44,7 +44,7 @@ internal fun EmptyTaskList(
             )
 
             Text(
-                text = stringResource(R.string.task_list_empty),
+                text = stringResource(CommonR.string.task_list_empty),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h3
                     .merge(TextStyle(MaterialTheme.colors.onBackground)),

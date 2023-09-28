@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.oscarg798.remembrall.profile.R
+import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.remembrall.oscarg798.calendar.Calendar
+
 
 @Composable
 internal fun CalendarSelector(
@@ -26,7 +28,7 @@ internal fun CalendarSelector(
             .padding(horizontal = RemembrallTheme.dimens.Medium)
     ) {
         Text(
-            text = stringResource(R.string.profile_calendar_label),
+            text = stringResource(CommonR.string.profile_calendar_label),
             modifier = Modifier.padding(
                 vertical = RemembrallTheme.dimens.Small
             ),

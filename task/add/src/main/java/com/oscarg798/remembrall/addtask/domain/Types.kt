@@ -25,24 +25,26 @@ internal data class DueDate(
 internal sealed interface Event {
 
     object OnTaskSaved : Event
-    object OnBackClicked : Event
-    object OnCloseClicked : Event
-    object OnTagActionClicked : Event
-    object OnSaveActionClicked : Event
-    object DismissAttendeePicker : Event
-    object OnCalendarActionClicked : Event
-    object OnAttendeeActionClicked : Event
     object OnTaskPrioritySelectorDismissed : Event
-    data class OnTitleChanged(val title: String) : Event
-    data class OnAttendeeAdded(val attendee: String) : Event
-    data class OnAttendeeRemoved(val attendee: String) : Event
+    object OnTagActionClicked : Event
+    object OnTagActionLongClicked: Event
+    object OnSaveActionClicked : Event
+    object OnCloseClicked : Event
+    object OnCalendarActionLongClicked: Event
+    object OnCalendarActionClicked : Event
+    object OnBackClicked : Event
+    object OnAttendeeActionClicked : Event
+    object DismissAttendeePicker : Event
     data class OnValidationError(val error: ValidationError) : Event
-    data class OnDescriptionChanged(val description: String) : Event
-    data class OnPriorityChanged(val priority: TaskPriority) : Event
+    data class OnTitleChanged(val title: String) : Event
     data class OnTaskPrioritiesFound(val priorities: List<TaskPriority>) : Event
+    data class OnPriorityChanged(val priority: TaskPriority) : Event
     data class OnDueDatePickerInitialDateFound(val initialDate: LocalDateTime) : Event
-    data class OnDueDateDateAndTimeSelected(val date: LocalDate, val time: LocalTime) : Event
     data class OnDueDateFormatted(val date: LocalDateTime, val formattedDate: String) : Event
+    data class OnDueDateDateAndTimeSelected(val date: LocalDate, val time: LocalTime) : Event
+    data class OnDescriptionChanged(val description: String) : Event
+    data class OnAttendeeRemoved(val attendee: String) : Event
+    data class OnAttendeeAdded(val attendee: String) : Event
 }
 
 internal sealed interface Effect {

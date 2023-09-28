@@ -15,11 +15,12 @@ apply plugin: 'org.jlleitschuh.gradle.ktlint'
 apply from: 'dependencies.gradle'
 
 buildscript {
-    ext.kotlin_version = '1.8.10'
-    ext.compose_ui_version = '1.4.2'
-    ext.navigationVersion = '2.4.1'
-    ext.targetAndCompileVersion = 33
+    ext.kotlin_version = '1.9.10'
+    ext.compose_compiler_version = '1.5.3'
+    ext.navigationVersion = '2.7.2'
+    ext.targetAndCompileVersion = 34
     ext.minSdkversion = 26
+    ext.defaultBuildToolsVersion = "33.0.1"
 
     repositories {
         google()
@@ -33,10 +34,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.45'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.48'
         classpath 'com.google.gms:google-services:4.4.0'
         classpath "org.jlleitschuh.gradle:ktlint-gradle:11.1.0"
         classpath 'com.facebook.testing.screenshot:plugin:0.14.0'
