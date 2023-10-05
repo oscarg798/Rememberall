@@ -61,19 +61,6 @@ data class TaskDto(
         createdAt = taskMap[ColumnNames.CreatedAt] as? Long
     )
 
-    fun toTask(owned: Boolean = OwnershipUnknownAtThisPoint) = Task(
-        id = id,
-        name = name,
-        owner = owner,
-        description = description,
-        priority = priority,
-        completed = completed,
-        calendarSyncInformation = calendarSyncInformation?.toCalendarSyncInformation(),
-        dueDate = dueDate,
-        owned = owned,
-        createAt = createdAt
-    )
-
     object ColumnNames {
         const val Name = "name"
         const val Description = "description"
@@ -91,5 +78,3 @@ data class TaskDto(
                 CalendarSyncInformationDto.ColumnNames.CalendarEventId in keys
     }
 }
-
-private const val OwnershipUnknownAtThisPoint = false

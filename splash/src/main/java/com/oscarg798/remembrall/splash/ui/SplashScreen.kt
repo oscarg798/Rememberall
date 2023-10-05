@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
@@ -29,8 +30,8 @@ fun NavGraphBuilder.splashScreen() = composable(
     val initialModel = remember(viewModel) {
         viewModel.model.value
     }
-    val model by viewModel.model.collectAsState(initialModel)
-    val uiEffects by viewModel.uiEffect.collectAsState(initial = null)
+    val model by viewModel.model.collectAsStateWithLifecycle(initialModel)
+    val uiEffects by viewModel.uiEffect.collectAsStateWithLifecycle(null)
     val navController = LocalNavControllerProvider.current
 
     LaunchedEffect(uiEffects) {

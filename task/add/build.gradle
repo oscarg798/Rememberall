@@ -60,6 +60,7 @@ dependencies {
 
     implementation libs.hilt.compose
     implementation libs.compose.dialogs
+    implementation libs.compose.uiUtil
 
     implementation libs.mobius.android
 
@@ -78,6 +79,10 @@ dependencies {
     implementation project(path: ':ui:color')
     implementation project(path: ':calendar')
     implementation project(path: ':mobiusutils')
+    implementation project(path: ':viewmodelutils')
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':ui:components:toolbar')
+    implementation project(path: ':ui:components:actionrow')
+    implementation project(path: ':ui:components:actionbutton')
     implementation project(path: ':task:taskpriorityextensions')
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.oscarg798.remembrall.login.R
@@ -37,8 +38,8 @@ fun NavGraphBuilder.loginScreen(onFinishRequest: () -> Unit) =
             viewModel.model.value
         }
         val context = LocalContext.current
-        val state by viewModel.model.collectAsState(initialState)
-        val uiEffects by viewModel.uiEffect.collectAsState(initial = null)
+        val state by viewModel.model.collectAsStateWithLifecycle(initialState)
+        val uiEffects by viewModel.uiEffect.collectAsStateWithLifecycle( null)
         val snackbarHostState = remember { SnackbarHostState() }
         val navController = LocalNavControllerProvider.current
 

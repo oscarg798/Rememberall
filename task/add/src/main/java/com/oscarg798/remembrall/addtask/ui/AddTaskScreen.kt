@@ -18,7 +18,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -39,7 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -57,10 +55,12 @@ import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.addtask.R
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
-import com.oscarg798.remembrall.addtask.domain.ValidationError
+import com.oscarg798.remembrall.addtask.domain.Error
 import com.oscarg798.remembrall.ui.RemembrallButton
 import com.oscarg798.remembrall.ui.icons.R as IconsR
 import androidx.compose.ui.tooling.preview.Devices
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
@@ -88,8 +88,8 @@ fun NavGraphBuilder.addTaskScreen() =
         val snackbarHostState = remember { SnackbarHostState() }
         val context = LocalContext.current
 
-        val model by viewModel.model.collectAsState(initialState)
-        val uiEffects by viewModel.uiEffect.collectAsState(initial = null)
+        val model by viewModel.model.collectAsStateWithLifecycle(initialValue = initialState)
+        val uiEffects by viewModel.uiEffect.collectAsStateWithLifecycle(initialValue = null)
         var selectingTaskPriority by remember { mutableStateOf(false) }
         val dueDateDatePickerState = rememberMaterialDialogState()
         val dueDateTimePickerState = rememberMaterialDialogState()
@@ -149,14 +149,20 @@ fun NavGraphBuilder.addTaskScreen() =
                 is Effect.UIEffect.ShowError -> {
                     snackbarHostState.showSnackbar(
                         when (uiEffect.error) {
-                            ValidationError.AttendeesNotValid ->
+                            Effect.UIEffect.ShowError.Error.InvalidAttendeesFormat ->
                                 context.getString(R.string.attendees_error_message)
 
-                            ValidationError.NameWrongLength ->
+                            Effect.UIEffect.ShowError.Error.InvalidName ->
                                 context.getString(R.string.name_error_message)
+
+                            Effect.UIEffect.ShowError.Error.ErrorAddingTask ->
+                                context.getString(R.string.error_adding_task)
+
                         }
                     )
                 }
+
+                is Effect.UIEffect.NavigateToLogin -> Router.Login.navigate(navController)
             }
         }
 
@@ -290,21 +296,15 @@ private fun AddTaskToolbar(
     modifier: Modifier = Modifier,
     onEvent: (Event) -> Unit
 ) {
-    TopAppBar(
+    RemembrallToolbar(
         modifier = modifier,
-        backgroundColor = Color.Transparent,
-        contentColor = Color.Transparent,
-        navigationIcon = {
-            ToolbarButton(icon = IconsR.drawable.ic_back) {
-                onEvent(Event.OnCloseClicked)
-            }
-        },
-        elevation = 0.dp,
-        title = {},
+        backEnabled = true,
         actions = {
             ToolbarButton(icon = IconsR.drawable.ic_close) {
                 onEvent(Event.OnCloseClicked)
             }
+        }, onBackPressed = {
+            onEvent(Event.OnCloseClicked)
         }
     )
 }

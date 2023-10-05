@@ -14,8 +14,7 @@ import kotlinx.coroutines.withContext
 internal class FirebaseTaskStoreDataSource @Inject constructor(
     private val taskCollection: CollectionReference,
     private val coroutinesContextProvider: CoroutineContextProvider
-) :
-    TaskDataSource {
+) : TaskDataSource {
 
     override suspend fun addTask(user: String, taskDto: TaskDto) {
         withContext(coroutinesContextProvider.io) {
@@ -29,11 +28,10 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
         }
     }
 
-    // TODO: Should we add a completed filter?
     override suspend fun getTask(id: String): TaskDto {
         val taskResult = withContext(coroutinesContextProvider.io) {
             taskCollection.document(id).get().toSuspend {
-                IllegalArgumentException("Task not found $id")
+                IllegalArgumentException("Task with id $id not found", it)
             }
         }
 
@@ -41,21 +39,19 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
     }
 
     override suspend fun getTasks(user: String): Collection<TaskDto> {
-        val tasks = mutableListOf<Task<QuerySnapshot>>()
-        withContext(coroutinesContextProvider.io) {
-            tasks.add(getQuerySnapshot(taskCollection.whereEqualTo(UserColumnName, user)))
-            tasks.add(
-                getQuerySnapshot(
-                    taskCollection.whereArrayContainsAny(
-                        AttendeesColumnName,
-                        listOf(user)
-                    )
+        val taskQueries = mutableListOf<Task<QuerySnapshot>>()
+        taskQueries.add(getQuerySnapshot(taskCollection.whereEqualTo(UserColumnName, user)))
+        taskQueries.add(
+            getQuerySnapshot(
+                taskCollection.whereArrayContainsAny(
+                    AttendeesColumnName,
+                    listOf(user)
                 )
             )
-        }
+        )
 
         return withContext(coroutinesContextProvider.computation) {
-            tasks.map {
+            taskQueries.map {
                 it.result.documents
             }.map {
                 it.map { document ->
@@ -67,8 +63,8 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
 
     private suspend fun getQuerySnapshot(query: Query): Task<QuerySnapshot> =
         withContext(coroutinesContextProvider.io) {
-            query.get().toSuspend {
-                it ?: IllegalStateException()
+            query.get().toSuspend { cause ->
+                IllegalStateException("Can not perform query", cause)
             }
         }
 
@@ -114,15 +110,15 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
         calendarSyncInformation?.let {
             pairs.add(
                 CalendarSyncInformationDto.ColumnNames.CalendarId to
-                    calendarSyncInformation.calendarId
+                        calendarSyncInformation.calendarId
             )
             pairs.add(
                 CalendarSyncInformationDto.ColumnNames.CalendarEventId to
-                    calendarSyncInformation.calendarEventId
+                        calendarSyncInformation.calendarEventId
             )
             pairs.add(
                 CalendarSyncInformationDto.ColumnNames.Synced to
-                    calendarSyncInformation.synced
+                        calendarSyncInformation.synced
             )
             calendarSyncInformation.attendees?.map { it.email }?.let { emails ->
                 pairs.add(CalendarSyncInformationDto.ColumnNames.Attendees to emails)

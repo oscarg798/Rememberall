@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.oscarg798.remembrall.addtask.ui.addTaskScreen
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
+import com.oscarg798.remembrall.detail.ui.taskDetailScreen
 import com.oscarg798.remembrall.login.ui.loginScreen
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.ui.splashScreen
@@ -27,6 +28,7 @@ fun MainScreen(onFinishRequest: () -> Unit) {
             loginScreen(onFinishRequest = onFinishRequest)
             addTaskScreen()
             profileScreen()
+            taskDetailScreen()
         }
     }
 }

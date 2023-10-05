@@ -66,7 +66,7 @@ fun RemembrallScaffold(
     content: @Composable (PaddingValues) -> Unit
 ) {
     RemembrallTheme {
-        ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
+        ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
             Scaffold(
                 topBar = topBar,
                 floatingActionButton = floatingActionButton,

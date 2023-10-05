@@ -36,13 +36,19 @@
             <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/task" />
             <option value="$PROJECT_DIR$/task/add" />
+            <option value="$PROJECT_DIR$/task/detail" />
             <option value="$PROJECT_DIR$/task/list" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/taskimpl" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/ui/color" />
+            <option value="$PROJECT_DIR$/ui/components" />
+            <option value="$PROJECT_DIR$/ui/components/actionbutton" />
+            <option value="$PROJECT_DIR$/ui/components/actionrow" />
+            <option value="$PROJECT_DIR$/ui/components/toolbar" />
             <option value="$PROJECT_DIR$/ui/icons" />
             <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/viewmodelutils" />
           </set>
         </option>
       </GradleProjectSettings>

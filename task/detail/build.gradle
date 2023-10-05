@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.oscarg798.remembrall.detail'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+        targetSdk targetAndCompileVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type",
+                            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                            "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
+
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+
+    implementation libs.hilt.compose
+    implementation libs.compose.constraintLayout
+    implementation libs.compose.uiUtil
+
+    implementation libs.mobius.android
+
+    implementation libs.hilt.android
+    kapt(libs.hilt.dagger.compiler)
+
+    implementation project(path: ':ui')
+    implementation project(path: ":auth")
+    implementation project(path: ':task')
+    implementation project(path: ':date')
+    implementation project(path: ':user')
+    implementation project(path: ':rxutils')
+    implementation project(path: ':ui:color')
+    implementation project(path: ':ui:icons')
+    implementation project(path: ':mobiusutils')
+    implementation project(path: ':viewmodelutils')
+    implementation project(path: ':coroutinesutils')
+    implementation project(path: ':ui:components:toolbar')
+    implementation project(path: ':ui:components:actionrow')
+    implementation project(path: ':ui:components:actionbutton')
+    implementation project(path: ':task:taskpriorityextensions')
+}

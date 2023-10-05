@@ -162,6 +162,7 @@ dependencies {
     implementation project(path: ':ui:icons')
     implementation project(path: ':ui:color')
     implementation project(path: ':taskimpl')
+    implementation project(path: ':task:detail')
     implementation project(path: ':task:list')
     implementation project(path: ':oauthimpl')
     implementation project(path: ':authandroid')

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="attendee_placeholder">Jon Smith</string>
-    <string name="attendee_hint">jhon@doe.com</string>
-    <string name="save_attendee_button_label">Add</string>
-    <string name="attendess_separator">", "</string>
     <string name="attendee_dialog_attendees_subtitle">Already added:</string>
     <string name="attendee_dialog_title">Add Attendees</string>
+    <string name="attendee_hint">jhon@doe.com</string>
+    <string name="attendee_placeholder">Jon Smith</string>
     <string name="attendees_error_message">Attendees must be email address</string>
+    <string name="attendess_separator">", "</string>
+    <string name="description_hint">Tap here to start...</string>
+    <string name="error_adding_task">Unknown error adding task, please try again later</string>
     <string name="name_error_message">Name must be at least 3 characters long</string>
     <string name="priority_high_label">High</string>
-    <string name="priority_urgent_label">Urgent</string>
-    <string name="priority_medium_label">Medium</string>
     <string name="priority_low_label">Low</string>
-    <string name="description_hint">Tap here to start...</string>
+    <string name="priority_medium_label">Medium</string>
+    <string name="priority_urgent_label">Urgent</string>
+    <string name="save_attendee_button_label">Add</string>
     <string name="title_hint">Awesome Title</string>
 </resources>

@@ -17,6 +17,7 @@ data class DisplayableTask(
 
     ) {
 
+    @Deprecated("DateFormatter should not be added as dependency here")
     constructor(task: Task, dueDateFormatter: DateFormatter) : this(
         id = task.id,
         owned = task.owned,

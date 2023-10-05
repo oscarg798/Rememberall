@@ -20,7 +20,7 @@ internal fun update(
     Event.DismissAttendeePicker -> onDismissAttendeePicker()
     is Event.OnAttendeeAdded -> onAttendeeAdded(model, event)
     Event.OnAttendeeActionClicked -> onAttendeesActionClicked()
-    is Event.OnValidationError -> onValidationError(model, event)
+    is Event.OnError -> onValidationError(model, event)
     is Event.OnPriorityChanged -> onPriorityChanged(model, event)
     is Event.OnAttendeeRemoved -> onAttendeeRemoved(model, event)
     Event.OnCalendarActionClicked -> onCalendarActionClicked(model)
@@ -35,9 +35,9 @@ internal fun update(
 }
 
 private fun onTagActionLongClicked(model: Model): Upcoming {
-    return if(model.priority ==null){
+    return if (model.priority == null) {
         noChange()
-    }else{
+    } else {
         next(model.copy(priority = null))
     }
 }
@@ -50,11 +50,23 @@ private fun onCalendarActionLongClicked(model: Model): Upcoming {
     }
 }
 
-private fun onValidationError(model: Model, event: Event.OnValidationError): Upcoming {
+private fun onValidationError(model: Model, event: Event.OnError): Upcoming {
+    val effects = setOf(
+        when (event.error) {
+            Error.AddingTask -> Effect.UIEffect.ShowError(Effect.UIEffect.ShowError.Error.ErrorAddingTask)
+            Error.Auth -> Effect.UIEffect.NavigateToLogin
+            Error.InvalidAttendeesFormat ->
+                Effect.UIEffect.ShowError(Effect.UIEffect.ShowError.Error.InvalidAttendeesFormat)
+
+            Error.InvalidName ->
+                Effect.UIEffect.ShowError(Effect.UIEffect.ShowError.Error.InvalidName)
+        }
+    )
+
     return if (model.loading) {
-        next(model.copy(loading = false), setOf(Effect.UIEffect.ShowError(event.error)))
+        next(model.copy(loading = false), effects)
     } else {
-        dispatch(setOf(Effect.UIEffect.ShowError(event.error)))
+        dispatch(effects)
     }
 }
 

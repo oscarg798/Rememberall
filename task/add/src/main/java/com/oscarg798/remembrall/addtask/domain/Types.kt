@@ -35,7 +35,7 @@ internal sealed interface Event {
     object OnBackClicked : Event
     object OnAttendeeActionClicked : Event
     object DismissAttendeePicker : Event
-    data class OnValidationError(val error: ValidationError) : Event
+    data class OnError(val error: Error) : Event
     data class OnTitleChanged(val title: String) : Event
     data class OnTaskPrioritiesFound(val priorities: List<TaskPriority>) : Event
     data class OnPriorityChanged(val priority: TaskPriority) : Event
@@ -63,18 +63,29 @@ internal sealed interface Effect {
 
     sealed interface UIEffect : Effect {
         object Close : UIEffect
+        object NavigateToLogin: UIEffect
         object ShowAttendeesPicker : UIEffect
         object DismissDueDatePicker : UIEffect
         object DismissAttendeesPicker : UIEffect
         object DismissTaskPriorityPicker : UIEffect
-        data class ShowDueDateDatePicker(val initialDateTime: LocalDateTime) : UIEffect
         data class ShowPriorityPicker(val priorities: List<TaskPriority>) : UIEffect
-        data class ShowError(val error: ValidationError) : UIEffect
+        data class ShowDueDateDatePicker(val initialDateTime: LocalDateTime) : UIEffect
+        data class ShowError(val error: Error) : UIEffect{
+            sealed interface Error {
+                object InvalidName : Error
+                object InvalidAttendeesFormat : Error
+                object ErrorAddingTask: Error
+            }
+        }
+
     }
 }
 
-internal sealed interface ValidationError {
 
-    object NameWrongLength : ValidationError
-    object AttendeesNotValid : ValidationError
+
+internal sealed interface Error {
+    object Auth: Error
+    object InvalidName : Error
+    object AddingTask: Error
+    object InvalidAttendeesFormat : Error
 }

@@ -2,7 +2,7 @@ package com.oscarg798.remembrall.addtask.usecase
 
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
-import com.oscarg798.remembrall.addtask.domain.ValidationError
+import com.oscarg798.remembrall.addtask.domain.Error
 import com.oscarg798.remembrall.auth.Session
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.TaskRepository
@@ -23,11 +23,11 @@ internal class AddTaskUseCaseImpl @Inject constructor(
 
     override suspend fun invoke(effect: Effect.SaveTask): Event {
         if (effect.title.length < RequiredNameLength) {
-            return Event.OnValidationError(ValidationError.NameWrongLength)
+            return Event.OnError(Error.InvalidName)
         }
 
         if (!effect.attendees.areAttendeesValid()) {
-            return Event.OnValidationError(ValidationError.AttendeesNotValid)
+            return Event.OnError(Error.InvalidAttendeesFormat)
         }
 
         val taskId = taskRepository.createTaskId()
@@ -44,29 +44,38 @@ internal class AddTaskUseCaseImpl @Inject constructor(
             )
         } else null
 
-        val task = taskRepository.addTask(
-            user = getUser().email,
-            addTaskParam = TaskRepository.AddTaskParam(
-                id = taskId,
-                name = effect.title,
-                priority = effect.priority,
-                description = effect.description,
-                dueDate = effect.dueDate?.date?.let { dueDateFormatter.toMillis(it) },
-                calendarSyncInformation = calendarSyncInformation,
-                createdAt = dueDateFormatter.toMillis(dateProvider())
+        val user = runCatching { getUser().email }.getOrNull() ?: return Event.OnError(Error.Auth)
+
+        return runCatching {
+            val task = taskRepository.addTask(
+                user = user,
+                addTaskParam = TaskRepository.AddTaskParam(
+                    id = taskId,
+                    name = effect.title,
+                    priority = effect.priority,
+                    description = effect.description,
+                    dueDate = effect.dueDate?.date?.let { dueDateFormatter.toMillis(it) },
+                    calendarSyncInformation = calendarSyncInformation,
+                    createdAt = dueDateFormatter.toMillis(dateProvider())
+                )
             )
-        )
 
-        taskRepository.onTaskUpdated(task)
+            taskRepository.onTaskUpdated(task)
+        }.fold({
+            Event.OnTaskSaved
+        }, {
+            if (it !is Exception) throw it
+            Event.OnError(Error.AddingTask)
+        })
 
-        return Event.OnTaskSaved
+
     }
 
     private suspend fun getUser(): User {
         val session = session.getLoggedInState()
 
-        if (session !is Session.State.LoggedIn) {
-            throw IllegalStateException("Must be Logged In at this Point")
+        require(session is Session.State.LoggedIn) {
+            "User must be logged in to add a task"
         }
 
         return session.user
