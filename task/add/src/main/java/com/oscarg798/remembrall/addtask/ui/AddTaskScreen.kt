@@ -28,7 +28,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -55,19 +54,17 @@ import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.addtask.R
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
-import com.oscarg798.remembrall.addtask.domain.Error
 import com.oscarg798.remembrall.ui.RemembrallButton
 import com.oscarg798.remembrall.ui.icons.R as IconsR
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
+import com.oscarg798.remembrall.ui.dimensions.dimensions
+import com.oscarg798.remembrall.ui.dimensions.typo
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
-import com.oscarg798.remembrall.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui.theming.dimensions
-import com.oscarg798.remembrall.ui.theming.typo
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
@@ -193,7 +190,7 @@ fun NavGraphBuilder.addTaskScreen() =
                     selectedPriority = model.priority,
                     dueDate = model.dueDate,
                     hasAttendees = model.attendees.isNotEmpty(),
-                    enabled = !model.loading,
+                    loading = model.loading,
                     onEvent = { viewModel.onEvent(it) }
                 )
 
@@ -533,7 +530,7 @@ private fun AttendeeItem(
 @Preview(device = Devices.NEXUS_5)
 @Composable
 private fun AttendeesBottomSheetPreview() {
-    RemembrallTheme {
+    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
         AttendeesBottomSheet(state = rememberModalBottomSheetState(), attendees = setOf(
             "oscarg79@gmail.com"
         ), onAttendeeDeleted = {}, onAttendeeAdded = {}) {
@@ -545,7 +542,7 @@ private fun AttendeesBottomSheetPreview() {
 @Preview
 @Composable
 private fun AddTaskToolbarPreview() {
-    RemembrallTheme {
+    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
         AddTaskToolbar(Modifier.width(200.dp)) {
         }
     }

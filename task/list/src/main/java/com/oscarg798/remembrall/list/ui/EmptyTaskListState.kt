@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.ui.AddButton
 import com.oscarg798.remembrall.ui.icons.R as IconsR
-import com.oscarg798.remembrall.ui.theming.RemembrallTheme
+import androidx.compose.material3.MaterialTheme
+import com.oscarg798.remembrall.ui.dimensions.dimensions
+import com.oscarg798.remembrall.ui.dimensions.typo
 
 @Composable
 internal fun EmptyTaskList(
@@ -39,23 +40,23 @@ internal fun EmptyTaskList(
                 painter = painterResource(IconsR.drawable.ic_agenda),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(horizontal = RemembrallTheme.dimens.Medium)
+                    .padding(horizontal = MaterialTheme.dimensions.Medium)
                     .size(EmptyStateIconSize)
             )
 
             Text(
                 text = stringResource(CommonR.string.task_list_empty),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h3
-                    .merge(TextStyle(MaterialTheme.colors.onBackground)),
-                modifier = Modifier.padding(horizontal = RemembrallTheme.dimens.Medium)
+                style = MaterialTheme.typo.h3
+                    .merge(TextStyle(MaterialTheme.colorScheme.onBackground)),
+                modifier = Modifier.padding(horizontal = MaterialTheme.dimensions.Medium)
             )
         }
 
         AddButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(RemembrallTheme.dimens.Medium)
+                .padding(MaterialTheme.dimensions.Medium)
         ) {
             onAddButtonClicked()
         }

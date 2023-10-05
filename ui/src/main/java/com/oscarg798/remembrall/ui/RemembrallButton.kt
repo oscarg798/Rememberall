@@ -9,7 +9,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.oscarg798.remembrall.ui.theming.RemembrallTheme
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.theming.getButtonShape
 import com.oscarg798.remembrall.ui.theming.getButtonTextStyle
 
@@ -27,7 +27,7 @@ fun RemembrallButton(
         enabled = !loading,
         modifier = modifier
             .fillMaxWidth()
-            .padding(RemembrallTheme.dimens.Medium),
+            .padding(MaterialTheme.dimensions.Medium),
         shape = getButtonShape(),
         colors = ButtonDefaults.buttonColors(
             disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,

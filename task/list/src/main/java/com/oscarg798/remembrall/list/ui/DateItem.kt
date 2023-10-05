@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 
@@ -33,7 +34,7 @@ fun DayItem(
     ) {
         Row(
             Modifier.padding(
-                horizontal = RemembrallTheme.dimens.Small
+                horizontal = MaterialTheme.dimensions.Small
             )
         ) {
             Text(
@@ -46,8 +47,8 @@ fun DayItem(
         Row(
             Modifier
                 .padding(
-                    start = RemembrallTheme.dimens.Small,
-                    end = RemembrallTheme.dimens.Small
+                    start = MaterialTheme.dimensions.Small,
+                    end = MaterialTheme.dimensions.Small
                 )
                 .wrapContentSize()
         ) {

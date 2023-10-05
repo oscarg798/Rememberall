@@ -48,11 +48,7 @@ data class TaskDto(
         },
         completed = taskMap[ColumnNames.Completed] as? Boolean
             ?: throw NullPointerException("Completed not found"),
-        dueDate = taskMap[ColumnNames.DueDate] as? Long
-            ?: throw NullPointerException(
-                "Due data not found, " +
-                    "but seems it was synced with Calendar $taskMap"
-            ),
+        dueDate = taskMap[ColumnNames.DueDate] as? Long,
         calendarSyncInformation = if (taskMap.hasCalendarInformation()) {
             CalendarSyncInformationDto(taskMap)
         } else {

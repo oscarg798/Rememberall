@@ -2,11 +2,13 @@ package com.oscarg798.remembrall.addtask.ui
 
 import com.oscarg798.remembrall.ui.icons.R as IconsR
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
@@ -25,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.oscarg798.remembrall.actionbutton.ActionButton
@@ -36,9 +37,9 @@ import com.oscarg798.remembrall.addtask.domain.DueDate
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
+import com.oscarg798.remembrall.ui.dimensions.dimensions
+import com.oscarg798.remembrall.ui.dimensions.typo
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui.theming.dimensions
-import com.oscarg798.remembrall.ui.theming.typo
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import java.time.LocalDateTime
 
@@ -52,7 +53,7 @@ internal fun AddTaskForm(
     hasAttendees: Boolean,
     dueDate: DueDate? = null,
     selectedPriority: TaskPriority? = null,
-    enabled: Boolean = true,
+    loading: Boolean = false,
     onEvent: (Event) -> Unit
 ) {
     ConstraintLayout(modifier) {
@@ -69,7 +70,7 @@ internal fun AddTaskForm(
             TextField(
                 value = title,
                 onValueChange = { onEvent(Event.OnTitleChanged(it)) },
-                enabled = enabled,
+                enabled = !loading,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
@@ -104,7 +105,7 @@ internal fun AddTaskForm(
                 onValueChange = { onEvent(Event.OnDescriptionChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = MaterialTheme.typo.body1,
-                enabled = enabled,
+                enabled = !loading,
                 placeholder = {
                     Text(
                         stringResource(R.string.description_hint),
@@ -126,7 +127,7 @@ internal fun AddTaskForm(
             selectedPriority = selectedPriority,
             hasDueDateSelected = dueDate != null,
             hasAttendees = hasAttendees,
-            enabled = enabled,
+            loading = loading,
             onEvent = onEvent
         )
     }
@@ -140,69 +141,69 @@ private fun ActionsRow(
     hasDueDateSelected: Boolean,
     hasAttendees: Boolean,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    loading: Boolean = false,
     onEvent: (Event) -> Unit
 ) {
     ActionRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
     ) {
-        ActionButton(
-            enabled = enabled,
-            icon = IconsR.drawable.ic_calendar,
-            tintColor = if (hasDueDateSelected) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            },
-            onLongClicked = { onEvent(Event.OnCalendarActionLongClicked) },
-            onClick = { onEvent(Event.OnCalendarActionClicked) },
-        )
-
-        ActionButtonWithDropDown(
-            enabled = enabled,
-            icon = IconsR.drawable.ic_tag,
-            onClick = { onEvent(Event.OnTagActionClicked) },
-            tintColor = if (selectedPriority != null) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            },
-            onLongClicked = {
-                onEvent(Event.OnTagActionLongClicked)
-            },
-            dropDownContent = {
-                TaskPriorityDropDown(
-                    expanded = selectingTaskPriority,
-                    priorities = taskPriorities,
-                    selectedPriority = selectedPriority,
-                    onEvent = onEvent,
-                    modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
-                )
+        if (loading) {
+            Box(Modifier.padding(MaterialTheme.dimensions.ExtraSmall)) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
-        )
+        } else {
+            ActionButton(
+                icon = IconsR.drawable.ic_calendar,
+                tintColor = if (hasDueDateSelected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
+                onLongClicked = { onEvent(Event.OnCalendarActionLongClicked) },
+                onClick = { onEvent(Event.OnCalendarActionClicked) },
+            )
 
-        ActionButton(
-            enabled = enabled,
-            icon = IconsR.drawable.ic_attendees,
-            onClick = { onEvent(Event.OnAttendeeActionClicked) },
-            tintColor = if (hasAttendees) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            }
-        )
+            ActionButtonWithDropDown(
+                icon = IconsR.drawable.ic_tag,
+                onClick = { onEvent(Event.OnTagActionClicked) },
+                tintColor = if (selectedPriority != null) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
+                onLongClicked = {
+                    onEvent(Event.OnTagActionLongClicked)
+                },
+                dropDownContent = {
+                    TaskPriorityDropDown(
+                        expanded = selectingTaskPriority,
+                        priorities = taskPriorities,
+                        selectedPriority = selectedPriority,
+                        onEvent = onEvent,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
+                    )
+                }
+            )
 
-        ActionButton(
-            enabled = enabled,
-            icon = IconsR.drawable.ic_save,
-            tintColor = MaterialTheme.colorScheme.primary,
-            onClick = { onEvent(Event.OnSaveActionClicked) },
-        )
+            ActionButton(
+                icon = IconsR.drawable.ic_attendees,
+                onClick = { onEvent(Event.OnAttendeeActionClicked) },
+                tintColor = if (hasAttendees) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                }
+            )
+
+            ActionButton(
+                icon = IconsR.drawable.ic_save,
+                tintColor = MaterialTheme.colorScheme.primary,
+                onClick = { onEvent(Event.OnSaveActionClicked) },
+            )
+        }
     }
 }
-
 
 
 @Composable
@@ -249,12 +250,12 @@ private fun AddTaskPreview() {
     val description = remember { mutableStateOf("Why tf R they looking back when they should be ") }
     val priorityBoxExpanded = remember { mutableStateOf(false) }
     val selectedPriority = remember { mutableStateOf<TaskPriority?>(null) }
-    RemembrallTheme {
+    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
         AddTaskForm(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
-                .padding(16.dp),
+                .padding(MaterialTheme.dimensions.Medium),
             title = title.value,
             description = description.value,
             availableTaskPriorities = listOf(
@@ -268,6 +269,8 @@ private fun AddTaskPreview() {
                 LocalDateTime.now(),
                 "Mon, Sep 25 2023"
             ),
+
+            loading = false,
             hasAttendees = true,
             onEvent = {
                 when {
@@ -299,7 +302,7 @@ internal val TextFieldColors: androidx.compose.material.TextFieldColors
         errorCursorColor = MaterialTheme.colorScheme.onError,
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
-        disabledIndicatorColor = Color.DarkGray,
+        disabledIndicatorColor = Color.Transparent,
         errorIndicatorColor = MaterialTheme.colorScheme.onError,
         placeholderColor = SecondaryTextColor,
         disabledPlaceholderColor = SecondaryTextColor,

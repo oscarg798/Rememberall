@@ -4,6 +4,7 @@ import com.oscarg798.remembrall.ui.icons.R as IconsR
 import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -47,16 +49,14 @@ import com.oscarg798.remembrall.detail.di.TaskDetailEntryPoint
 import com.oscarg798.remembrall.detail.domain.DisplayableTask
 import com.oscarg798.remembrall.detail.domain.Effect
 import com.oscarg798.remembrall.detail.domain.Event
-import com.oscarg798.remembrall.detail.domain.Model
 import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
+import com.oscarg798.remembrall.ui.dimensions.dimensions
+import com.oscarg798.remembrall.ui.dimensions.typo
 import com.oscarg798.remembrall.ui.extensions.requireArguments
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
-import com.oscarg798.remembrall.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui.theming.dimensions
-import com.oscarg798.remembrall.ui.theming.typo
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.oscarg798.remembrall.viewmodelutils.provide
 import dagger.hilt.android.EntryPointAccessors
@@ -141,7 +141,7 @@ fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, dee
                             horizontal = MaterialTheme.dimensions.Large
                         ),
                     task = task,
-                    enabled = !model.loading,
+                    loading = model.loading,
                     onEvent = viewModel::onEvent
                 )
             }
@@ -152,7 +152,7 @@ fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, dee
 
 @Composable
 private fun TaskDetailScreen(
-    enabled: Boolean,
+    loading: Boolean,
     modifier: Modifier,
     task: DisplayableTask, onEvent: (Event) -> Unit
 ) {
@@ -176,17 +176,21 @@ private fun TaskDetailScreen(
                     bottom.linkTo(parent.bottom)
                 }
         ) {
-            ActionButton(
-                enabled = enabled,
-                icon = IconsR.drawable.ic_edit,
-                onClick = { onEvent(Event.OnEditActionClicked) },
-            )
+            if (loading) {
+                Box(Modifier.padding(MaterialTheme.dimensions.ExtraSmall)) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                ActionButton(
+                    icon = IconsR.drawable.ic_edit,
+                    onClick = { onEvent(Event.OnEditActionClicked) },
+                )
 
-            ActionButton(
-                enabled = enabled,
-                icon = IconsR.drawable.ic_delete,
-                onClick = { onEvent(Event.OnDeleteButtonClicked) },
-            )
+                ActionButton(
+                    icon = IconsR.drawable.ic_delete,
+                    onClick = { onEvent(Event.OnDeleteButtonClicked) },
+                )
+            }
         }
     }
 }
@@ -269,7 +273,7 @@ private fun TaskDetail(
 @Composable
 @Preview(device = Devices.NEXUS_5)
 private fun TaskDetailPreview() {
-    RemembrallTheme {
+    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
         RemembrallScaffold {
             TaskDetailScreen(
                 modifier = Modifier
@@ -278,7 +282,7 @@ private fun TaskDetailPreview() {
                     .padding(it)
                     .padding(MaterialTheme.dimensions.Medium),
                 task = task,
-                enabled = true
+                loading = false
             ) {}
         }
     }

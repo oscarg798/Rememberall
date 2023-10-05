@@ -17,7 +17,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.oscarg798.remembrall.ui.R
 import com.oscarg798.remembrall.ui.icons.R as IconsR
 
 @Composable

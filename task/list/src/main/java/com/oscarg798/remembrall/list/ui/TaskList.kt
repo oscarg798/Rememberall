@@ -27,6 +27,7 @@ import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.list.model.TaskGroup
 import com.oscarg798.remembrall.ui.AddButton
 import com.oscarg798.remembrall.ui.Shimmer
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
@@ -52,7 +53,7 @@ internal fun TaskList(
             state = listState,
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = RemembrallTheme.dimens.Medium)
+                .padding(top = MaterialTheme.dimensions.Medium)
                 .fillMaxSize()
         ) {
             if (loading) {
@@ -65,7 +66,7 @@ internal fun TaskList(
                             style = MaterialTheme.typography.displaySmall
                                 .merge(TextStyle(color = MaterialTheme.colorScheme.onBackground)),
                             modifier = Modifier
-                                .padding(horizontal = RemembrallTheme.dimens.Large)
+                                .padding(horizontal = MaterialTheme.dimensions.Large)
                                 .fillMaxWidth()
                         )
                     }
@@ -74,20 +75,20 @@ internal fun TaskList(
                     items(groups.itemsByDay.keys.toList(), key = { it.toString() }) { dayGroup ->
                         Row(
                             Modifier.padding(
-                                vertical = RemembrallTheme.dimens.Small,
-                                horizontal = RemembrallTheme.dimens.Medium
+                                vertical = MaterialTheme.dimensions.Small,
+                                horizontal = MaterialTheme.dimensions.Medium
                             )
                         ) {
                             DayGroupField(
                                 dayGroup = dayGroup,
                                 modifier = Modifier.padding(
-                                    top = RemembrallTheme.dimens.Medium,
-                                    start = RemembrallTheme.dimens.Small
+                                    top = MaterialTheme.dimensions.Medium,
+                                    start = MaterialTheme.dimensions.Small
                                 )
                             )
                             Column(
                                 modifier = Modifier.padding(
-                                    start = RemembrallTheme.dimens.Small,
+                                    start = MaterialTheme.dimensions.Small,
                                 )
                             ) {
                                 groups.itemsByDay[dayGroup]?.map {
@@ -99,7 +100,7 @@ internal fun TaskList(
                                         options = options,
                                         onOptionClicked = onOptionClicked,
                                         modifier = Modifier.padding(
-                                            vertical = RemembrallTheme.dimens.Medium
+                                            vertical = MaterialTheme.dimensions.Medium
                                         )
                                     )
                                 }
@@ -113,7 +114,7 @@ internal fun TaskList(
         AddButton(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(RemembrallTheme.dimens.Medium)
+                .padding(MaterialTheme.dimensions.Medium)
         ) {
             onAddButtonClicked()
         }
@@ -146,12 +147,12 @@ private fun LazyListScope.loadingList() {
     items(Examples.toList()) {
         Card(
             backgroundColor = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(RemembrallTheme.dimens.Medium),
+            shape = RoundedCornerShape(MaterialTheme.dimensions.Medium),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    vertical = RemembrallTheme.dimens.Small,
-                    horizontal = RemembrallTheme.dimens.Medium
+                    vertical = MaterialTheme.dimensions.Small,
+                    horizontal = MaterialTheme.dimensions.Medium
                 )
         ) {
             Shimmer(

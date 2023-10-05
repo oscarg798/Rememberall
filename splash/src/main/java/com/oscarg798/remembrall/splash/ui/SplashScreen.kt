@@ -3,8 +3,8 @@ package com.oscarg798.remembrall.splash.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -15,6 +15,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.oscarg798.remembrall.splash.domain.Effect
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
@@ -47,7 +48,7 @@ fun NavGraphBuilder.splashScreen() = composable(
         RemembrallPage(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(RemembrallTheme.dimens.Medium)
+                .padding(MaterialTheme.dimensions.Medium)
                 .fillMaxSize()
         ) {
             if (model.loading) {

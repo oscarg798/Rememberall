@@ -65,14 +65,13 @@ dependencies {
     implementation libs.hilt.android
     kapt(libs.hilt.dagger.compiler)
 
-
     implementation project(path: ':ui')
     implementation project(path: ':date')
     implementation project(path: ':task')
     implementation project(path: ':common')
     implementation project(path: ':ui:color')
     implementation project(path: ':ui:icons')
+    implementation project(path: ':ui:theming')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':task:taskpriorityextensions')
-
 }

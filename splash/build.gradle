@@ -68,6 +68,7 @@ dependencies {
     implementation project(path: ':ui')
     implementation project(path: ':auth')
     implementation project(path: ':rxutils')
+    implementation project(path: ':ui:theming')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':viewmodelutils')
     implementation project(path: ':coroutinesutils')

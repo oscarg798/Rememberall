@@ -55,13 +55,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.oscarg798.remembrall.ui.theming.RemembrallTheme
-import com.oscarg798.remembrall.ui.theming.dimensions
-import com.oscarg798.remembrall.ui.theming.typo
+import com.oscarg798.remembrall.ui.dimensions.dimensions
+import com.oscarg798.remembrall.ui.dimensions.typo
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import java.util.UUID
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 @Composable
 internal fun TaskItem(
@@ -101,7 +99,7 @@ fun TaskCard(
     Card(
         contentColor = MaterialTheme.colorScheme.surface,
         backgroundColor = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(RemembrallTheme.dimens.Medium),
+        shape = RoundedCornerShape(MaterialTheme.dimensions.Medium),
         modifier = modifier
             .clickable { onClick(task) }
     ) {
@@ -109,7 +107,7 @@ fun TaskCard(
             Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(RemembrallTheme.dimens.Medium)
+                .padding(MaterialTheme.dimensions.Medium)
         ) {
             content()
         }
@@ -133,7 +131,7 @@ private fun TaskBody(
         TaskTitle(
             task = task,
             modifier = Modifier
-                .padding(top = RemembrallTheme.dimens.Small)
+                .padding(top = MaterialTheme.dimensions.Small)
                 .weight(
                     when {
                         taskCardOptions is TaskCardOptions.Present && task.owned -> .8f
@@ -196,7 +194,7 @@ private fun TaskBody(
             TaskDueDate(
                 dueDate = it,
                 Modifier
-                    .padding(top = RemembrallTheme.dimens.ExtraSmall)
+                    .padding(top = MaterialTheme.dimensions.ExtraSmall)
                     .weight(if (task.owned) 1f else .8f)
             )
         }
@@ -231,7 +229,7 @@ private fun Attendees(attendees: Collection<CalendarAttendee>) {
                 text = attendee.email,
                 style = TextStyle(color = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
-                    .padding(RemembrallTheme.dimens.Medium)
+                    .padding(MaterialTheme.dimensions.Medium)
             )
         }
     }
@@ -254,7 +252,7 @@ private fun TaskHeader(task: DisplayableTask) {
         color = SecondaryTextColor,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = RemembrallTheme.dimens.ExtraSmall)
+            .padding(top = MaterialTheme.dimensions.ExtraSmall)
             .height(HorizontalDividerHeight)
     )
 }
@@ -302,7 +300,7 @@ private fun TaskDueDate(dueDate: String, modifier: Modifier) {
                 .merge(TextStyle(color = MaterialTheme.colorScheme.secondary)),
             maxLines = SingleLine,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(start = RemembrallTheme.dimens.Medium)
+            modifier = Modifier.padding(start = MaterialTheme.dimensions.Medium)
         )
     }
 }
@@ -426,7 +424,7 @@ private fun TaskList2(
 @Composable
 private fun TaskListPreview() {
     val data = remember { generateRandomData() }
-    RemembrallTheme {
+    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
         TaskList2(
             data,
             Modifier
@@ -453,7 +451,7 @@ private fun generateRandomData(): List<DisplayableTask> {
 @Preview
 @Composable
 private fun TaskItemPreview() {
-    RemembrallTheme {
+    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
         Box {
             TaskItem2(
                 task = DisplayableTask(

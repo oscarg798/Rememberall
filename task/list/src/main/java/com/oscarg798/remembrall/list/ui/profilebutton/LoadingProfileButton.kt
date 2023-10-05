@@ -7,12 +7,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
 internal fun LoadingProfileButton() {
     CircularProgressIndicator(
-        modifier = Modifier.padding(RemembrallTheme.dimens.ExtraSmall)
+        modifier = Modifier.padding(MaterialTheme.dimensions.ExtraSmall)
             .size(ProfileButtonSize),
         color = MaterialTheme.colorScheme.onSecondary
     )

@@ -78,6 +78,7 @@ dependencies {
     implementation project(path: ':ui:icons')
     implementation project(path: ':ui:color')
     implementation project(path: ':calendar')
+    implementation project(path: ':ui:theming')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':viewmodelutils')
     implementation project(path: ':coroutinesutils')

@@ -13,6 +13,7 @@ dependencies {
     implementation project(path: ':ui:color')
     implementation project(path: ':calendar')
     implementation project(path: ':ui:icons')
+    implementation project(path: ':ui:theming')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
 }

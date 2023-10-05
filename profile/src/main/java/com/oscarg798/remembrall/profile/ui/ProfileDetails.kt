@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.extensions.SingleLine
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.remembrall.oscarg798.calendar.Calendar
@@ -25,7 +26,7 @@ internal fun ProfileDetails(
             maxLines = SingleLine,
             style = MaterialTheme.typography.displayMedium
                 .merge(TextStyle(color = MaterialTheme.colorScheme.onBackground)),
-            modifier = Modifier.padding(RemembrallTheme.dimens.Medium)
+            modifier = Modifier.padding(MaterialTheme.dimensions.Medium)
         )
 
         CalendarSelector(

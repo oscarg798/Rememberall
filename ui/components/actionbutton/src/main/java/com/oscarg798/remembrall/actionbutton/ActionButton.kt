@@ -50,7 +50,7 @@ fun ActionButton(
 fun ActionButtonWithDropDown(
     @DrawableRes icon: Int,
     modifier: Modifier = Modifier,
-    enabled: Boolean,
+    enabled: Boolean = true,
     dropDownContent: @Composable () -> Unit,
     tintColor: Color = MaterialTheme.colorScheme.onSurface,
     onLongClicked: () -> Unit = {},

@@ -14,7 +14,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            RemembrallTheme {
+            com.oscarg798.remembrall.ui.theming.RemembrallTheme {
                 MainScreen {
                     finishAndRemoveTask()
                 }

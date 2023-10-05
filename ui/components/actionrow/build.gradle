@@ -54,4 +54,5 @@ dependencies {
     implementation libs.compose.ui
 
     implementation project(":ui:icons")
+    implementation project(":ui:dimensions")
 }

@@ -37,6 +37,7 @@
             <option value="$PROJECT_DIR$/task" />
             <option value="$PROJECT_DIR$/task/add" />
             <option value="$PROJECT_DIR$/task/detail" />
+            <option value="$PROJECT_DIR$/task/edit" />
             <option value="$PROJECT_DIR$/task/list" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/taskimpl" />
@@ -46,7 +47,10 @@
             <option value="$PROJECT_DIR$/ui/components/actionbutton" />
             <option value="$PROJECT_DIR$/ui/components/actionrow" />
             <option value="$PROJECT_DIR$/ui/components/toolbar" />
+            <option value="$PROJECT_DIR$/ui/dimensions" />
             <option value="$PROJECT_DIR$/ui/icons" />
+            <option value="$PROJECT_DIR$/ui/theming" />
+            <option value="$PROJECT_DIR$/ui/typography" />
             <option value="$PROJECT_DIR$/user" />
             <option value="$PROJECT_DIR$/viewmodelutils" />
           </set>

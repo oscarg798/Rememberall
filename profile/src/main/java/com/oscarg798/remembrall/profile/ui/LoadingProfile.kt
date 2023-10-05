@@ -15,13 +15,14 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
 import com.oscarg798.remembrall.ui.Shimmer
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 
 @Composable
 internal fun LoadingProfile() {
     Column(
         Modifier
-            .padding(horizontal = RemembrallTheme.dimens.Medium)
+            .padding(horizontal =MaterialTheme.dimensions.Medium)
     ) {
         LoadingItem()
         LoadingItem()
@@ -29,9 +30,9 @@ internal fun LoadingProfile() {
         Card(
             backgroundColor = MaterialTheme.colorScheme.surface,
             modifier = Modifier.padding(
-                vertical = RemembrallTheme.dimens.Small
+                vertical =MaterialTheme.dimensions.Small
             ),
-            shape = RoundedCornerShape(RemembrallTheme.dimens.Small)
+            shape = RoundedCornerShape(MaterialTheme.dimensions.Small)
         ) {
             LazyColumn {
                 items(listOf(1, 2, 3)) {
@@ -52,9 +53,9 @@ internal fun LoadingProfile() {
 
 @Composable
 private fun LoadingItem() = Shimmer(
-    cornerRadius = CornerRadius(RemembrallTheme.dimens.Medium.value),
+    cornerRadius = CornerRadius(MaterialTheme.dimensions.Medium.value),
     modifier = Modifier
-        .padding(RemembrallTheme.dimens.Medium)
+        .padding(MaterialTheme.dimensions.Medium)
         .fillMaxWidth()
         .height(LoadingTextHeight)
 )

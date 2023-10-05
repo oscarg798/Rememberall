@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
         setContent {
             val navController = rememberNavController()
             CompositionLocalProvider(LocalNavControllerProvider provides navController) {
-                RemembrallTheme {
+                com.oscarg798.remembrall.ui.theming.RemembrallTheme {
                     NavHost(navController = navController, startDestination = Router.Login.route) {
                         loginScreen(onFinishRequest = {
                             finish()

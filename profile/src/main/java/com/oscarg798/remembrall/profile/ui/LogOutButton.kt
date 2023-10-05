@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.ui.theming.getButtonShape
 import com.oscarg798.remembrall.ui.theming.getButtonTextStyle
@@ -17,7 +19,7 @@ internal fun LogOutButton(onClick: () -> Unit) {
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(RemembrallTheme.dimens.Medium),
+            .padding(MaterialTheme.dimensions.Medium),
         shape = getButtonShape()
     ) {
         Text(text = "Lout Out", style = getButtonTextStyle())
