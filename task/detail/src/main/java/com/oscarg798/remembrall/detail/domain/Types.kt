@@ -23,7 +23,7 @@ sealed interface Effect {
     sealed interface UIEffect : Effect {
         data object CloseScreen : UIEffect
         data class ShowError(val error: Error) : UIEffect
-        data class NavigateToEdit(val id: String) : UIEffect
+        data class NavigateToEdit(val taskId: String) : UIEffect
     }
 }
 

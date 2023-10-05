@@ -7,22 +7,29 @@ import com.oscarg798.remembrall.addtask.domain.Model
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
 import com.oscarg798.remembrall.viewmodelutils.MobiusViewModel
 import com.spotify.mobius.First
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-@HiltViewModel
-internal class AddTaskViewModel @Inject constructor(
+
+internal class AddTaskViewModel @AssistedInject constructor(
+    @Assisted private val taskId: String? = null,
     loopInjector: LoopInjector<Model, Event, Effect>,
     uiEffectState: MutableSharedFlow<Effect.UIEffect>,
     coroutineContextProvider: CoroutineContextProvider,
 ) : MobiusViewModel<Model, Event, Effect>(
-    initialModel = Model(),
-    init = { First.first(
+    initialModel = Model(taskId = taskId),
+    init = {
+        First.first(
             it,
-            setOf(Effect.GetAvailableTaskPriorities(it.priority))
+            setOf(Effect.GetAvailableTaskPriorities(it.priority)) + if (taskId != null) {
+                setOf(Effect.LoadTask(taskId))
+            } else {
+                emptySet()
+            }
         )
     },
     loopInjector = loopInjector, coroutineContextProvider = coroutineContextProvider,
@@ -31,4 +38,9 @@ internal class AddTaskViewModel @Inject constructor(
 
     val uiEffect: Flow<Effect.UIEffect> = uiEffectState.asSharedFlow()
 
+    @AssistedFactory
+    interface Factory {
+
+        fun create(taskId: String?): AddTaskViewModel
+    }
 }

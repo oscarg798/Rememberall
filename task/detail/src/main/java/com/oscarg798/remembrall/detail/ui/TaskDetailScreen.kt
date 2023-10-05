@@ -2,6 +2,7 @@ package com.oscarg798.remembrall.detail.ui
 
 import com.oscarg798.remembrall.ui.icons.R as IconsR
 import android.app.Activity
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -93,7 +94,14 @@ fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, dee
         val effect = effects ?: return@LaunchedEffect
 
         when (effect) {
-            is Effect.UIEffect.NavigateToEdit -> Router.Edit.navigate(navController)
+            is Effect.UIEffect.NavigateToEdit -> {
+                Router.AddTask.navigate(
+                    navController,
+                    Bundle().apply {
+                        putString(Router.AddTask.TaskIdArgument, effect.taskId)
+                    }
+                )
+            }
             is Effect.UIEffect.ShowError -> snackbarHostState.showSnackbar(
                 activity.getString(R.string.error_marking_task_as_completed)
             )
@@ -270,6 +278,13 @@ private fun TaskDetail(
     }
 }
 
+private fun provideEntryPoint(
+    activity: Activity
+) = EntryPointAccessors.fromActivity(
+    activity,
+    TaskDetailEntryPoint::class.java
+)
+
 @Composable
 @Preview(device = Devices.NEXUS_5)
 private fun TaskDetailPreview() {
@@ -287,13 +302,6 @@ private fun TaskDetailPreview() {
         }
     }
 }
-
-private fun provideEntryPoint(
-    activity: Activity
-) = EntryPointAccessors.fromActivity(
-    activity,
-    TaskDetailEntryPoint::class.java
-)
 
 private val task = DisplayableTask(
     id = "1",

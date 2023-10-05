@@ -37,7 +37,6 @@
             <option value="$PROJECT_DIR$/task" />
             <option value="$PROJECT_DIR$/task/add" />
             <option value="$PROJECT_DIR$/task/detail" />
-            <option value="$PROJECT_DIR$/task/edit" />
             <option value="$PROJECT_DIR$/task/list" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/taskimpl" />

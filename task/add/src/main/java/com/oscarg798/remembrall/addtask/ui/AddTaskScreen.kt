@@ -56,129 +56,164 @@ import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.ui.RemembrallButton
 import com.oscarg798.remembrall.ui.icons.R as IconsR
+import android.app.Activity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.oscarg798.remembrall.addtask.di.AddTaskEntryPoint
 import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
 import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.dimensions.typo
+import com.oscarg798.remembrall.ui.extensions.requireArguments
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
+import com.oscarg798.remembrall.viewmodelutils.provide
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import dagger.hilt.android.EntryPointAccessors
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-fun NavGraphBuilder.addTaskScreen() =
-    composable(Router.AddTask.route, deepLinks = getDeepLinks()) { backStackEntry ->
+fun NavGraphBuilder.addTaskScreen() = composable(Router.AddTask.route, deepLinks = listOf(
+    navDeepLink {
+        uriPattern = Router.AddTask.uriPattern
+    }
+)) { backStackEntry ->
 
-        val viewModel: AddTaskViewModel = hiltViewModel(backStackEntry)
-        val initialState = remember { viewModel.model.value }
-        val navController = LocalNavControllerProvider.current
-        val snackbarHostState = remember { SnackbarHostState() }
-        val context = LocalContext.current
+    val navController = LocalNavControllerProvider.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
-        val model by viewModel.model.collectAsStateWithLifecycle(initialValue = initialState)
-        val uiEffects by viewModel.uiEffect.collectAsStateWithLifecycle(initialValue = null)
-        var selectingTaskPriority by remember { mutableStateOf(false) }
-        val dueDateDatePickerState = rememberMaterialDialogState()
-        val dueDateTimePickerState = rememberMaterialDialogState()
-        var pickersInitialDateTime by remember { mutableStateOf<LocalDateTime?>(null) }
-        var selectedDueDateDate by remember { mutableStateOf<LocalDate?>(null) }
-        val attendeesBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-        var showAttendeesBottomSheet by remember { mutableStateOf(false) }
+    val taskId = remember(backStackEntry) {
+        backStackEntry.requireArguments()
+            .getString(Router.AddTask.TaskIdArgument)
+    }
 
-        LaunchedEffect(key1 = uiEffects) {
-            val uiEffect = uiEffects ?: return@LaunchedEffect
+    val entryPoint = remember(taskId) {
+        provideEntryPoint(context as Activity)
+    }
 
-            when (uiEffect) {
-                Effect.UIEffect.Close -> navController.popBackStack()
-                Effect.UIEffect.DismissAttendeesPicker -> {
-                    if (attendeesBottomSheetState.currentValue == SheetValue.Expanded) {
-                        attendeesBottomSheetState.hide()
-                    }
-                    showAttendeesBottomSheet = false
+    val viewModel: AddTaskViewModel = viewModel(
+        viewModelStoreOwner = backStackEntry,
+        factory = provide {
+            entryPoint.addTaskViewModelFactory().create(taskId)
+        }
+    )
+    val initialState = remember { viewModel.model.value }
+
+    val model by viewModel.model.collectAsStateWithLifecycle(initialValue = initialState)
+    val uiEffects by viewModel.uiEffect.collectAsStateWithLifecycle(initialValue = null)
+    var selectingTaskPriority by remember { mutableStateOf(false) }
+    val dueDateDatePickerState = rememberMaterialDialogState()
+    val dueDateTimePickerState = rememberMaterialDialogState()
+    var pickersInitialDateTime by remember { mutableStateOf<LocalDateTime?>(null) }
+    var selectedDueDateDate by remember { mutableStateOf<LocalDate?>(null) }
+    val attendeesBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var showAttendeesBottomSheet by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = uiEffects) {
+        val uiEffect = uiEffects ?: return@LaunchedEffect
+
+        when (uiEffect) {
+            Effect.UIEffect.Close -> navController.popBackStack()
+            Effect.UIEffect.DismissAttendeesPicker -> {
+                if (attendeesBottomSheetState.currentValue == SheetValue.Expanded) {
+                    attendeesBottomSheetState.hide()
+                }
+                showAttendeesBottomSheet = false
+            }
+
+            Effect.UIEffect.DismissDueDatePicker -> {
+                selectedDueDateDate = null
+                pickersInitialDateTime = null
+                if (dueDateDatePickerState.showing) {
+                    dueDateDatePickerState.hide()
                 }
 
-                Effect.UIEffect.DismissDueDatePicker -> {
-                    selectedDueDateDate = null
-                    pickersInitialDateTime = null
-                    if (dueDateDatePickerState.showing) {
-                        dueDateDatePickerState.hide()
-                    }
+                if (dueDateTimePickerState.showing) {
+                    dueDateTimePickerState.hide()
+                }
+            }
 
-                    if (dueDateTimePickerState.showing) {
-                        dueDateTimePickerState.hide()
-                    }
+            Effect.UIEffect.DismissTaskPriorityPicker -> selectingTaskPriority = false
+            Effect.UIEffect.ShowAttendeesPicker -> {
+                if (attendeesBottomSheetState.currentValue != SheetValue.Expanded
+                ) {
+                    attendeesBottomSheetState.expand()
+                    showAttendeesBottomSheet = true
                 }
 
-                Effect.UIEffect.DismissTaskPriorityPicker -> selectingTaskPriority = false
-                Effect.UIEffect.ShowAttendeesPicker -> {
-                    if (attendeesBottomSheetState.currentValue != SheetValue.Expanded
-                    ) {
-                        attendeesBottomSheetState.expand()
-                        showAttendeesBottomSheet = true
-                    }
-
-                    if (!showAttendeesBottomSheet) {
-                        showAttendeesBottomSheet = true
-                    }
+                if (!showAttendeesBottomSheet) {
+                    showAttendeesBottomSheet = true
                 }
+            }
 
-                is Effect.UIEffect.ShowDueDateDatePicker -> {
-                    pickersInitialDateTime = uiEffect.initialDateTime
-                    if (!dueDateDatePickerState.showing) {
-                        dueDateDatePickerState.show()
+            is Effect.UIEffect.ShowDueDateDatePicker -> {
+                pickersInitialDateTime = uiEffect.initialDateTime
+                if (!dueDateDatePickerState.showing) {
+                    dueDateDatePickerState.show()
+                }
+            }
+
+            is Effect.UIEffect.ShowPriorityPicker -> {
+                selectingTaskPriority = true
+            }
+
+            is Effect.UIEffect.ShowError -> {
+                snackbarHostState.showSnackbar(
+                    when (uiEffect.error) {
+                        Effect.UIEffect.ShowError.Error.InvalidAttendeesFormat ->
+                            context.getString(R.string.attendees_error_message)
+
+                        Effect.UIEffect.ShowError.Error.InvalidName ->
+                            context.getString(R.string.name_error_message)
+
+                        Effect.UIEffect.ShowError.Error.ErrorAddingTask ->
+                            context.getString(R.string.error_adding_task)
+
                     }
-                }
+                )
+            }
 
-                is Effect.UIEffect.ShowPriorityPicker -> {
-                    selectingTaskPriority = true
-                }
+            is Effect.UIEffect.NavigateToLogin -> Router.Login.navigate(navController)
+        }
+    }
 
-                is Effect.UIEffect.ShowError -> {
-                    snackbarHostState.showSnackbar(
-                        when (uiEffect.error) {
-                            Effect.UIEffect.ShowError.Error.InvalidAttendeesFormat ->
-                                context.getString(R.string.attendees_error_message)
-
-                            Effect.UIEffect.ShowError.Error.InvalidName ->
-                                context.getString(R.string.name_error_message)
-
-                            Effect.UIEffect.ShowError.Error.ErrorAddingTask ->
-                                context.getString(R.string.error_adding_task)
-
-                        }
+    RemembrallScaffold(
+        topBar = {
+            AddTaskToolbar(
+                onEvent = { viewModel.onEvent(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = MaterialTheme.dimensions.Medium,
+                        start = MaterialTheme.dimensions.Medium,
+                        end = MaterialTheme.dimensions.Medium
+                    )
+            )
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { paddingValues ->
+        RemembrallPage(modifier = Modifier.padding(paddingValues)) {
+            if (model.taskId != null && model.loadedTask == null) {
+                Box(Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
-
-                is Effect.UIEffect.NavigateToLogin -> Router.Login.navigate(navController)
-            }
-        }
-
-        RemembrallScaffold(
-            topBar = {
-                AddTaskToolbar(
-                    onEvent = { viewModel.onEvent(it) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = MaterialTheme.dimensions.Medium,
-                            start = MaterialTheme.dimensions.Medium,
-                            end = MaterialTheme.dimensions.Medium
-                        )
-                )
-            },
-            snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-        ) { paddingValues ->
-            RemembrallPage(modifier = Modifier.padding(paddingValues)) {
+            } else {
                 AddTaskForm(
                     modifier = Modifier
                         .fillMaxSize()
@@ -223,32 +258,27 @@ fun NavGraphBuilder.addTaskScreen() =
                     }
                 }
             }
+        }
 
-            AnimatedVisibility(
-                visible = showAttendeesBottomSheet,
-                enter = slideInVertically(tween(durationMillis = 1_000))
-            ) {
-                AttendeesBottomSheet(
-                    state = attendeesBottomSheetState,
-                    attendees = model.attendees,
-                    onAttendeeAdded = {
-                        viewModel.onEvent(Event.OnAttendeeAdded(it))
-                    },
-                    onAttendeeDeleted = {
-                        viewModel.onEvent(Event.OnAttendeeRemoved(it))
-                    }
-                ) {
-                    viewModel.onEvent(Event.DismissAttendeePicker)
+        AnimatedVisibility(
+            visible = showAttendeesBottomSheet,
+            enter = slideInVertically(tween(durationMillis = 1_000))
+        ) {
+            AttendeesBottomSheet(
+                state = attendeesBottomSheetState,
+                attendees = model.attendees,
+                onAttendeeAdded = {
+                    viewModel.onEvent(Event.OnAttendeeAdded(it))
+                },
+                onAttendeeDeleted = {
+                    viewModel.onEvent(Event.OnAttendeeRemoved(it))
                 }
+            ) {
+                viewModel.onEvent(Event.DismissAttendeePicker)
             }
         }
     }
-
-private fun getDeepLinks() = listOf(
-    navDeepLink {
-        uriPattern = Router.AddTask.uriPattern
-    }
-)
+}
 
 @Composable
 private fun DueDatePickerDialog(
@@ -526,6 +556,13 @@ private fun AttendeeItem(
         }
     }
 }
+
+private fun provideEntryPoint(
+    activity: Activity
+) = EntryPointAccessors.fromActivity(
+    activity,
+    AddTaskEntryPoint::class.java
+)
 
 @Preview(device = Devices.NEXUS_5)
 @Composable

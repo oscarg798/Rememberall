@@ -5,6 +5,7 @@ import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.Model
 import com.oscarg798.remembrall.addtask.effecthandler.AddTaskEffectHandler
 import com.oscarg798.remembrall.addtask.effecthandler.UIEffectConsumer
+import com.oscarg798.remembrall.addtask.ui.AddTaskViewModel
 import com.oscarg798.remembrall.addtask.ui.LoopInjectorImpl
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCaseImpl
@@ -16,31 +17,35 @@ import com.oscarg798.remembrall.addtask.usecase.GetAvailableTaskPriorities
 import com.oscarg798.remembrall.addtask.usecase.GetAvailableTaskPrioritiesImpl
 import com.oscarg798.remembrall.addtask.usecase.GetDueDatePickerInitialDate
 import com.oscarg798.remembrall.addtask.usecase.GetDueDatePickerInitialDateImpl
+import com.oscarg798.remembrall.addtask.usecase.GetTask
+import com.oscarg798.remembrall.addtask.usecase.GetTaskImpl
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 internal interface AddTaskModule {
 
     @Binds
     fun bindAddTaskEffectHandler(impl: AddTaskEffectHandler): EffectHandlerProvider<Effect, Event>
 
     @Binds
-    @ViewModelScoped
+    @ActivityRetainedScoped
     fun bindLoopInjector(impl: LoopInjectorImpl): LoopInjector<Model, Event, Effect>
 
     @Binds
-    @ViewModelScoped
+    @ActivityRetainedScoped
     fun bindUiEffectConsumer(impl: UIEffectConsumer): EffectConsumer<Effect>
 
     @Binds
@@ -60,10 +65,13 @@ internal interface AddTaskModule {
     @Binds
     fun bindAddTaskUseCase(impl: AddTaskUseCaseImpl): AddTaskUseCase
 
+    @Binds
+    fun bindGetTask(impl: GetTaskImpl): GetTask
+
     companion object {
 
         @Provides
-        @ViewModelScoped
+        @ActivityRetainedScoped
         fun provideUiEffectState(): MutableSharedFlow<Effect.UIEffect> {
             return MutableSharedFlow(
                 extraBufferCapacity = 1,
@@ -71,4 +79,11 @@ internal interface AddTaskModule {
             )
         }
     }
+}
+
+@EntryPoint
+@InstallIn(ActivityComponent::class)
+internal interface AddTaskEntryPoint {
+
+    fun addTaskViewModelFactory(): AddTaskViewModel.Factory
 }

@@ -32,6 +32,26 @@ internal fun update(
     is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
     Event.OnCalendarActionLongClicked -> onCalendarActionLongClicked(model)
     Event.OnTagActionLongClicked -> onTagActionLongClicked(model)
+    is Event.OnTaskLoaded -> onTaskLoaded(model, event)
+}
+
+private fun onTaskLoaded(model: Model, event: Event.OnTaskLoaded): Upcoming {
+    return if (model.loadedTask == event.task) {
+        noChange()
+    } else {
+        val task = event.task
+        return next(
+            model.copy(
+                loadedTask = task,
+                title = event.task.name,
+                description = task.description.orEmpty(),
+                dueDate = event.dueDate,
+                priority = task.priority,
+                attendees = task.calendarSyncInformation?.attendees?.map { it.email }?.toSet()
+                    ?: emptySet(),
+            )
+        )
+    }
 }
 
 private fun onTagActionLongClicked(model: Model): Upcoming {

@@ -13,7 +13,26 @@ import com.oscarg798.remembrall.ui.navigation.Router.TaskDetail.TaskIdArgument
 sealed class Router(val route: String, val uriPattern: String) {
 
     object TaskList : Router(TaskListRoute, TaskListUriPattern)
-    object AddTask : Router(AddTaskRoute, AddTaskUriPattern)
+    object AddTask : Router(AddTaskRoute, AddTaskUriPattern) {
+
+        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
+            return if (arguments == null) {
+                uriPattern.toUri()
+            } else {
+                require(arguments.containsKey(TaskIdArgument))
+                uriPattern.replace(
+                    "{$TaskIdArgument}",
+                    arguments.getString(
+                        TaskIdArgument
+                    )!!
+                ).toUri()
+            }
+        }
+
+
+        const val TaskIdArgument = "TaskId"
+    }
+
     object Profile : Router(ProfileRoute, ProfileUriPattern)
     object Splash : Router(SplashRoute, SplashUriPattern)
     object Login : Router(LoginRoute, LoginUriPattern)
@@ -93,7 +112,7 @@ private const val TaskDetailRoute = "taskDetail"
 private const val TaskDetailUriPattern = "$DeepLinkUri/$TaskDetailRoute/{$TaskIdArgument}"
 
 private const val AddTaskRoute = "addTask"
-private const val AddTaskUriPattern = "$DeepLinkUri/$AddTaskRoute"
+private const val AddTaskUriPattern = "$DeepLinkUri/$AddTaskRoute/{${Router.AddTask.TaskIdArgument}}"
 
 private const val ProfileRoute = "profile"
 private const val ProfileUriPattern = "$DeepLinkUri/$ProfileRoute"
@@ -115,4 +134,4 @@ private const val AddCheckListUriPattern = "$DeepLinkUri/$AddCheckList"
 
 private const val ChecklistDetailRoute = "checklist-detail"
 private const val ChecklistDetailUriPattern = "$DeepLinkUri/$ChecklistDetailRoute/" +
-    "{$ChecklistIdArgument}"
+        "{$ChecklistIdArgument}"
