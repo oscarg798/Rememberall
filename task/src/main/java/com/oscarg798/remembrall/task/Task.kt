@@ -4,7 +4,7 @@ data class Task(
     val id: String,
     val owner: String,
     val owned: Boolean,
-    val name: String,
+    val title: String,
     val priority: TaskPriority?,
     val calendarSyncInformation: CalendarSyncInformation?,
     val dueDate: Long?,

@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import com.oscarg798.remembrall.list.TaskListViewModel
+import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
+import com.oscarg798.remembrall.task.addroute.AddRoute
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
 import com.oscarg798.remembrall.ui.navigation.Router
 
@@ -20,6 +22,7 @@ fun TaskListScreen(
     val state by viewModel.state.collectAsState(initial = TaskListViewModel.ViewState())
     val events by viewModel.events.collectAsState(initial = null)
     val navController = LocalNavControllerProvider.current
+    val navigator = LocalNavigatorProvider.current
 
     when {
         state.tasks.isEmpty() && !state.loading -> EmptyTaskList { viewModel.onAddClicked() }
@@ -45,12 +48,11 @@ fun TaskListScreen(
     LaunchedEffect(key1 = events) {
         val event = events ?: return@LaunchedEffect
         when (event) {
-            is TaskListViewModel.Event.ShowAddTaskForm -> Router.AddTask.navigate(navController)
+            is TaskListViewModel.Event.ShowAddTaskForm -> navigator.navigate(AddRoute)
             is TaskListViewModel.Event.OpenProfile -> Router.Profile.navigate(navController)
-            is TaskListViewModel.Event.NavigateToEdit -> Router.Edit.navigate(
-                navController,
+            is TaskListViewModel.Event.NavigateToEdit -> navigator.navigate(AddRoute,
                 Bundle().apply {
-                    putString(Router.Edit.TaskIdArgument, event.taskId)
+                    putString(AddRoute.TaskIdArgument, event.taskId)
                 }
             )
         }

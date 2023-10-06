@@ -11,6 +11,8 @@ import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
 import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCaseImpl
 import com.oscarg798.remembrall.addtask.usecase.CurrentDateProvider
 import com.oscarg798.remembrall.addtask.usecase.CurrentDateProviderImpl
+import com.oscarg798.remembrall.addtask.usecase.FieldValidator
+import com.oscarg798.remembrall.addtask.usecase.FieldValidatorImpl
 import com.oscarg798.remembrall.addtask.usecase.FormatDueDate
 import com.oscarg798.remembrall.addtask.usecase.FormatDueDateImpl
 import com.oscarg798.remembrall.addtask.usecase.GetAvailableTaskPriorities
@@ -19,6 +21,10 @@ import com.oscarg798.remembrall.addtask.usecase.GetDueDatePickerInitialDate
 import com.oscarg798.remembrall.addtask.usecase.GetDueDatePickerInitialDateImpl
 import com.oscarg798.remembrall.addtask.usecase.GetTask
 import com.oscarg798.remembrall.addtask.usecase.GetTaskImpl
+import com.oscarg798.remembrall.addtask.usecase.UpdateCalendarInformation
+import com.oscarg798.remembrall.addtask.usecase.UpdateCalendarInformationImpl
+import com.oscarg798.remembrall.addtask.usecase.UpdateTask
+import com.oscarg798.remembrall.addtask.usecase.UpdateTaskImpl
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
@@ -67,6 +73,15 @@ internal interface AddTaskModule {
 
     @Binds
     fun bindGetTask(impl: GetTaskImpl): GetTask
+
+    @Binds
+    fun bindUpdateTask(impl: UpdateTaskImpl): UpdateTask
+
+    @Binds
+    fun bindFieldValidator(impl: FieldValidatorImpl): FieldValidator
+
+    @Binds
+    fun bindUpdateCalendarInformation(impl: UpdateCalendarInformationImpl): UpdateCalendarInformation
 
     companion object {
 

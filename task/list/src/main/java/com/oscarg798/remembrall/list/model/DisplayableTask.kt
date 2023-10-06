@@ -21,7 +21,7 @@ data class DisplayableTask(
     constructor(task: Task, dueDateFormatter: DateFormatter) : this(
         id = task.id,
         owned = task.owned,
-        title = task.name,
+        title = task.title,
         description = task.description,
         priority = task.priority ?: TaskPriority.Low,
         completed = task.completed,

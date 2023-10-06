@@ -64,6 +64,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.oscarg798.remembrall.addtask.di.AddTaskEntryPoint
+import com.oscarg798.remembrall.task.addroute.AddRoute
 import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
 import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.dimensions.typo
@@ -85,9 +86,9 @@ import java.time.LocalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-fun NavGraphBuilder.addTaskScreen() = composable(Router.AddTask.route, deepLinks = listOf(
+fun NavGraphBuilder.addTaskScreen() = composable(AddRoute.route, deepLinks = listOf(
     navDeepLink {
-        uriPattern = Router.AddTask.uriPattern
+        uriPattern = AddRoute.uriPattern.toString()
     }
 )) { backStackEntry ->
 
@@ -97,7 +98,7 @@ fun NavGraphBuilder.addTaskScreen() = composable(Router.AddTask.route, deepLinks
 
     val taskId = remember(backStackEntry) {
         backStackEntry.requireArguments()
-            .getString(Router.AddTask.TaskIdArgument)
+            .getString(AddRoute.TaskIdArgument)!!
     }
 
     val entryPoint = remember(taskId) {
@@ -182,6 +183,8 @@ fun NavGraphBuilder.addTaskScreen() = composable(Router.AddTask.route, deepLinks
                         Effect.UIEffect.ShowError.Error.ErrorAddingTask ->
                             context.getString(R.string.error_adding_task)
 
+                        Effect.UIEffect.ShowError.Error.CanNotRemoveDueDateWhileUpdating ->
+                            context.getString(R.string.due_date_removal_on_update_error)
                     }
                 )
             }
@@ -206,7 +209,7 @@ fun NavGraphBuilder.addTaskScreen() = composable(Router.AddTask.route, deepLinks
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { paddingValues ->
         RemembrallPage(modifier = Modifier.padding(paddingValues)) {
-            if (model.taskId != null && model.loadedTask == null) {
+            if (!model.isLoaded()) {
                 Box(Modifier.fillMaxSize()) {
                     CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.primary,

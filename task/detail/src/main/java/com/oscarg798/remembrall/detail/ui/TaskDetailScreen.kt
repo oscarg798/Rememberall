@@ -50,6 +50,8 @@ import com.oscarg798.remembrall.detail.di.TaskDetailEntryPoint
 import com.oscarg798.remembrall.detail.domain.DisplayableTask
 import com.oscarg798.remembrall.detail.domain.Effect
 import com.oscarg798.remembrall.detail.domain.Event
+import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
+import com.oscarg798.remembrall.task.addroute.AddRoute
 import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
 import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.dimensions.typo
@@ -68,7 +70,7 @@ fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, dee
     }
 )) { backstackEntry ->
     val activity = LocalContext.current as Activity
-    val navController = LocalNavControllerProvider.current
+    val navigator = LocalNavigatorProvider.current
     val taskId = remember(backstackEntry) {
         backstackEntry.requireArguments()
             .getString(Router.TaskDetail.TaskIdArgument)!!
@@ -95,18 +97,19 @@ fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, dee
 
         when (effect) {
             is Effect.UIEffect.NavigateToEdit -> {
-                Router.AddTask.navigate(
-                    navController,
-                    Bundle().apply {
-                        putString(Router.AddTask.TaskIdArgument, effect.taskId)
+                navigator.navigate(
+                    route = AddRoute,
+                    arguments = Bundle().apply {
+                        putString(AddRoute.TaskIdArgument, effect.taskId)
                     }
                 )
             }
+
             is Effect.UIEffect.ShowError -> snackbarHostState.showSnackbar(
                 activity.getString(R.string.error_marking_task_as_completed)
             )
 
-            Effect.UIEffect.CloseScreen -> navController.popBackStack()
+            Effect.UIEffect.CloseScreen -> navigator.navigateBack()
         }
     }
 

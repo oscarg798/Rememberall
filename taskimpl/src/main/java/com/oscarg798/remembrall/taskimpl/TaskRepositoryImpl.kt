@@ -11,9 +11,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,7 +85,7 @@ internal class TaskRepositoryImpl @Inject constructor(
 
     private fun TaskDto.toTask(owned: Boolean = OwnershipUnknownAtThisPoint) = Task(
         id = id,
-        name = name,
+        title = name,
         owner = owner,
         description = description,
         priority = priority,

@@ -13,7 +13,6 @@ class AddTaskToCalendarUseCase @Inject constructor(
 
     suspend fun execute(
         params: AddTaskToCalendarParams,
-
     ): CalendarSyncInformation {
         val selectedCalendar = calendarRepository.getSelectedCalendar()
 

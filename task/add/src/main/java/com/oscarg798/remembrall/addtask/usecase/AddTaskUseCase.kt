@@ -7,26 +7,25 @@ import com.oscarg798.remembrall.auth.Session
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.user.User
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 internal interface AddTaskUseCase : suspend (Effect.SaveTask) -> Event
 
 internal class AddTaskUseCaseImpl @Inject constructor(
     private val session: Session,
-    private val emailPattern: Pattern,
+    private val fieldValidator: FieldValidator,
     private val taskRepository: TaskRepository,
-    private val dateProvider: CurrentDateProvider,
     private val dueDateFormatter: DateFormatter,
+    private val dateProvider: CurrentDateProvider,
     private val addTaskToCalendarUseCase: AddTaskToCalendarUseCase,
 ) : AddTaskUseCase {
 
     override suspend fun invoke(effect: Effect.SaveTask): Event {
-        if (effect.title.length < RequiredNameLength) {
+        if (fieldValidator.isTitleValid(effect.title)) {
             return Event.OnError(Error.InvalidName)
         }
 
-        if (!effect.attendees.areAttendeesValid()) {
+        if (!fieldValidator.areAttendeesValid(effect.attendees)) {
             return Event.OnError(Error.InvalidAttendeesFormat)
         }
 
@@ -80,12 +79,6 @@ internal class AddTaskUseCaseImpl @Inject constructor(
 
         return session.user
     }
-
-    private fun Set<String>.areAttendeesValid(): Boolean {
-        return count {
-            !emailPattern.matcher(it).matches()
-        } == 0
-    }
 }
 
-private const val RequiredNameLength = 3
+

@@ -3,6 +3,7 @@ package com.oscarg798.remembrall.addtask.domain
 import androidx.compose.runtime.Stable
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
+import com.oscarg798.remembrall.task.addroute.AddRoute
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -12,13 +13,18 @@ internal data class Model(
     val title: String = "",
     val taskId: String? = null,
     val loading: Boolean = false,
-    val loadedTask: Task? = null,
+    val editableTask: Task? = null,
     val description: String = "",
     val dueDate: DueDate? = null,
     val priority: TaskPriority? = null,
     val attendees: Set<String> = setOf(),
     val availablePriorities: List<TaskPriority> = listOf(),
-)
+) {
+
+    fun isLoaded() = taskId == AddRoute.None || editableTask != null
+
+    fun isEditMode() = taskId != AddRoute.None
+}
 
 internal data class DueDate(
     val date: LocalDateTime,
@@ -61,6 +67,14 @@ internal sealed interface Effect {
         val attendees: Set<String> = setOf(),
     ) : Effect
 
+    data class UpdateTask(
+        val title: String,
+        val originalTask: Task,
+        val description: String,
+        val dueDate: DueDate? = null,
+        val priority: TaskPriority? = null,
+        val attendees: Set<String> = setOf(),
+    ) : Effect
     data class LoadTask(val taskId: String) : Effect
     data class GetDueDatePickerInitialDate(val dueDate: DueDate?) : Effect
     data class FormatDueDate(val date: LocalDate, val time: LocalTime) : Effect
@@ -80,6 +94,7 @@ internal sealed interface Effect {
                 object InvalidName : Error
                 object InvalidAttendeesFormat : Error
                 object ErrorAddingTask : Error
+                object CanNotRemoveDueDateWhileUpdating: Error
             }
         }
 
@@ -92,4 +107,5 @@ internal sealed interface Error {
     object InvalidName : Error
     object AddingTask : Error
     object InvalidAttendeesFormat : Error
+    object CanNotRemoveDueDateWhileUpdating: Error
 }

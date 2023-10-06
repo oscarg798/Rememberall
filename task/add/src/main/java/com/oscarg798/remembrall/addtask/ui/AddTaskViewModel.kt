@@ -1,6 +1,7 @@
 package com.oscarg798.remembrall.addtask.ui
 
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
+import com.oscarg798.remembrall.task.addroute.AddRoute
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.Model
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 
 
 internal class AddTaskViewModel @AssistedInject constructor(
-    @Assisted private val taskId: String? = null,
+    @Assisted private val taskId: String,
     loopInjector: LoopInjector<Model, Event, Effect>,
     uiEffectState: MutableSharedFlow<Effect.UIEffect>,
     coroutineContextProvider: CoroutineContextProvider,
@@ -25,7 +26,9 @@ internal class AddTaskViewModel @AssistedInject constructor(
     init = {
         First.first(
             it,
-            setOf(Effect.GetAvailableTaskPriorities(it.priority)) + if (taskId != null) {
+            setOf(
+                Effect.GetAvailableTaskPriorities(it.priority)
+            ) + if (taskId != AddRoute.None) {
                 setOf(Effect.LoadTask(taskId))
             } else {
                 emptySet()
@@ -41,6 +44,6 @@ internal class AddTaskViewModel @AssistedInject constructor(
     @AssistedFactory
     interface Factory {
 
-        fun create(taskId: String?): AddTaskViewModel
+        fun create(taskId: String): AddTaskViewModel
     }
 }

@@ -20,7 +20,7 @@ internal class GetTaskImpl @Inject constructor(
             DisplayableTask(
                 id = task.id,
                 owned = task.owned,
-                title = task.name,
+                title = task.title,
                 attendees = task.calendarSyncInformation?.attendees?.map { it.email }?.toSet()
                     ?: emptySet(),
                 description = task.description,

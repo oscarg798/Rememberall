@@ -10,28 +10,11 @@ import androidx.navigation.navOptions
 import com.oscarg798.remembrall.ui.navigation.Router.ChecklistDetail.ChecklistIdArgument
 import com.oscarg798.remembrall.ui.navigation.Router.TaskDetail.TaskIdArgument
 
+@Deprecated("This must not used", replaceWith = ReplaceWith("navigator.navigate()",
+    ""))
 sealed class Router(val route: String, val uriPattern: String) {
 
     object TaskList : Router(TaskListRoute, TaskListUriPattern)
-    object AddTask : Router(AddTaskRoute, AddTaskUriPattern) {
-
-        override fun getDeeplinkNavigationRoute(arguments: Bundle?): Uri {
-            return if (arguments == null) {
-                uriPattern.toUri()
-            } else {
-                require(arguments.containsKey(TaskIdArgument))
-                uriPattern.replace(
-                    "{$TaskIdArgument}",
-                    arguments.getString(
-                        TaskIdArgument
-                    )!!
-                ).toUri()
-            }
-        }
-
-
-        const val TaskIdArgument = "TaskId"
-    }
 
     object Profile : Router(ProfileRoute, ProfileUriPattern)
     object Splash : Router(SplashRoute, SplashUriPattern)
@@ -110,9 +93,6 @@ private val TaskListUriPattern = "$DeepLinkUri/$TaskListRoute"
 
 private const val TaskDetailRoute = "taskDetail"
 private const val TaskDetailUriPattern = "$DeepLinkUri/$TaskDetailRoute/{$TaskIdArgument}"
-
-private const val AddTaskRoute = "addTask"
-private const val AddTaskUriPattern = "$DeepLinkUri/$AddTaskRoute/{${Router.AddTask.TaskIdArgument}}"
 
 private const val ProfileRoute = "profile"
 private const val ProfileUriPattern = "$DeepLinkUri/$ProfileRoute"

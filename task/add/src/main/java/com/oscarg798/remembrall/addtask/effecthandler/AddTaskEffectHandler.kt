@@ -8,6 +8,7 @@ import com.oscarg798.remembrall.addtask.usecase.FormatDueDate
 import com.oscarg798.remembrall.addtask.usecase.GetAvailableTaskPriorities
 import com.oscarg798.remembrall.addtask.usecase.GetDueDatePickerInitialDate
 import com.oscarg798.remembrall.addtask.usecase.GetTask
+import com.oscarg798.remembrall.addtask.usecase.UpdateTask
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.MobiusCoroutines
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 internal class AddTaskEffectHandler @Inject constructor(
     private val getTask: GetTask,
+    private val updateTask: UpdateTask,
     private val formatDueDate: FormatDueDate,
     private val addTaskUseCase: AddTaskUseCase,
     private val coroutineContextProvider: CoroutineContextProvider,
@@ -26,6 +28,7 @@ internal class AddTaskEffectHandler @Inject constructor(
     override fun provide(uiEffectConsumer: EffectConsumer<Effect>): Connectable<Effect, Event> {
         return MobiusCoroutines.subtypeEffectHandler<Effect, Event>()
             .addFunction(getTask)
+            .addFunction(updateTask)
             .addFunction(formatDueDate)
             .addFunction(addTaskUseCase)
             .addFunction(getAvailableTaskPriorities)

@@ -11,39 +11,39 @@ internal fun update(
     model: Model,
     event: Event
 ): Upcoming = when (event) {
-    Event.OnTaskSaved -> onBackClicked()
-    Event.OnBackClicked -> onBackClicked()
-    Event.OnCloseClicked -> onCloseClicked()
-    Event.OnTagActionClicked -> onTagActionClicked(model)
-    is Event.OnTitleChanged -> onTitleChanged(model, event)
-    Event.OnSaveActionClicked -> onSaveActionClicked(model)
     Event.DismissAttendeePicker -> onDismissAttendeePicker()
-    is Event.OnAttendeeAdded -> onAttendeeAdded(model, event)
     Event.OnAttendeeActionClicked -> onAttendeesActionClicked()
+    Event.OnBackClicked -> onBackClicked()
+    Event.OnCalendarActionClicked -> onCalendarActionClicked(model)
+    Event.OnCalendarActionLongClicked -> onCalendarActionLongClicked(model)
+    Event.OnCloseClicked -> onCloseClicked()
+    Event.OnSaveActionClicked -> onSaveActionClicked(model)
+    Event.OnTagActionClicked -> onTagActionClicked(model)
+    Event.OnTagActionLongClicked -> onTagActionLongClicked(model)
+    Event.OnTaskPrioritySelectorDismissed -> onTaskPrioritySelectorDismissed()
+    Event.OnTaskSaved -> onBackClicked()
+    is Event.OnAttendeeAdded -> onAttendeeAdded(model, event)
+    is Event.OnAttendeeRemoved -> onAttendeeRemoved(model, event)
+    is Event.OnDescriptionChanged -> onDescriptionChange(model, event)
+    is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
+    is Event.OnDueDateFormatted -> onDueDateFormatted(model, event)
+    is Event.OnDueDatePickerInitialDateFound -> onDueDatePickerInitialDateFound(event)
     is Event.OnError -> onValidationError(model, event)
     is Event.OnPriorityChanged -> onPriorityChanged(model, event)
-    is Event.OnAttendeeRemoved -> onAttendeeRemoved(model, event)
-    Event.OnCalendarActionClicked -> onCalendarActionClicked(model)
-    is Event.OnDueDateFormatted -> onDueDateFormatted(model, event)
-    is Event.OnDescriptionChanged -> onDescriptionChange(model, event)
-    is Event.OnTaskPrioritiesFound -> onTaskPrioritiesFound(model, event)
-    Event.OnTaskPrioritySelectorDismissed -> onTaskPrioritySelectorDismissed()
-    is Event.OnDueDatePickerInitialDateFound -> onDueDatePickerInitialDateFound(event)
-    is Event.OnDueDateDateAndTimeSelected -> onDueDateDateAndTimeSelected(model, event)
-    Event.OnCalendarActionLongClicked -> onCalendarActionLongClicked(model)
-    Event.OnTagActionLongClicked -> onTagActionLongClicked(model)
     is Event.OnTaskLoaded -> onTaskLoaded(model, event)
+    is Event.OnTaskPrioritiesFound -> onTaskPrioritiesFound(model, event)
+    is Event.OnTitleChanged -> onTitleChanged(model, event)
 }
 
 private fun onTaskLoaded(model: Model, event: Event.OnTaskLoaded): Upcoming {
-    return if (model.loadedTask == event.task) {
+    return if (model.editableTask == event.task) {
         noChange()
     } else {
         val task = event.task
         return next(
             model.copy(
-                loadedTask = task,
-                title = event.task.name,
+                editableTask = task,
+                title = event.task.title,
                 description = task.description.orEmpty(),
                 dueDate = event.dueDate,
                 priority = task.priority,
@@ -73,13 +73,20 @@ private fun onCalendarActionLongClicked(model: Model): Upcoming {
 private fun onValidationError(model: Model, event: Event.OnError): Upcoming {
     val effects = setOf(
         when (event.error) {
-            Error.AddingTask -> Effect.UIEffect.ShowError(Effect.UIEffect.ShowError.Error.ErrorAddingTask)
+            Error.AddingTask -> Effect.UIEffect.ShowError(
+                Effect.UIEffect.ShowError.Error.ErrorAddingTask
+            )
+
             Error.Auth -> Effect.UIEffect.NavigateToLogin
             Error.InvalidAttendeesFormat ->
                 Effect.UIEffect.ShowError(Effect.UIEffect.ShowError.Error.InvalidAttendeesFormat)
 
             Error.InvalidName ->
                 Effect.UIEffect.ShowError(Effect.UIEffect.ShowError.Error.InvalidName)
+
+            Error.CanNotRemoveDueDateWhileUpdating -> Effect.UIEffect.ShowError(
+                Effect.UIEffect.ShowError.Error.CanNotRemoveDueDateWhileUpdating
+            )
         }
     )
 
@@ -91,10 +98,9 @@ private fun onValidationError(model: Model, event: Event.OnError): Upcoming {
 }
 
 private fun onSaveActionClicked(model: Model): Upcoming {
-    return if (model.loading) {
+    return if (model.loading || !model.isLoaded()) {
         noChange()
-    } else {
-
+    } else if (!model.isEditMode()) {
         next(
             model.copy(loading = true),
             setOf(
@@ -104,6 +110,20 @@ private fun onSaveActionClicked(model: Model): Upcoming {
                     dueDate = model.dueDate,
                     priority = model.priority,
                     attendees = model.attendees
+                )
+            )
+        )
+    } else {
+        next(
+            model.copy(loading = true),
+            setOf(
+                Effect.UpdateTask(
+                    title = model.title,
+                    description = model.description,
+                    dueDate = model.dueDate,
+                    priority = model.priority,
+                    attendees = model.attendees,
+                    originalTask = model.editableTask!!
                 )
             )
         )

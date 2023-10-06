@@ -165,13 +165,18 @@ dependencies {
     implementation project(path: ':task:list')
     implementation project(path: ':oauthimpl')
     implementation project(path: ':ui:theming')
+    implementation project(path: ':navigation')
     implementation project(path: ':task:detail')
     implementation project(path: ':authandroid')
     implementation project(path: ':calendarimpl')
+    implementation project(path: ':task:addroute')
+    implementation project(path: ':navigationimpl')
+    implementation project(path: ':navigationutils')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':activityprovider')
     implementation project(path: ':activityproviderimpl')
+    implementation project(path: ':task:addrouteprovider')
 
 
     implementation libs.accompanist.pager

@@ -15,4 +15,5 @@
     <string name="priority_urgent_label">Urgent</string>
     <string name="save_attendee_button_label">Add</string>
     <string name="title_hint">Awesome Title</string>
+    <string name="due_date_removal_on_update_error">Removing due date on update is not supported yet</string>
 </resources>

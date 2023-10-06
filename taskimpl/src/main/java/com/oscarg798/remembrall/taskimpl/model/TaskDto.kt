@@ -18,7 +18,7 @@ data class TaskDto(
     constructor(task: Task) : this(
         id = task.id,
         owner = task.owner,
-        name = task.name,
+        name = task.title,
         description = task.description,
         priority = task.priority,
         completed = task.completed,

@@ -10,6 +10,8 @@ import com.oscarg798.remembrall.addtask.ui.addTaskScreen
 import com.oscarg798.remembrall.common.viewmodel.ViewModelStore
 import com.oscarg798.remembrall.detail.ui.taskDetailScreen
 import com.oscarg798.remembrall.login.ui.loginScreen
+import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
+import com.oscarg798.remembrall.navigationimpl.NavigatorFactory
 import com.oscarg798.remembrall.profile.ui.profileScreen
 import com.oscarg798.remembrall.splash.ui.splashScreen
 import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
@@ -17,11 +19,14 @@ import com.oscarg798.remembrall.ui.navigation.Router
 
 @ExperimentalPagerApi
 @Composable
-fun MainScreen(onFinishRequest: () -> Unit) {
+fun MainScreen(navigatorFactory: NavigatorFactory, onFinishRequest: () -> Unit) {
     val navController = rememberNavController()
-    val viewModelStore = remember { ViewModelStore() }
+    val navigator = remember { navigatorFactory.create(navController) }
 
-    CompositionLocalProvider(LocalNavControllerProvider provides navController) {
+    CompositionLocalProvider(
+        LocalNavControllerProvider provides navController,
+        LocalNavigatorProvider provides navigator
+    ) {
         NavHost(navController = navController, startDestination = Router.Splash.route) {
             splashScreen()
             homeScreen() { onFinishRequest() }
