@@ -3,20 +3,24 @@ package com.oscarg798.remembrall.splash.di
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
+import com.oscarg798.remembrall.navigation.Page
 import com.oscarg798.remembrall.splash.domain.Effect
 import com.oscarg798.remembrall.splash.domain.Event
 import com.oscarg798.remembrall.splash.domain.Model
 import com.oscarg798.remembrall.splash.effecthandler.SplashEffectHandler
 import com.oscarg798.remembrall.splash.effecthandler.UIEffectConsumer
 import com.oscarg798.remembrall.splash.ui.LoopInjectorImpl
+import com.oscarg798.remembrall.splash.ui.SplashPage
 import com.oscarg798.remembrall.splash.usecase.IsUserLoggedIn
 import com.oscarg798.remembrall.splash.usecase.IsUserLoggedInImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.multibindings.IntoSet
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -48,4 +52,13 @@ internal interface SplashModule {
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
     }
+}
+
+@Module
+@InstallIn(ActivityRetainedComponent::class)
+internal object PageProvider {
+
+    @IntoSet
+    @Provides
+    fun provideSplashPage(): Page = SplashPage
 }

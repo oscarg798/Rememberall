@@ -1,9 +1,9 @@
 package com.oscarg798.remembrall.addtask.domain
 
 import androidx.compose.runtime.Stable
+import com.oscarg798.remembrall.navigation.Route
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
-import com.oscarg798.remembrall.task.addroute.AddRoute
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -21,9 +21,9 @@ internal data class Model(
     val availablePriorities: List<TaskPriority> = listOf(),
 ) {
 
-    fun isLoaded() = taskId == AddRoute.None || editableTask != null
+    fun isLoaded() = taskId == Route.NO_PARAMETER || editableTask != null
 
-    fun isEditMode() = taskId != AddRoute.None
+    fun isEditMode() = taskId != Route.NO_PARAMETER
 }
 
 internal data class DueDate(

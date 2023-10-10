@@ -1,13 +1,14 @@
 package com.oscarg798.remembrall.list.usecase
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
+import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.list.model.TaskGroup
 import java.util.Calendar
 import javax.inject.Inject
 
 class GetInitialIndexPosition @Inject constructor(private val dueDateFormatter: DateFormatter) {
 
-    operator fun invoke(groupedTask: Map<TaskGroup.MonthGroup, TaskGroup>): Int {
+    operator fun invoke(groupedTask: Map<TaskGroup.MonthGroup, DisplayableTasksGroup>): Int {
         val currentDate = Calendar.getInstance()
         val currentDateInMillis = currentDate.timeInMillis
         val currentMonthValue = currentDate.get(Calendar.MONTH)

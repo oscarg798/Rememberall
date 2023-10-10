@@ -9,6 +9,8 @@ interface Navigator {
 
     fun navigateBack()
 
+    fun close()
+
     companion object {
         const val DeepLinkUri = "https://remembrall"
     }

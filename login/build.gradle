@@ -87,6 +87,7 @@ dependencies {
     implementation project(path: ':rxutils')
     implementation project(path: ':calendar')
     implementation project(path: ':ui:theming')
+    implementation project(path: ':navigation')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':viewmodelutils')
     implementation project(path: ':coroutinesutils')

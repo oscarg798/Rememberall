@@ -51,29 +51,35 @@ import com.oscarg798.remembrall.detail.domain.DisplayableTask
 import com.oscarg798.remembrall.detail.domain.Effect
 import com.oscarg798.remembrall.detail.domain.Event
 import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
-import com.oscarg798.remembrall.task.addroute.AddRoute
+import com.oscarg798.remembrall.navigation.Page
+import com.oscarg798.remembrall.navigation.Route
 import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
 import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.dimensions.typo
 import com.oscarg798.remembrall.ui.extensions.requireArguments
-import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.oscarg798.remembrall.viewmodelutils.provide
 import dagger.hilt.android.EntryPointAccessors
 
-fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, deepLinks = listOf(
+internal object TaskDetailPage : Page {
+
+    override fun build(builder: NavGraphBuilder) {
+        return builder.taskDetailScreen()
+    }
+}
+
+private fun NavGraphBuilder.taskDetailScreen() = composable(Route.DETAIL.path, deepLinks = listOf(
     navDeepLink {
-        uriPattern = Router.TaskDetail.uriPattern
+        uriPattern = Route.DETAIL.uriPattern.toString()
     }
 )) { backstackEntry ->
     val activity = LocalContext.current as Activity
     val navigator = LocalNavigatorProvider.current
     val taskId = remember(backstackEntry) {
         backstackEntry.requireArguments()
-            .getString(Router.TaskDetail.TaskIdArgument)!!
+            .getString(Route.TaskIdArgument)!!
     }
 
     val entryPoint = remember(taskId) {
@@ -98,9 +104,9 @@ fun NavGraphBuilder.taskDetailScreen() = composable(Router.TaskDetail.route, dee
         when (effect) {
             is Effect.UIEffect.NavigateToEdit -> {
                 navigator.navigate(
-                    route = AddRoute,
+                    route = Route.ADD,
                     arguments = Bundle().apply {
-                        putString(AddRoute.TaskIdArgument, effect.taskId)
+                        putString(Route.TaskIdArgument, effect.taskId)
                     }
                 )
             }

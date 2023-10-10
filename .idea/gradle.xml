@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/dateimpl" />
             <option value="$PROJECT_DIR$/gmstaskutils" />
             <option value="$PROJECT_DIR$/home" />
+            <option value="$PROJECT_DIR$/homeutils" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/mobiusutils" />
             <option value="$PROJECT_DIR$/navigation" />
@@ -39,8 +40,9 @@
             <option value="$PROJECT_DIR$/splash" />
             <option value="$PROJECT_DIR$/task" />
             <option value="$PROJECT_DIR$/task/add" />
-            <option value="$PROJECT_DIR$/task/addroute" />
             <option value="$PROJECT_DIR$/task/addrouteprovider" />
+            <option value="$PROJECT_DIR$/task/descriptionformatter" />
+            <option value="$PROJECT_DIR$/task/descriptionformatterimpl" />
             <option value="$PROJECT_DIR$/task/detail" />
             <option value="$PROJECT_DIR$/task/list" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />

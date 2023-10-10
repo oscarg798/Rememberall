@@ -3,6 +3,7 @@ package com.oscarg798.remembrall.navigationimpl
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.navOptions
+import com.oscarg798.remembrall.activityprovider.ActivityProvider
 import com.oscarg798.remembrall.navigation.DeeplinkRouteFactory
 import com.oscarg798.remembrall.navigation.Navigator
 import com.oscarg798.remembrall.navigation.Route
@@ -16,8 +17,9 @@ interface NavigatorFactory {
 }
 
 internal class NavigatorImpl @AssistedInject constructor(
+   private val activityProvider: ActivityProvider,
     @Assisted private val navController: NavController,
-    private val deeplinkRouteFactories: Map<Class<out Route>, @JvmSuppressWildcards DeeplinkRouteFactory>
+    private val deeplinkRouteFactories: Map<Route, @JvmSuppressWildcards DeeplinkRouteFactory>,
 ) : Navigator {
 
     override fun navigate(route: Route, arguments: Bundle?) {
@@ -33,8 +35,13 @@ internal class NavigatorImpl @AssistedInject constructor(
         navController.popBackStack()
     }
 
+    override fun close() {
+        activityProvider.provide()?.finishAffinity()
+       activityProvider.provide()?.finishAndRemoveTask()
+    }
+
     private fun getDeeplinkRouteFactory(route: Route): DeeplinkRouteFactory {
-        return deeplinkRouteFactories[route::class.java] ?: DefaultDeeplinkRouteFactory
+        return deeplinkRouteFactories[route] ?: DefaultDeeplinkRouteFactory
     }
 
     @AssistedFactory

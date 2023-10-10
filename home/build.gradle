@@ -1,16 +1,57 @@
-apply from: "../common.gradle"
-
-android{
-    namespace "com.oscarg798.remembrall.home"
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
+
+android {
+    namespace "com.oscarg798.remembrall.home"
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+        targetSdk targetAndCompileVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    defaultConfig {
+        testInstrumentationRunner "com.oscarg798.remembrall.login.CustomTestRunner"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
 dependencies  {
 
     implementation libs.accompanist.pager
     implementation libs.accompanist.pagerIndicator
 
+    implementation libs.hilt.android
+    kapt(libs.hilt.dagger.compiler)
+
     implementation project(path: ':ui')
     implementation project(path: ':ui:icons')
-    implementation project(path: ':task:list')
+    implementation project(path: ':homeutils')
+    implementation project(path: ':navigation')
     implementation project(path: ':ui:theming')
 
 }

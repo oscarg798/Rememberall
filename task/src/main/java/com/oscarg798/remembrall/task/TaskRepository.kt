@@ -4,12 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {
 
-    @Deprecated(
-        "Stream tasks instead",
-        replaceWith = ReplaceWith("streamTasks(user: String)")
-    )
-    val taskUpdateListener: Flow<Task>
-
     suspend fun addTask(user: String, addTaskParam: AddTaskParam): Task
 
     @Deprecated(
@@ -25,8 +19,6 @@ interface TaskRepository {
     suspend fun update(task: Task)
 
     fun streamTasks(user: String): Flow<Collection<Task>>
-
-    fun onTaskUpdated(task: Task)
 
     fun createTaskId(): String
 

@@ -1,18 +1,20 @@
 package com.oscarg798.remembrall.list
 
+import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.list.model.DisplayableTask
 import com.oscarg798.remembrall.common.viewmodel.AbstractViewModel
 import com.oscarg798.remembrall.common.viewmodel.launch
-import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
 import com.oscarg798.remembrall.list.model.TaskGroup
 import com.oscarg798.remembrall.list.ui.TaskCardOptions
 import com.oscarg798.remembrall.list.usecase.GetInitialIndexPosition
 import com.oscarg798.remembrall.list.usecase.GetTaskGrouped
-import com.oscarg798.remembrall.list.usecase.GetTaskUpdateListenerUseCase
 import com.oscarg798.remembrall.list.usecase.RemoveTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
@@ -20,33 +22,17 @@ class TaskListViewModel @Inject constructor(
     private val removeTaskUseCase: RemoveTaskUseCase,
     private val getTaskGrouped: GetTaskGrouped,
     private val getInitialIndexPosition: GetInitialIndexPosition,
-    private val dueDateFormatter: DateFormatter,
-    private val getTaskUpdateListenerUseCase: GetTaskUpdateListenerUseCase,
-    coroutineContextProvider: com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
+    coroutineContextProvider: CoroutineContextProvider
 ) : AbstractViewModel<TaskListViewModel.ViewState, TaskListViewModel.Event>(
     ViewState()
-),
-    com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider by coroutineContextProvider {
-
-    private var shouldUpdate = false
-
-    init {
-        launch {
-            getTaskUpdateListenerUseCase.execute().collect {
-                if (it != null) {
-                    shouldUpdate = true
-                }
-            }
-        }
-    }
+), CoroutineContextProvider by coroutineContextProvider {
 
     fun onAddClicked() {
         _event.tryEmit(Event.ShowAddTaskForm)
     }
 
     fun getTasks() = launch {
-        if (currentState().tasks.isEmpty() || shouldUpdate) {
-            shouldUpdate = false
+        if (currentState().tasks.isEmpty()) {
             fetchTasks()
         }
     }
@@ -54,21 +40,21 @@ class TaskListViewModel @Inject constructor(
     private fun fetchTasks() = launch {
         update { it.copy(loading = true, error = null) }
 
-        val tasks = withContext(io) {
-            getTaskGrouped()
-        }
+        getTaskGrouped()
+            .flatMapMerge { displayableTasksMapped ->
+                val index = withContext(io) { getInitialIndexPosition(displayableTasksMapped) }
+                flowOf(Pair(index, displayableTasksMapped))
+            }
+            .collectLatest { indexAndDisplayableTasks ->
+                update { currentState ->
+                    currentState.copy(
+                        loading = false,
+                        tasks = indexAndDisplayableTasks.second,
+                        initialIndex = indexAndDisplayableTasks.first
+                    )
+                }
+            }
 
-        val index = withContext(io) { getInitialIndexPosition(tasks) }
-
-        val displayableTasks = withContext(io) {
-            tasks.map {
-                it.key to DisplayableTasksGroup(it.value, dueDateFormatter)
-            }.toMap()
-        }
-
-        update { currentState ->
-            currentState.copy(loading = false, tasks = displayableTasks, initialIndex = index)
-        }
     }
 
     fun onOptionClicked(task: DisplayableTask, option: TaskCardOptions.Option) {

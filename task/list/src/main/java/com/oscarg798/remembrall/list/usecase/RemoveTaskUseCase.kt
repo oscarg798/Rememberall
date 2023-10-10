@@ -10,8 +10,6 @@ class RemoveTaskUseCase @Inject constructor(
 ) {
 
     suspend fun execute(id: String) {
-        val task = taskRepository.getTask(id)
         taskRepository.removeTask(id)
-        taskRepository.onTaskUpdated(task = task)
     }
 }

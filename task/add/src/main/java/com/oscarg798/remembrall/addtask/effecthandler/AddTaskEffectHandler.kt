@@ -3,7 +3,7 @@ package com.oscarg798.remembrall.addtask.effecthandler
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
-import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
+import com.oscarg798.remembrall.addtask.usecase.AddTask
 import com.oscarg798.remembrall.addtask.usecase.FormatDueDate
 import com.oscarg798.remembrall.addtask.usecase.GetAvailableTaskPriorities
 import com.oscarg798.remembrall.addtask.usecase.GetDueDatePickerInitialDate
@@ -19,7 +19,7 @@ internal class AddTaskEffectHandler @Inject constructor(
     private val getTask: GetTask,
     private val updateTask: UpdateTask,
     private val formatDueDate: FormatDueDate,
-    private val addTaskUseCase: AddTaskUseCase,
+    private val addTaskUseCase: AddTask,
     private val coroutineContextProvider: CoroutineContextProvider,
     private val getAvailableTaskPriorities: GetAvailableTaskPriorities,
     private val getDueDatePickerInitialDate: GetDueDatePickerInitialDate,

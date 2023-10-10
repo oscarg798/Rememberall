@@ -5,10 +5,11 @@ import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.Model
 import com.oscarg798.remembrall.addtask.effecthandler.AddTaskEffectHandler
 import com.oscarg798.remembrall.addtask.effecthandler.UIEffectConsumer
+import com.oscarg798.remembrall.addtask.ui.AddTaskPage
 import com.oscarg798.remembrall.addtask.ui.AddTaskViewModel
 import com.oscarg798.remembrall.addtask.ui.LoopInjectorImpl
-import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
-import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCaseImpl
+import com.oscarg798.remembrall.addtask.usecase.AddTask
+import com.oscarg798.remembrall.addtask.usecase.AddTaskImpl
 import com.oscarg798.remembrall.addtask.usecase.CurrentDateProvider
 import com.oscarg798.remembrall.addtask.usecase.CurrentDateProviderImpl
 import com.oscarg798.remembrall.addtask.usecase.FieldValidator
@@ -28,6 +29,7 @@ import com.oscarg798.remembrall.addtask.usecase.UpdateTaskImpl
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
+import com.oscarg798.remembrall.navigation.Page
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -36,6 +38,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.multibindings.IntoSet
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -69,7 +72,7 @@ internal interface AddTaskModule {
     fun bindCurrentDateProvider(impl: CurrentDateProviderImpl): CurrentDateProvider
 
     @Binds
-    fun bindAddTaskUseCase(impl: AddTaskUseCaseImpl): AddTaskUseCase
+    fun bindAddTaskUseCase(impl: AddTaskImpl): AddTask
 
     @Binds
     fun bindGetTask(impl: GetTaskImpl): GetTask
@@ -93,6 +96,10 @@ internal interface AddTaskModule {
                 onBufferOverflow = BufferOverflow.DROP_OLDEST
             )
         }
+
+        @IntoSet
+        @Provides
+        fun provideAddTaskPage(): Page = AddTaskPage
     }
 }
 

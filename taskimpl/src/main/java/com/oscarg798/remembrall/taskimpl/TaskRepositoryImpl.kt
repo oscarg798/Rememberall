@@ -22,11 +22,6 @@ internal class TaskRepositoryImpl @Inject constructor(
     private val coroutinesContextProvider: CoroutineContextProvider,
 ) : TaskRepository {
 
-    private val editableTaskUpdateListener = MutableStateFlow<Task?>(null)
-
-    override val taskUpdateListener: Flow<Task>
-        get() = editableTaskUpdateListener.asStateFlow().filterNotNull()
-
     private val streamableTasks = MutableStateFlow<Collection<Task>>(emptyList())
 
     override suspend fun addTask(user: String, addTaskParam: TaskRepository.AddTaskParam): Task {
@@ -45,11 +40,31 @@ internal class TaskRepositoryImpl @Inject constructor(
 
         taskDataSource.addTask(user, task)
 
-        return task.toTask(true)
+        val addedTask = task.toTask(true)
+
+        withContext(coroutinesContextProvider.computation) {
+            val tasksId = streamableTasks.value.map { it.id }.toSet()
+            if (addedTask.id !in tasksId) {
+                streamableTasks.value = streamableTasks.value.toMutableList().apply {
+                    add(addedTask)
+                }
+            }
+        }
+
+        return addedTask
     }
 
     override suspend fun update(task: Task) {
         taskDataSource.update(TaskDto(task))
+        withContext(coroutinesContextProvider.computation) {
+            val currentTasks = streamableTasks.value.toMutableList()
+            val index = currentTasks.indexOfFirst { it.id == task.id }
+            if (index != -1) {
+                currentTasks.removeAt(index)
+            }
+            currentTasks.add(task)
+            streamableTasks.value = currentTasks
+        }
     }
 
     override suspend fun removeTask(id: String) {
@@ -76,10 +91,6 @@ internal class TaskRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTask(id: String): Task = taskDataSource.getTask(id).toTask()
-
-    override fun onTaskUpdated(task: Task) {
-        editableTaskUpdateListener.value = task
-    }
 
     override fun createTaskId(): String = idProvider()
 

@@ -1,11 +1,11 @@
 package com.oscarg798.remembrall.addtask.ui
 
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
-import com.oscarg798.remembrall.task.addroute.AddRoute
 import com.oscarg798.remembrall.addtask.domain.Effect
 import com.oscarg798.remembrall.addtask.domain.Event
 import com.oscarg798.remembrall.addtask.domain.Model
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
+import com.oscarg798.remembrall.navigation.Route
 import com.oscarg798.remembrall.viewmodelutils.MobiusViewModel
 import com.spotify.mobius.First
 import dagger.assisted.Assisted
@@ -28,7 +28,7 @@ internal class AddTaskViewModel @AssistedInject constructor(
             it,
             setOf(
                 Effect.GetAvailableTaskPriorities(it.priority)
-            ) + if (taskId != AddRoute.None) {
+            ) + if (taskId != Route.NO_PARAMETER) {
                 setOf(Effect.LoadTask(taskId))
             } else {
                 emptySet()

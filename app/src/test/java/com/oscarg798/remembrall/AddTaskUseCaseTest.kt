@@ -1,10 +1,8 @@
 package com.oscarg798.remembrall
 
-import com.remembrall.oscarg798.calendar.Calendar
-import com.remembrall.oscarg798.calendar.CalendarRepository
 import com.oscarg798.remembrall.common_calendar.exception.CalendarNotFoundException
 import com.oscarg798.remembrall.addtask.exception.AddTaskException
-import com.oscarg798.remembrall.addtask.usecase.AddTaskUseCase
+import com.oscarg798.remembrall.addtask.usecase.AddTask
 
 import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.task.CalendarSyncInformation
@@ -34,13 +32,13 @@ class AddTaskUseCaseTest {
     private val matchers: Matcher = mockk()
 
     private val task: Task = mockk()
-    private lateinit var usecase: AddTaskUseCase
+    private lateinit var usecase: AddTask
 
     @Before
     fun setup() {
         every { emailPattern.matcher(any()) } answers { matchers }
 
-        usecase = AddTaskUseCase(
+        usecase = AddTask(
             dueDateFormatter = dueDateFormatter,
             taskRepository = taskRepository,
             calendarRepository = calendarRepository,
@@ -375,4 +373,4 @@ class AddTaskUseCaseTest {
     }
 }
 
-private val params = AddTaskUseCase.AddTaskParam()
+private val params = AddTask.AddTaskParam()

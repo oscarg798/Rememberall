@@ -34,5 +34,4 @@ dependencies {
 
     implementation project(":navigation")
     implementation libs.hilt.android
-    kapt(libs.hilt.dagger.compiler)
 }

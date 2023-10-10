@@ -37,8 +37,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding false
-        dataBinding false
         compose true
     }
 
@@ -71,9 +69,9 @@ dependencies {
     implementation project(path: ':common')
     implementation project(path: ':ui:color')
     implementation project(path: ':ui:icons')
+    implementation project(path: ':homeutils')
     implementation project(path: ':navigation')
     implementation project(path: ':ui:theming')
-    implementation project(path: ':task:addroute')
     implementation project(path: ':navigationutils')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':task:taskpriorityextensions')

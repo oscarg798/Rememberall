@@ -7,12 +7,15 @@ import com.oscarg798.remembrall.login.effecthandler.LoginEffectHandlerProvider
 import com.oscarg798.remembrall.login.effecthandler.LoginEffectHandlerProviderImpl
 import com.oscarg798.remembrall.login.effecthandler.UIEffectConsumer
 import com.oscarg798.remembrall.login.effecthandler.UIEffectConsumerImpl
+import com.oscarg798.remembrall.login.ui.LoginPage
 import com.oscarg798.remembrall.login.ui.LoopInjectorImpl
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
+import com.oscarg798.remembrall.navigation.Page
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.channels.BufferOverflow
@@ -46,4 +49,12 @@ internal interface LoginModule {
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
     }
+}
+
+@Module
+@InstallIn(ActivityRetainedComponent::class)
+internal object LoginPageProvider {
+
+    @Provides
+    fun provide(): Page = LoginPage
 }

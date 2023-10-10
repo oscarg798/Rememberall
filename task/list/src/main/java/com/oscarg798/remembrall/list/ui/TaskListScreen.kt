@@ -7,21 +7,27 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
+import com.oscarg798.remembrall.homeutils.HomeContent
 import com.oscarg798.remembrall.list.TaskListViewModel
 import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
-import com.oscarg798.remembrall.task.addroute.AddRoute
-import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui.navigation.Router
+import com.oscarg798.remembrall.navigation.Route
+
+internal object TaskListHomeContent : HomeContent {
+
+    @Composable
+    override fun Content(backStack: NavBackStackEntry) {
+        TaskListScreen(backStackEntry = backStack)
+    }
+}
 
 @Composable
-fun TaskListScreen(
+private fun TaskListScreen(
     backStackEntry: NavBackStackEntry
 ) {
 
     val viewModel: TaskListViewModel = hiltViewModel(viewModelStoreOwner = backStackEntry)
     val state by viewModel.state.collectAsState(initial = TaskListViewModel.ViewState())
     val events by viewModel.events.collectAsState(initial = null)
-    val navController = LocalNavControllerProvider.current
     val navigator = LocalNavigatorProvider.current
 
     when {
@@ -33,12 +39,9 @@ fun TaskListScreen(
             initialIndex = state.initialIndex,
             options = state.options,
             onClick = {
-                Router.TaskDetail.navigate(
-                    navController,
-                    Bundle().apply {
-                        putString(Router.TaskDetail.TaskIdArgument, it)
-                    }
-                )
+                navigator.navigate(Route.DETAIL, Bundle().apply {
+                    putString(Route.TaskIdArgument, it)
+                })
             }, onAddButtonClicked = { viewModel.onAddClicked() }
         ) { task, option ->
             viewModel.onOptionClicked(task, option)
@@ -48,11 +51,11 @@ fun TaskListScreen(
     LaunchedEffect(key1 = events) {
         val event = events ?: return@LaunchedEffect
         when (event) {
-            is TaskListViewModel.Event.ShowAddTaskForm -> navigator.navigate(AddRoute)
-            is TaskListViewModel.Event.OpenProfile -> Router.Profile.navigate(navController)
-            is TaskListViewModel.Event.NavigateToEdit -> navigator.navigate(AddRoute,
+            is TaskListViewModel.Event.ShowAddTaskForm -> navigator.navigate(Route.ADD)
+            is TaskListViewModel.Event.OpenProfile -> navigator.navigate(Route.PROFILE)
+            is TaskListViewModel.Event.NavigateToEdit -> navigator.navigate(Route.ADD,
                 Bundle().apply {
-                    putString(AddRoute.TaskIdArgument, event.taskId)
+                    putString(Route.TaskIdArgument, event.taskId)
                 }
             )
         }

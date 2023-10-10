@@ -1,5 +1,6 @@
 package com.oscarg798.remembrall.profile.ui
 
+import com.oscarg798.remembrall.common.R as CommonR
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -7,25 +8,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
+import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
+import com.oscarg798.remembrall.navigation.Page
+import com.oscarg798.remembrall.navigation.Route
 import com.oscarg798.remembrall.profile.ProfileViewModel
-import com.oscarg798.remembrall.common.R as CommonR
-import com.oscarg798.remembrall.ui.navigation.LocalNavControllerProvider
-import com.oscarg798.remembrall.ui.navigation.Router
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBarTitle
 
-fun NavGraphBuilder.profileScreen() =
+internal object ProfilePage: Page {
+
+    override fun build(builder: NavGraphBuilder) {
+        return builder.profileScreen()
+    }
+}
+
+private fun NavGraphBuilder.profileScreen() =
     composable(
-        route = Router.Profile.route,
-        deepLinks = Router.Profile.getDeepLinks()
+        route = Route.PROFILE.path,
+        deepLinks = listOf(
+            navDeepLink {
+                uriPattern = Route.PROFILE.uriPattern.toString()
+            }
+        )
     ) { backStackEntry ->
 
         val viewModel: ProfileViewModel = hiltViewModel(backStackEntry)
         val state by viewModel.state.collectAsState(ProfileViewModel.ViewState())
         val events by viewModel.events.collectAsState(null)
-        val navController = LocalNavControllerProvider.current
+        val navigator = LocalNavigatorProvider.current
 
         LaunchedEffect(key1 = viewModel) {
             viewModel.getProfileInformation()
@@ -34,7 +47,7 @@ fun NavGraphBuilder.profileScreen() =
         LaunchedEffect(events) {
             val event = events ?: return@LaunchedEffect
             if (event is ProfileViewModel.Event.NavigateToLogin) {
-                Router.Login.navigate(navController = navController)
+                navigator.navigate(Route.LOGIN)
             }
         }
 
@@ -44,7 +57,7 @@ fun NavGraphBuilder.profileScreen() =
                     title = {
                         RemembrallTopBarTitle(stringResource(CommonR.string.profile_title))
                     }, backButtonAction = {
-                    navController.popBackStack()
+                    navigator.navigateBack()
                 }
                 )
             }
