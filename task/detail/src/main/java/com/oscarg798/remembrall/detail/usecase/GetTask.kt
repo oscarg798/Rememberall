@@ -1,5 +1,6 @@
 package com.oscarg798.remembrall.detail.usecase
 
+import com.oscarg798.rememberall.task.descriptionformatter.DescriptionFormatter
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.detail.domain.DisplayableTask
 import com.oscarg798.remembrall.detail.domain.Effect
@@ -12,6 +13,7 @@ internal interface GetTask : suspend (Effect.GetTask) -> Event.OnDisplayableTask
 internal class GetTaskImpl @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val taskRepository: TaskRepository,
+    private val descriptionFormatter: DescriptionFormatter,
 ) : GetTask {
 
     override suspend fun invoke(effect: Effect.GetTask): Event.OnDisplayableTaskFound {
@@ -23,7 +25,7 @@ internal class GetTaskImpl @Inject constructor(
                 title = task.title,
                 attendees = task.calendarSyncInformation?.attendees?.map { it.email }?.toSet()
                     ?: emptySet(),
-                description = task.description,
+                description = task.description?.let { descriptionFormatter(it) },
                 priority = task.priority,
                 completed = task.completed,
                 dueDate = task.dueDate?.let {

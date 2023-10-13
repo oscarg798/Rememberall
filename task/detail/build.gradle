@@ -52,6 +52,8 @@ android {
 
 dependencies {
 
+    coreLibraryDesugaring libs.android.tools.desugar
+
     implementation libs.hilt.compose
     implementation libs.compose.constraintLayout
     implementation libs.compose.uiUtil
@@ -71,12 +73,13 @@ dependencies {
     implementation project(path: ':ui:icons')
     implementation project(path: ':ui:theming')
     implementation project(path: ':navigation')
-    implementation project(path: ':navigationutils')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':viewmodelutils')
+    implementation project(path: ':navigationutils')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':ui:components:toolbar')
     implementation project(path: ':ui:components:actionrow')
+    implementation project(path: ':task:descriptionformatter')
     implementation project(path: ':ui:components:actionbutton')
     implementation project(path: ':task:taskpriorityextensions')
 }

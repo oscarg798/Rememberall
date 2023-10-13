@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +45,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import com.oscarg798.rememberall.task.descriptionformatter.Description
 import com.oscarg798.remembrall.actionbutton.ActionButton
 import com.oscarg798.remembrall.actionrow.ActionRow
 import com.oscarg798.remembrall.detail.R
@@ -59,9 +62,12 @@ import com.oscarg798.remembrall.ui.dimensions.typo
 import com.oscarg798.remembrall.ui.extensions.requireArguments
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
+import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import com.oscarg798.remembrall.viewmodelutils.provide
 import dagger.hilt.android.EntryPointAccessors
+import kotlin.text.Typography.bullet
+import kotlin.text.Typography.nbsp
 
 internal object TaskDetailPage : Page {
 
@@ -274,14 +280,14 @@ private fun TaskDetail(
         }
 
         task.description?.let { description ->
-            Text(
-                text = description,
+            FormattedDescription(
+                description = description,
                 modifier = Modifier
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState()),
                 style = MaterialTheme.typo.body1.copy(
                     color = MaterialTheme.colorScheme.onSurface
-                ),
+                )
             )
         }
     }
@@ -295,9 +301,46 @@ private fun provideEntryPoint(
 )
 
 @Composable
+private fun FormattedDescription(
+    description: Description,
+    modifier: Modifier,
+    style: TextStyle = MaterialTheme.typo.body1
+) {
+    val text = remember(description) {
+        buildAnnotatedString {
+            description.format.forEach { format ->
+                when (format) {
+                    is Description.Format.Bold -> withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.Bold
+                        )
+                    ) {
+                        append(format.value)
+                    }
+
+                    Description.Format.Bullet -> {
+                        append(bullet)
+                        append(nbsp)
+                    }
+
+                    Description.Format.LineBreak,
+                    is Description.Format.UnFormatted -> append(format.value)
+                }
+            }
+        }
+    }
+
+    Text(
+        text = text.text,
+        modifier = modifier,
+        style = MaterialTheme.typo.body1,
+    )
+}
+
+@Composable
 @Preview(device = Devices.NEXUS_5)
 private fun TaskDetailPreview() {
-    com.oscarg798.remembrall.ui.theming.RemembrallTheme {
+    RemembrallTheme {
         RemembrallScaffold {
             TaskDetailScreen(
                 modifier = Modifier
@@ -305,19 +348,54 @@ private fun TaskDetailPreview() {
                     .fillMaxSize()
                     .padding(it)
                     .padding(MaterialTheme.dimensions.Medium),
-                task = task,
+                task = TaskPreview,
                 loading = false
             ) {}
         }
     }
 }
 
-private val task = DisplayableTask(
+
+@Composable
+@Preview(device = Devices.NEXUS_5)
+private fun FormatterDescriptionPreview() {
+
+    RemembrallTheme {
+        RemembrallScaffold {
+            Row(Modifier.padding(16.dp)) {
+                FormattedDescription(
+                    description = TaskPreview.description!!,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+    }
+}
+
+
+private val TaskPreview = DisplayableTask(
     id = "1",
     owned = true,
     title = generateString(3),
     attendees = setOf(generateString()),
-    description = generateString(3_000),
+    description = Description(
+        listOf(
+            Description.Format.UnFormatted("this must"),
+            Description.Format.LineBreak,
+            Description.Format.Bullet,
+            Description.Format.UnFormatted("work "),
+            Description.Format.LineBreak,
+            Description.Format.Bullet,
+            Description.Format.Bold("is bold"),
+            Description.Format.LineBreak,
+            Description.Format.UnFormatted("multiple"),
+            Description.Format.Bold("preview"),
+            Description.Format.LineBreak,
+            Description.Format.UnFormatted(" *lines"),
+            Description.Format.LineBreak,
+            Description.Format.UnFormatted("*"),
+        )
+    ),
     dueDate = "Monday 29 Sep, 23"
 )
 

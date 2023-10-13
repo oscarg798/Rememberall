@@ -177,6 +177,8 @@ dependencies {
     implementation project(path: ':activityprovider')
     implementation project(path: ':activityproviderimpl')
     implementation project(path: ':task:addrouteprovider')
+    implementation project(path: ':task:descriptionformatter')
+    implementation project(path: ':task:descriptionformatterimpl')
 
 
     implementation libs.accompanist.pager

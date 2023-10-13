@@ -2,8 +2,9 @@ package com.oscarg798.remembrall.task.descriptionformatterimpl
 
 import com.oscarg798.rememberall.task.descriptionformatter.Description
 import com.oscarg798.rememberall.task.descriptionformatter.DescriptionFormatter
+import javax.inject.Inject
 
-class DescriptionFormatterImpl : DescriptionFormatter {
+class DescriptionFormatterImpl @Inject constructor() : DescriptionFormatter {
 
     override fun invoke(value: String): Description {
         val formats = mutableListOf<Description.Format>()

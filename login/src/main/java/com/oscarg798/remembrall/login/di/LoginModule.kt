@@ -18,6 +18,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.multibindings.IntoSet
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -55,6 +56,7 @@ internal interface LoginModule {
 @InstallIn(ActivityRetainedComponent::class)
 internal object LoginPageProvider {
 
+    @IntoSet
     @Provides
     fun provide(): Page = LoginPage
 }

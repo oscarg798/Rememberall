@@ -85,6 +85,7 @@ dependencies {
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':ui:components:toolbar')
     implementation project(path: ':ui:components:actionrow')
+    implementation project(path: ':task:descriptionformatter')
     implementation project(path: ':ui:components:actionbutton')
     implementation project(path: ':task:taskpriorityextensions')
 }
