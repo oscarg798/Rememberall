@@ -1,16 +1,20 @@
 package com.oscarg798.rememberall.task.descriptionformatter
 
 data class Description(
-    val value: List<Format>
+    val format: List<Format>
 ) {
 
     override fun toString(): String {
-        return value.joinToString("") { it.toString() }
+        return format.joinToString("") { it.toString() }
     }
 
     override fun equals(other: Any?): Boolean {
         return other is Description && other.toString() == toString() &&
-                other.value == value
+                other.format == format
+    }
+
+    override fun hashCode(): Int {
+        return format.hashCode()
     }
 
     sealed class Format(open val value: String) {
@@ -25,6 +29,15 @@ data class Description(
             override fun toString(): String {
                 return value
             }
+        }
+
+        data object LineBreak : Format("\n"){
+
+            override fun toString(): String  = value
+        }
+
+        object Bullet: Format("* "){
+            override fun toString(): String  = value
         }
     }
 }

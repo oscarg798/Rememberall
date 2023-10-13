@@ -2,20 +2,20 @@ package com.oscarg798.remembrall.task.descriptionformatterimpl
 
 import com.oscarg798.rememberall.task.descriptionformatter.Description
 import com.oscarg798.rememberall.task.descriptionformatter.DescriptionFormatter
-import java.util.Stack
 
 class DescriptionFormatterImpl : DescriptionFormatter {
-
 
     override fun invoke(value: String): Description {
         val formats = mutableListOf<Description.Format>()
         val phraseQueue = mutableListOf<String>()
         value.forEach { char ->
             val character = char.toString()
-            if (character.matches(BreakLine.toRegex())) {
+            if (character.matches(LineBreak.toRegex())) {
                 if (phraseQueue.isNotEmpty()) {
-                    formats.add(phraseQueue.asFormat())
+                    val format = phraseQueue.asFormat()
+                    formats.addFormatAppendingIfUnformatted(format)
                 }
+                formats.add(Description.Format.LineBreak)
                 phraseQueue.clear()
             } else if (character.matches(BoldToken.toRegex()) &&
                 phraseQueue.isNotEmpty() &&
@@ -46,7 +46,62 @@ class DescriptionFormatterImpl : DescriptionFormatter {
             formats.addFormatAppendingIfUnformatted(format)
         }
 
-        return Description(formats)
+
+        return Description(appendBullets(formats))
+    }
+
+    private fun appendBullets(formats: MutableList<Description.Format>): List<Description.Format> {
+        if (formats.isEmpty() || !formats.contains(Description.Format.LineBreak)) return formats
+
+        val lines = mutableListOf<List<Description.Format>>()
+
+        var lastBreakLineIndex = -1
+        for (i in 0 until formats.size) {
+            if (formats[i] is Description.Format.LineBreak && i != 0) {
+                // if we have not found a break line then we must evaluate first format, otherwise the next from the last break line
+                val initialLineIndex = if (lastBreakLineIndex == -1) 0 else lastBreakLineIndex + 1
+                if (initialLineIndex < formats.size &&
+                    formats[initialLineIndex] is Description.Format.UnFormatted &&
+                    formats[initialLineIndex].value.matches(Bullet.toRegex())
+                ) {
+                    // We remove the characters matching the bullet
+                    val firstUnFormatted = Description.Format.UnFormatted(
+                        formats[initialLineIndex].value.drop(2)
+                    )
+
+                    // We add the bullet and the format with its characters
+                    lines.add(
+                        listOf(Description.Format.Bullet) +
+                                listOf(firstUnFormatted) +
+                                formats.subList(
+                                    fromIndex = initialLineIndex + 1,
+                                    // toIndex is exclusive so we try to go to the size or to the next item
+                                    toIndex = (i + 1).coerceAtMost(formats.size)
+                                )
+                    )
+                } else {
+                    lines.add(
+                        formats.subList(
+                            fromIndex = initialLineIndex,
+                            // toIndex is exclusive so we try to go to the size or to the next item
+                            toIndex = (i + 1).coerceAtMost(formats.size)
+                        )
+                    )
+                }
+                lastBreakLineIndex = i
+            } else if (i == formats.lastIndex) {
+                val initialLineIndex = if (lastBreakLineIndex == -1) 0 else lastBreakLineIndex + 1
+                lines.add(
+                    formats.subList(
+                        fromIndex = initialLineIndex,
+                        // toIndex is exclusive so we try to go to the size or to the next item
+                        toIndex = (i + 1).coerceAtMost(formats.size)
+                    )
+                )
+            }
+        }
+
+        return lines.flatten()
     }
 
     private fun MutableList<Description.Format>.addFormatAppendingIfUnformatted(newFormat: Description.Format) {
@@ -72,14 +127,10 @@ class DescriptionFormatterImpl : DescriptionFormatter {
         }
 
     private fun List<String>.asPhrase() = joinToString("")
-
-    //
-    private fun canSpaceBeAdded(index: Int, words: List<String>) = index + 1 < words.size
 }
 
-internal const val Space = "\\s"
-private const val BreakLine = "\\n"
-private const val Bold = "^\\*.+.[^ \\s]+\\*\$"
+private const val LineBreak = "\\n"
+private const val Bold = "^(\\*[^\\s])+.+([^\\s]\\*)\$"
 private const val BoldToken = "\\*"
-private const val TokenizedMinLenght = 3
-private const val BoldCandidate = "^\\*.{1,}(\\s+|.+).{1,}\$"
+private const val BoldCandidate = "^(\\*[^\\s]).{0,}\$"
+private const val Bullet = "^\\*\\s.{0,}\$"

@@ -146,4 +146,111 @@ internal class DescriptionFormatterImplTest {
         assertThat(response.toString()).isEqualTo(value)
     }
 
+    @Test
+    fun givenAnStringWithLineBreak_whenInvoked_thenRightDescriptionReturned(){
+        val value = "Given an string with line *break just* return \n the proper *string*"
+
+        val response = underTest.invoke(value)
+
+        assertThat(response).isEqualTo(
+            Description(
+                listOf(
+                    Format.UnFormatted("Given an string with line "),
+                    Format.Bold("break just"),
+                    Format.UnFormatted(" return "),
+                    Format.LineBreak,
+                    Format.UnFormatted(" the proper "),
+                    Format.Bold("string"),
+                )
+            )
+        )
+        assertThat(response.toString()).isEqualTo(value)
+    }
+
+    @Test
+    fun givenAnStringWithLineBreaks_whenInvoked_thenRightDescriptionReturned(){
+        val value = "this must\n work \n is\nmultiple\n *lines\n*"
+
+        val response = underTest.invoke(value)
+
+        assertThat(response).isEqualTo(
+            Description(
+                listOf(
+                    Format.UnFormatted("this must"),
+                    Format.LineBreak,
+                    Format.UnFormatted(" work "),
+                    Format.LineBreak,
+                    Format.UnFormatted(" is"),
+                    Format.LineBreak,
+                    Format.UnFormatted("multiple"),
+                    Format.LineBreak,
+                    Format.UnFormatted(" *lines"),
+                    Format.LineBreak,
+                    Format.UnFormatted("*"),
+                )
+            )
+        )
+        assertThat(response.toString()).isEqualTo(value)
+    }
+
+    @Test
+    fun givenAStringWithBulletPoints_whenInvoked_thenRightDescriptionReturned(){
+        val value = "* this has a bullet point\n"
+
+        val response = underTest.invoke(value)
+
+        assertThat(response).isEqualTo(
+            Description(
+                listOf(
+                    Format.Bullet,
+                    Format.UnFormatted("this has a bullet point"),
+                    Format.LineBreak
+                )
+            )
+        )
+        assertThat(response.toString()).isEqualTo(value)
+    }
+
+    @Test
+    fun givenAStringWithBulletPointsAndBold_whenInvoked_thenRightDescriptionReturned(){
+        val value = "* this has *a bullet* point\n"
+
+        val response = underTest.invoke(value)
+
+        assertThat(response).isEqualTo(
+            Description(
+                listOf(
+                    Format.Bullet,
+                    Format.UnFormatted("this has "),
+                    Format.Bold("a bullet"),
+                    Format.UnFormatted(" point"),
+                    Format.LineBreak
+                )
+            )
+        )
+        assertThat(response.toString()).isEqualTo(value)
+    }
+
+    @Test
+    fun givenAStringWithMultipleLines_whenInvoked_thenRightDescriptionReturned(){
+        val value = "* this is a bullet line\n* same for this line\n but this one"
+
+        val response = underTest.invoke(value)
+
+        assertThat(response).isEqualTo(
+            Description(
+                listOf(
+                    Format.Bullet,
+                    Format.UnFormatted("this is a bullet line"),
+                    Format.LineBreak,
+                    Format.Bullet,
+                    Format.UnFormatted("same for this line"),
+                    Format.LineBreak,
+                    Format.UnFormatted(" but this one")
+                )
+            )
+        )
+        assertThat(response.toString()).isEqualTo(value)
+    }
+
 }
