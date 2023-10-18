@@ -108,6 +108,7 @@ dependencies {
     implementation libs.material
 
     implementation libs.androidx.constraintLayout
+    implementation libs.room.ktx
     testImplementation libs.junit.base
     androidTestImplementation libs.androidx.test.junit
     androidTestImplementation libs.androidx.test.espresso.core
@@ -118,10 +119,6 @@ dependencies {
 
     implementation libs.lottie.main
     implementation libs.lottie.compose
-
-    implementation libs.androidx.room.runtime
-    implementation libs.androidx.room.ktx
-    kapt libs.androidx.room.compiler
 
     implementation libs.hilt.android
     implementation libs.hilt.compose
@@ -175,7 +172,9 @@ dependencies {
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':activityprovider')
+    implementation project(path: ':task:persistence')
     implementation project(path: ':activityproviderimpl')
+    implementation project(path: ':task:persistenceimpl')
     implementation project(path: ':task:addrouteprovider')
     implementation project(path: ':task:descriptionformatter')
     implementation project(path: ':task:descriptionformatterimpl')

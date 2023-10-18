@@ -4,7 +4,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Patterns
-import androidx.room.Room
 import androidx.work.WorkManager
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,8 +12,6 @@ import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.BuildConfig
 import com.oscarg798.remembrall.common.HomeActivityPendingIntentFinder
 import com.oscarg798.remembrall.common.IdentifierGenerator
-import com.oscarg798.remembrall.common.persistence.AppDatabase
-import com.oscarg798.remembrall.common.persistence.TaskDao
 import com.oscarg798.remembrall.common.provider.StringProvider
 import com.oscarg798.remembrall.common.provider.StringProviderImpl
 import com.oscarg798.remembrall.common.repository.data.LocalPreferenceRepository
@@ -68,16 +65,6 @@ object AppModule {
     fun provideStringProvider(stringProviderImpl: StringProviderImpl): StringProvider =
         stringProviderImpl
 
-    @Provides
-    @Singleton
-    fun provideDataBase(@ApplicationContext context: Context) = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java, DatabaseName
-    ).build()
-
-    @Provides
-    @Singleton
-    fun provideTaskDao(appDatabase: AppDatabase): TaskDao = appDatabase.taskDao()
 
     @Provides
     @Singleton
@@ -139,4 +126,3 @@ object AppModule {
 }
 
 private const val PreferenceName = "Remembrall"
-private const val DatabaseName = "Remembrall"

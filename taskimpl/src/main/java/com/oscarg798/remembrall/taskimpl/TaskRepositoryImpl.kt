@@ -1,7 +1,7 @@
 package com.oscarg798.remembrall.taskimpl
 
-import android.util.LruCache
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
+import com.oscarg798.remembrall.persistence.TaskDAO
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.taskimpl.datasource.TaskDataSource
@@ -10,25 +10,18 @@ import com.oscarg798.remembrall.taskimpl.model.TaskDto
 import javax.inject.Inject
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 internal class TaskRepositoryImpl @Inject constructor(
+    private val taskDAO: TaskDAO,
     private val idProvider: IdProvider,
     private val taskDataSource: TaskDataSource,
     private val coroutinesContextProvider: CoroutineContextProvider,
 ) : TaskRepository {
-
-    private val streamableTasks = MutableStateFlow<Collection<Task>>(emptyList())
-
-    private val taskByIdCache = LruCache<String, Task>(TaskByIdCacheSize)
-    private val streamableTaskByIds = MutableStateFlow<Map<String, Task>>(mapOf())
 
     override suspend fun addTask(user: String, addTaskParam: TaskRepository.AddTaskParam): Task {
         val task = TaskDto(
@@ -47,34 +40,24 @@ internal class TaskRepositoryImpl @Inject constructor(
         taskDataSource.addTask(user, task)
 
         val addedTask = task.toTask(true)
-
-        withContext(coroutinesContextProvider.computation) {
-            val tasksId = streamableTasks.value.map { it.id }.toSet()
-            if (addedTask.id !in tasksId) {
-                streamableTasks.value = streamableTasks.value.toMutableList().apply {
-                    add(addedTask)
-                }
-            }
-        }
+        taskDAO.insert(addedTask)
 
         return addedTask
     }
 
     override suspend fun update(task: Task) {
         taskDataSource.update(TaskDto(task))
-        updateStreamableTasks(task)
-        updateTaskByIdCache(task)
+        taskDAO.update(task)
     }
 
     override suspend fun removeTask(id: String) {
         taskDataSource.deleteTask(id)
         withContext(coroutinesContextProvider.computation) {
-            streamableTasks.value = streamableTasks.value.filter { it.id != id }
-            val currentTaskByIdCache = taskByIdCache.snapshot()
-            if (currentTaskByIdCache.containsKey(id)) {
-                taskByIdCache.remove(id)
-                streamableTaskByIds.value = taskByIdCache.snapshot()
-            }
+            taskDAO.delete(id)
+        }
+
+        if (taskDAO.exists(id)) {
+            taskDAO.delete(id)
         }
     }
 
@@ -89,45 +72,32 @@ internal class TaskRepositoryImpl @Inject constructor(
             )
         }
 
-    override fun streamTasks(user: String): Flow<Collection<Task>> = streamableTasks.asStateFlow()
-        .onStart {
-            fetchTasks(user)
-        }
-
-    private suspend fun fetchTasks(user: String) = coroutineScope {
-        launch { streamableTasks.value = getTasks(user) }
+    override fun streamTasks(user: String): Flow<Collection<Task>> = flow {
+        fetchTasks(user)
+        emitAll(taskDAO.stream(user))
     }
 
-    override suspend fun getTask(id: String): Task = taskDataSource.getTask(id).toTask()
+    private suspend fun fetchTasks(user: String) = coroutineScope {
+        launch {
+            taskDAO.insert(getTasks(user).toList())
+        }
+    }
+
+    override suspend fun getTask(id: String): Task {
+        val task = taskDataSource.getTask(id).toTask()
+        if (taskDAO.exists(id)) {
+            taskDAO.update(task)
+        } else {
+            taskDAO.insert(task)
+        }
+        return task
+    }
 
     override fun createTaskId(): String = idProvider()
 
-    override fun streamTask(id: String): Flow<Task> = streamableTaskByIds.asStateFlow()
-        .map {
-            taskByIdCache.snapshot()[id]
-        }.filterNotNull()
-        .onStart {
-            updateTaskByIdCache(getTask(id))
-        }.flowOn(coroutinesContextProvider.io)
-
-    private suspend fun updateStreamableTasks(vararg tasks: Task) =
-        withContext(coroutinesContextProvider.computation) {
-            val currentTasks = streamableTasks.value.toMutableList()
-            tasks.forEach { task ->
-                val index = currentTasks.indexOfFirst { it.id == task.id }
-                if (index != -1) {
-                    currentTasks.removeAt(index)
-                }
-                currentTasks.add(task)
-            }
-            streamableTasks.value = currentTasks
-        }
-
-    private suspend fun updateTaskByIdCache(task: Task) =
-        withContext(coroutinesContextProvider.computation) {
-            taskByIdCache.put(task.id, task)
-            streamableTaskByIds.value = taskByIdCache.snapshot()
-        }
+    override fun streamTask(id: String): Flow<Task> = taskDAO.get(id).onStart {
+        getTask(id)
+    }
 
     private fun TaskDto.toTask(owned: Boolean = OwnershipUnknownAtThisPoint) = Task(
         id = id,
@@ -145,4 +115,3 @@ internal class TaskRepositoryImpl @Inject constructor(
 
 
 private const val OwnershipUnknownAtThisPoint = false
-private const val TaskByIdCacheSize = 3

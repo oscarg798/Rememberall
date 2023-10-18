@@ -45,6 +45,8 @@
             <option value="$PROJECT_DIR$/task/descriptionformatterimpl" />
             <option value="$PROJECT_DIR$/task/detail" />
             <option value="$PROJECT_DIR$/task/list" />
+            <option value="$PROJECT_DIR$/task/persistence" />
+            <option value="$PROJECT_DIR$/task/persistenceimpl" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />
             <option value="$PROJECT_DIR$/taskimpl" />
             <option value="$PROJECT_DIR$/ui" />

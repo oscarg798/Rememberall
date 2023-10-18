@@ -42,4 +42,5 @@ dependencies {
     implementation project(path: ':task')
     implementation project(path: ":gmstaskutils")
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':task:persistence')
 }
