@@ -1,5 +1,6 @@
 package com.oscarg798.remembrall.taskimpl
 
+import android.util.LruCache
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskRepository
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,6 +26,9 @@ internal class TaskRepositoryImpl @Inject constructor(
 ) : TaskRepository {
 
     private val streamableTasks = MutableStateFlow<Collection<Task>>(emptyList())
+
+    private val taskByIdCache = LruCache<String, Task>(TaskByIdCacheSize)
+    private val streamableTaskByIds = MutableStateFlow<Map<String, Task>>(mapOf())
 
     override suspend fun addTask(user: String, addTaskParam: TaskRepository.AddTaskParam): Task {
         val task = TaskDto(
@@ -56,24 +62,26 @@ internal class TaskRepositoryImpl @Inject constructor(
 
     override suspend fun update(task: Task) {
         taskDataSource.update(TaskDto(task))
-        withContext(coroutinesContextProvider.computation) {
-            val currentTasks = streamableTasks.value.toMutableList()
-            val index = currentTasks.indexOfFirst { it.id == task.id }
-            if (index != -1) {
-                currentTasks.removeAt(index)
-            }
-            currentTasks.add(task)
-            streamableTasks.value = currentTasks
-        }
+        updateStreamableTasks(task)
+        updateTaskByIdCache(task)
     }
 
     override suspend fun removeTask(id: String) {
         taskDataSource.deleteTask(id)
         withContext(coroutinesContextProvider.computation) {
             streamableTasks.value = streamableTasks.value.filter { it.id != id }
+            val currentTaskByIdCache = taskByIdCache.snapshot()
+            if (currentTaskByIdCache.containsKey(id)) {
+                taskByIdCache.remove(id)
+                streamableTaskByIds.value = taskByIdCache.snapshot()
+            }
         }
     }
 
+    @Deprecated(
+        message = "Stream tasks instead",
+        replaceWith = ReplaceWith("streamTasks(user: String)")
+    )
     override suspend fun getTasks(user: String): Collection<Task> =
         taskDataSource.getTasks(user).map {
             it.toTask(
@@ -94,6 +102,33 @@ internal class TaskRepositoryImpl @Inject constructor(
 
     override fun createTaskId(): String = idProvider()
 
+    override fun streamTask(id: String): Flow<Task> = streamableTaskByIds.asStateFlow()
+        .map {
+            taskByIdCache.snapshot()[id]
+        }.filterNotNull()
+        .onStart {
+            updateTaskByIdCache(getTask(id))
+        }.flowOn(coroutinesContextProvider.io)
+
+    private suspend fun updateStreamableTasks(vararg tasks: Task) =
+        withContext(coroutinesContextProvider.computation) {
+            val currentTasks = streamableTasks.value.toMutableList()
+            tasks.forEach { task ->
+                val index = currentTasks.indexOfFirst { it.id == task.id }
+                if (index != -1) {
+                    currentTasks.removeAt(index)
+                }
+                currentTasks.add(task)
+            }
+            streamableTasks.value = currentTasks
+        }
+
+    private suspend fun updateTaskByIdCache(task: Task) =
+        withContext(coroutinesContextProvider.computation) {
+            taskByIdCache.put(task.id, task)
+            streamableTaskByIds.value = taskByIdCache.snapshot()
+        }
+
     private fun TaskDto.toTask(owned: Boolean = OwnershipUnknownAtThisPoint) = Task(
         id = id,
         title = name,
@@ -110,3 +145,4 @@ internal class TaskRepositoryImpl @Inject constructor(
 
 
 private const val OwnershipUnknownAtThisPoint = false
+private const val TaskByIdCacheSize = 3

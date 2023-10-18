@@ -19,8 +19,8 @@ internal class TaskDetailEffectHandler @Inject constructor(
 
     override fun provide(uiEffectConsumer: EffectConsumer<Effect>): Connectable<Effect, Event> {
         return MobiusCoroutines.subtypeEffectHandler<Effect, Event>()
-            .addFunction(getTask)
             .addFunction(markTaskAsCompleted)
+            .addEffectHandler(Effect.GetTask::class, getTask::invoke)
             .addConsumer<Effect.UIEffect.ShowError>(uiEffectConsumer)
             .addConsumer<Effect.UIEffect.CloseScreen>(uiEffectConsumer)
             .addConsumer<Effect.UIEffect.NavigateToEdit>(uiEffectConsumer)

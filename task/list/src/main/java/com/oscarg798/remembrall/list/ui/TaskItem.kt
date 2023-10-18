@@ -36,7 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.oscarg798.remembrall.list.model.DisplayableTask
+import com.oscarg798.remembrall.list.domain.model.DisplayableTask
 import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.common.R as CommonR
 import com.oscarg798.remembrall.taskpriorityextensions.getColor

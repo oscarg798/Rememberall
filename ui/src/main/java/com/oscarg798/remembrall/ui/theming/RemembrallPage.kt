@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun RemembrallPage(
-    backgroundColor: Color = MaterialTheme.colorScheme.background,
     modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     content: @Composable () -> Unit
 ) {
     Box(

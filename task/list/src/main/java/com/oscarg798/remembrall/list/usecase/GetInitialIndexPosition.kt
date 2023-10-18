@@ -1,14 +1,21 @@
 package com.oscarg798.remembrall.list.usecase
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
-import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
-import com.oscarg798.remembrall.list.model.TaskGroup
+import com.oscarg798.remembrall.list.domain.model.DisplayableTasksGroup
+import com.oscarg798.remembrall.list.domain.model.Effect
+import com.oscarg798.remembrall.list.domain.model.Event
+import com.oscarg798.remembrall.list.domain.model.TaskGroup
 import java.util.Calendar
 import javax.inject.Inject
 
-class GetInitialIndexPosition @Inject constructor(private val dueDateFormatter: DateFormatter) {
+internal interface GetInitialIndexPosition :
+        (Effect.GetScrollIndexPosition) -> Event.OnScrollIndexFound
 
-    operator fun invoke(groupedTask: Map<TaskGroup.MonthGroup, DisplayableTasksGroup>): Int {
+internal class GetInitialIndexPositionImpl @Inject constructor(
+    private val dueDateFormatter: DateFormatter
+) : GetInitialIndexPosition {
+
+    override fun invoke(effect: Effect.GetScrollIndexPosition): Event.OnScrollIndexFound {
         val currentDate = Calendar.getInstance()
         val currentDateInMillis = currentDate.timeInMillis
         val currentMonthValue = currentDate.get(Calendar.MONTH)
@@ -23,7 +30,7 @@ class GetInitialIndexPosition @Inject constructor(private val dueDateFormatter: 
         )
         var index = -1
 
-        val groupedTaskAsList = groupedTask.entries.toList().sortedBy { it.key.value.toInt() }
+        val groupedTaskAsList = effect.tasks.entries.toList().sortedBy { it.key.value.toInt() }
 
         val monthsNotAfterCurrentMonth = groupedTaskAsList.filter {
             it.key.year <= currentMonthGroup.year && it.key.value.toInt() <= currentMonthValue
@@ -41,7 +48,7 @@ class GetInitialIndexPosition @Inject constructor(private val dueDateFormatter: 
             }
         }
 
-        return index
+        return Event.OnScrollIndexFound(index)
     }
 
     private fun Collection<Any>.getIndexFromSize() = if (this.isEmpty()) 0 else size - 1

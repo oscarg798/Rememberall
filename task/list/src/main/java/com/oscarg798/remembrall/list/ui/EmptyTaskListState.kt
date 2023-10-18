@@ -25,10 +25,11 @@ import com.oscarg798.remembrall.ui.dimensions.typo
 
 @Composable
 internal fun EmptyTaskList(
+    modifier: Modifier,
     onAddButtonClicked: () -> Unit
 ) {
 
-    Box() {
+    Box(modifier) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,

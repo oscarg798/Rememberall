@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.list.model
+package com.oscarg798.remembrall.list.domain.model
 
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale

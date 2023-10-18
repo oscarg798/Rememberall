@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.list.model
+package com.oscarg798.remembrall.list.domain.model
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
 import com.oscarg798.remembrall.task.CalendarAttendee

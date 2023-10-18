@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.list.model
+package com.oscarg798.remembrall.list.domain.model
 
 data class Day(
     val name: String,

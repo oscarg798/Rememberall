@@ -1,21 +1,27 @@
 package com.oscarg798.remembrall.list.usecase
 
 import com.oscarg798.remembrall.dateformatter.DateFormatter
-import com.oscarg798.remembrall.list.model.DisplayableTasksGroup
+import com.oscarg798.remembrall.list.domain.model.DisplayableTasksGroup
+import com.oscarg798.remembrall.list.domain.model.Effect
+import com.oscarg798.remembrall.list.domain.model.Event
 import com.oscarg798.remembrall.task.Task
-import com.oscarg798.remembrall.list.model.TaskGroup
+import com.oscarg798.remembrall.list.domain.model.TaskGroup
 import java.util.SortedMap
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 
-class GetTaskGrouped @Inject constructor(
-    private val getTaskUseCase: GetTaskUseCase,
-    private val dateFormatter: DateFormatter
-) {
+internal interface GetTaskGrouped : suspend (Effect, (Event) -> Unit) -> Unit
 
-    suspend operator fun invoke(): Flow<SortedMap<TaskGroup.MonthGroup, DisplayableTasksGroup>> {
-        return getTaskUseCase.execute().map { tasks ->
+internal class GetTaskGroupedImpl @Inject constructor(
+    private val getTasksUseCase: GetTasksUseCase,
+    private val dateFormatter: DateFormatter
+) : GetTaskGrouped {
+
+    override suspend fun invoke(effect: Effect, output: (Event) -> Unit) {
+        require(effect is Effect.GetTasks)
+        getTasksUseCase().map { tasks ->
             val groups = HashMap<TaskGroup.MonthGroup, TaskGroup>()
             tasks.filter { it.dueDate != null }.forEach { task ->
                 val taskDate = TaskGroup.TaskDate(
@@ -52,12 +58,18 @@ class GetTaskGrouped @Inject constructor(
                 }
             }
 
-            groups.entries.associate{
-                it.key to DisplayableTasksGroup(it.value, dateFormatter)
-            }.toSortedMap() { first, second ->
-                convertMonthStringToIntPosition(first)
-                    .compareTo(convertMonthStringToIntPosition(second))
-            }
+            groups
+        }.collectLatest { groups->
+            output(
+                Event.OnTasksFound(
+                    groups.entries.associate {
+                        it.key to DisplayableTasksGroup(it.value, dateFormatter)
+                    }.toSortedMap { first, second ->
+                        convertMonthStringToIntPosition(first)
+                            .compareTo(convertMonthStringToIntPosition(second))
+                    }
+                )
+            )
         }
     }
 

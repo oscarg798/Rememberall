@@ -53,5 +53,6 @@ dependencies  {
     implementation project(path: ':homeutils')
     implementation project(path: ':navigation')
     implementation project(path: ':ui:theming')
+    implementation project(path: ':ui:components:toolbar')
 
 }

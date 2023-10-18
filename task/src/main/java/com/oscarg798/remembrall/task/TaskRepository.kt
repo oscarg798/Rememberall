@@ -14,6 +14,8 @@ interface TaskRepository {
 
     suspend fun getTask(id: String): Task
 
+    fun streamTask(id: String): Flow<Task>
+
     suspend fun removeTask(id: String)
 
     suspend fun update(task: Task)

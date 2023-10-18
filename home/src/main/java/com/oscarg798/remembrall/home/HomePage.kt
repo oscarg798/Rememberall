@@ -1,7 +1,10 @@
 package com.oscarg798.remembrall.home
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -11,6 +14,8 @@ import com.oscarg798.remembrall.homeutils.HomeContent
 import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
 import com.oscarg798.remembrall.navigation.Page
 import com.oscarg798.remembrall.navigation.Route
+import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
+import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBarTitle
@@ -40,19 +45,23 @@ private fun NavGraphBuilder.homeScreen(
 
     RemembrallScaffold(
         topBar = {
-            RemembrallTopBar(
-                title = {
-                    RemembrallTopBarTitle(stringResource(R.string.home_title))
-                },
+            RemembrallToolbar(
+                backEnabled = false,
                 actions = {
                     ToolbarRightAction {
                         navigator.navigate(Route.PROFILE)
                     }
-                }
+                },
+                modifier = Modifier,
+                title = {
+                    RemembrallTopBarTitle(stringResource(R.string.home_title))
+                },
             )
         }
     ) {
-        content(backStackEntry)
+        RemembrallPage(modifier = Modifier.padding(it)) {
+            content(backStackEntry)
+        }
     }
 
     BackHandler {
