@@ -147,6 +147,7 @@ dependencies {
     implementation project(path: ':date')
     implementation project(path: ':login')
     implementation project(path: ':oauth')
+    implementation project(path: ':widget')
     implementation project(path: ':common')
     implementation project(path: ':splash')
     implementation project(path: ":config")
@@ -162,6 +163,7 @@ dependencies {
     implementation project(path: ':task:list')
     implementation project(path: ':oauthimpl')
     implementation project(path: ':homeutils')
+    implementation project(path: ':widgetimpl')
     implementation project(path: ':ui:theming')
     implementation project(path: ':navigation')
     implementation project(path: ':task:detail')
@@ -178,7 +180,6 @@ dependencies {
     implementation project(path: ':task:addrouteprovider')
     implementation project(path: ':task:descriptionformatter')
     implementation project(path: ':task:descriptionformatterimpl')
-
 
     implementation libs.accompanist.pager
     implementation libs.accompanist.pagerIndicator

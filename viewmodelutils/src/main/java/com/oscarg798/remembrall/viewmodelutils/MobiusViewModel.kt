@@ -47,7 +47,7 @@ abstract class MobiusViewModel<Model, Event, Effect> constructor(
         return object : ViewModelConnection<Model>(_model) {}
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         controller.stop()
         super.onCleared()
     }

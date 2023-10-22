@@ -13,7 +13,7 @@ class GetProfileInformationUseCase @Inject constructor(
 ) {
 
     suspend fun execute(): ProfileInformation {
-        val user = (session.getLoggedInState() as? Session.State.LoggedIn)?.user
+        val user = (session.getSessionState() as? Session.State.LoggedIn)?.user
             ?: throw IllegalStateException(
                 "Can not get profile information without an user logged in"
             )

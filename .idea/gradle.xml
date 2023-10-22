@@ -54,6 +54,7 @@
             <option value="$PROJECT_DIR$/ui/components" />
             <option value="$PROJECT_DIR$/ui/components/actionbutton" />
             <option value="$PROJECT_DIR$/ui/components/actionrow" />
+            <option value="$PROJECT_DIR$/ui/components/taskitem" />
             <option value="$PROJECT_DIR$/ui/components/toolbar" />
             <option value="$PROJECT_DIR$/ui/dimensions" />
             <option value="$PROJECT_DIR$/ui/icons" />
@@ -61,6 +62,8 @@
             <option value="$PROJECT_DIR$/ui/typography" />
             <option value="$PROJECT_DIR$/user" />
             <option value="$PROJECT_DIR$/viewmodelutils" />
+            <option value="$PROJECT_DIR$/widget" />
+            <option value="$PROJECT_DIR$/widgetimpl" />
           </set>
         </option>
       </GradleProjectSettings>

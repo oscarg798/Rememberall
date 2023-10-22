@@ -39,7 +39,6 @@ import com.oscarg798.remembrall.task.TaskPriority
 import com.oscarg798.remembrall.taskpriorityextensions.getLabel
 import com.oscarg798.remembrall.ui.dimensions.dimensions
 import com.oscarg798.remembrall.ui.dimensions.typo
-import com.oscarg798.remembrall.ui.theming.RemembrallTheme
 import com.oscarg798.remembrall.uicolor.SecondaryTextColor
 import java.time.LocalDateTime
 

@@ -12,7 +12,9 @@ import com.oscarg798.remembrall.gmstaskutils.toSuspend
 import com.oscarg798.remembrall.user.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
@@ -25,7 +27,7 @@ internal class SessionImpl @Inject constructor(
     private val googleAuthOptionsBuilder: GoogleAuthOptionsBuilder,
     private val logoutActions: Set<@JvmSuppressWildcards LogoutAction>,
 ) : Session {
-    override suspend fun getLoggedInState(): Session.State =
+    override suspend fun getSessionState(): Session.State =
         withContext(coroutineContextProvider.io) {
             GoogleSignIn.getLastSignedInAccount(context)?.toUser()?.let {
                 Session.State.LoggedIn(it)
@@ -41,11 +43,12 @@ internal class SessionImpl @Inject constructor(
 
     override fun streamLoggedInState(): Flow<Session.State> = flow {
         while (true) {
-            emit(getLoggedInState())
-            kotlinx.coroutines.delay(UpdateThrottling)
+            emit(getSessionState())
+            delay(UpdateThrottling)
             yield()
         }
-    }.flowOn(coroutineContextProvider.computation)
+    }.distinctUntilChanged()
+        .flowOn(coroutineContextProvider.computation)
 
     override suspend fun silentLoginIng(): Session.State.LoggedIn {
         val signInResult = withContext(coroutineContextProvider.io) {
@@ -62,7 +65,7 @@ internal class SessionImpl @Inject constructor(
     }
 
     override suspend fun logout() {
-        val sessionState = getLoggedInState() as? Session.State.LoggedIn
+        val sessionState = getSessionState() as? Session.State.LoggedIn
             ?: throw IllegalStateException("To perform a logout user must be logged in first")
         logoutActions.forEach { it(sessionState) }
     }

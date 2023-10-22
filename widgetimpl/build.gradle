@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.oscarg798.remembrall.widgetimpl'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type",
+                            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                            "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
+
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+}
+
+dependencies {
+
+    implementation libs.glance
+    implementation libs.compose.ui
+    implementation libs.glanceMaterial
+    implementation libs.mobius.android
+    implementation libs.compose.tooling
+    implementation libs.compose.runtime
+    implementation libs.compose.foundation
+
+    kapt(libs.hilt.dagger.compiler)
+    implementation libs.hilt.android
+
+    implementation project(":auth")
+    implementation project(":task")
+    implementation project(":widget")
+    implementation project(path: ':date')
+    implementation project(path: ':rxutils')
+    implementation project(path: ':mobiusutils')
+    implementation project(path: ':viewmodelutils')
+    implementation project(path: ':coroutinesutils')
+    implementation project(path: ':task:taskpriorityextensions')
+}

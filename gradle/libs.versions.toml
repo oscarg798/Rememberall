@@ -114,6 +114,7 @@ compose-material = 'androidx.compose.material:material:1.5.1'
 compose-material3 = 'androidx.compose.material3:material3:1.2.0-alpha02'
 compose-animation = 'androidx.compose.animation:animation:1.5.1'
 compose-tooling = 'androidx.compose.ui:ui-tooling:1.5.1'
+compose-toolingPreview = "androidx.compose.ui:ui-tooling-preview:1.5.1"
 compose-viewmodel = 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2'
 compose-runtime = "androidx.compose.runtime:runtime:1.5.1"
 compose-runtimeLivedata = "androidx.compose.runtime:runtime-livedata:1.5.1"
@@ -196,6 +197,10 @@ landscapist-coil = "com.github.skydoves:landscapist-coil:2.1.1"
 mobius-android = "com.spotify.mobius:mobius-android:1.5.9"
 mobius-rx3 = "com.spotify.mobius:mobius-rx3:1.5.9"
 
+glance = "androidx.glance:glance-appwidget:1.0.0"
+glanceMaterial = "androidx.glance:glance-material3:1.0.0"
+glanceHost = "com.google.android.glance.tools:appwidget-host:0.2.2"
+
 rxjava = "io.reactivex.rxjava3:rxjava:3.1.6"
 
 tensorflow-lite = "org.tensorflow:tensorflow-lite:2.11.0"
@@ -221,5 +226,4 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.9.0"
-
 

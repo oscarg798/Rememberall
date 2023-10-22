@@ -69,7 +69,7 @@ internal class AddTaskImpl @Inject constructor(
     }
 
     private suspend fun getUser(): User {
-        val session = session.getLoggedInState()
+        val session = session.getSessionState()
 
         require(session is Session.State.LoggedIn) {
             "User must be logged in to add a task"

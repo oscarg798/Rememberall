@@ -361,8 +361,6 @@ private fun TaskItem2(
                         .align(Alignment.End)
                 )
             }
-
-
         }
     }
 }

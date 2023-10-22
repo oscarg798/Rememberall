@@ -16,7 +16,7 @@ internal class GoogleAuthInterceptor @Inject constructor(
 
         val originalRequest = chain.request()
 
-        val sessionState = runBlocking { session.getLoggedInState() }
+        val sessionState = runBlocking { session.getSessionState() }
 
         val accessCode = if (sessionState is Session.State.LoggedIn &&
             sessionState.user.serverAuthToken != null

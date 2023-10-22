@@ -37,7 +37,7 @@ internal class GetTasksUseCaseImpl @Inject constructor(
 
 
     private suspend fun getLoggedInUser() =
-        (session.getLoggedInState() as? Session.State.LoggedIn)?.user
+        (session.getSessionState() as? Session.State.LoggedIn)?.user
             ?: error("User must be logged in to get tasks")
 
 }

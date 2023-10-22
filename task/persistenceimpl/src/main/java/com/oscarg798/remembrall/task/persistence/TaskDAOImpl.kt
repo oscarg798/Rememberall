@@ -14,6 +14,7 @@ import com.oscarg798.remembrall.task.persistence.entity.CalendarSyncInformationE
 import com.oscarg798.remembrall.task.persistence.entity.TaskEntity
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -72,9 +73,11 @@ internal class TaskDAOImpl @Inject constructor(
         }
     }
 
-    override fun get(id: String): Flow<Task> = roomTaskDAO.get(id).flatMapLatest {
-        flowOf(getTaskFromTaskEntity(it))
-    }.flowOn(io)
+    override fun get(id: String): Flow<Task> = roomTaskDAO.get(id)
+        .filterNotNull()
+        .flatMapLatest {
+            flowOf(getTaskFromTaskEntity(it))
+        }.flowOn(io)
 
     private suspend fun getTaskFromTaskEntity(taskEntity: TaskEntity): Task {
         val calendarInformation = if (taskEntity.calendarSyncInformation != null) {

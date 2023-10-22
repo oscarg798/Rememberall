@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface Session {
 
-    suspend fun getLoggedInState(): State
+    suspend fun getSessionState(): State
 
     fun streamLoggedInState(): Flow<State>
 

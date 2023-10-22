@@ -45,7 +45,7 @@ fun RemembrallTheme(content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun isSmallScreen() = LocalConfiguration.current.screenWidthDp > 360
+fun isSmallScreen() = LocalConfiguration.current.screenWidthDp > 360
 
 
 val LocalFontAwesome = staticCompositionLocalOf<FontFamily> { error("You must provide it first") }

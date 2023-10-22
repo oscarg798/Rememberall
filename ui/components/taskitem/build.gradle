@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.oscarg798.remembrall.components.taskitem'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    kotlinOptions {
+        freeCompilerArgs = ["-Xallow-result-return-type",
+                            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                            "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                            "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                            "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                            "-Xopt-in=kotlin.contracts.ExperimentalContracts"]
+
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+}
+
+dependencies {
+
+    implementation libs.compose.ui
+    implementation libs.compose.tooling
+    implementation libs.androidx.coreKtx
+    implementation libs.compose.material3
+    implementation libs.compose.constraintLayout
+
+    implementation project(":ui:icons")
+    implementation project(":ui:theming")
+    implementation project(":ui:dimensions")
+    implementation project(path: ':ui:color')
+    implementation project(path: ':ui:components:actionbutton')
+
+
+}
