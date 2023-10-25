@@ -16,7 +16,11 @@ data class TaskGroup(
         val year: String
     )
 
-    data class DayGroup(val dayName: String, val dayNumber: String) {
+    data class DayGroup(
+        val dayName: String,
+        val dayNumber: String,
+        val year: String
+    ) {
         override fun toString(): String = "$dayName $dayNumber"
     }
 

@@ -17,4 +17,5 @@ dependencies {
     implementation project(path: ':ui:theming')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':ui:components:toolbar')
 }

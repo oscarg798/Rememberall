@@ -35,5 +35,6 @@ internal class RemembrallWidgetUpdaterImpl @Inject constructor(
             updateAppWidgetState(context, glanceId) { mutablePreferences ->
                 mutablePreferences[RemembrallWidgetPreferencesKeys.StateKey] = state.name
             }
+            RemembrallWidget.update(context, glanceId)
         }
 }

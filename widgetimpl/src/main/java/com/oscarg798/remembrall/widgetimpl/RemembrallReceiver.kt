@@ -13,7 +13,6 @@ class RemembrallReceiver : GlanceAppWidgetReceiver() {
 
     override val glanceAppWidget: GlanceAppWidget = RemembrallWidget
 
-
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
 

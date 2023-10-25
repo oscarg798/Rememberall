@@ -15,9 +15,17 @@ internal fun update(
 ): Upcoming = when (event) {
     Event.OnLoginClicked -> onLoginClicked()
     is Event.OnTaskClicked -> onTaskClicked(event)
+    Event.OnRefreshClicked -> onRefreshClicked(model)
     is Event.OnTaskFound -> onTasksFound(model, event)
-    is Event.OnSessionStateFound -> onSessionStateFound(model, event)
     is Event.OnStateChanged -> onStateChanged(model, event)
+    is Event.OnSessionStateFound -> onSessionStateFound(model, event)
+}
+
+private fun onRefreshClicked(model: Model): Upcoming = if (model.isUserLoggedIn()) {
+    val user = (model.sessionState as Session.State.LoggedIn).user
+    next(model.copy(tasks = null), setOf(Effect.GetTasks(user.email)))
+} else {
+    noChange()
 }
 
 private fun onStateChanged(model: Model, event: Event.OnStateChanged): Upcoming {
@@ -42,10 +50,20 @@ private fun onStateChanged(model: Model, event: Event.OnStateChanged): Upcoming 
 }
 
 private fun onTasksFound(model: Model, event: Event.OnTaskFound): Upcoming {
-    return if (model.tasks == event.task) {
+    return if (model.tasks == event.task && model.taskWindow == event.taskWindow) {
         noChange()
+    } else if (model.tasks == event.task && model.taskWindow != event.taskWindow) {
+        next(model.copy(taskWindow = event.taskWindow), setOf(Effect.ForceWidgetUpdate))
+    } else if (model.tasks != event.task && model.taskWindow == event.taskWindow) {
+        next(model.copy(tasks = event.task), setOf(Effect.ForceWidgetUpdate))
     } else {
-        next(model.copy(tasks = event.task))
+        next(
+            model.copy(
+                tasks = event.task,
+                taskWindow = event.taskWindow
+            ),
+            setOf(Effect.ForceWidgetUpdate)
+        )
     }
 }
 

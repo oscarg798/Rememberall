@@ -5,7 +5,6 @@ import com.oscarg798.remembrall.detail.domain.Event
 import com.oscarg798.remembrall.detail.domain.Model
 import com.oscarg798.remembrall.detail.effecthandler.TaskDetailEffectHandler
 import com.oscarg798.remembrall.detail.effecthandler.UIEffectConsumer
-import com.oscarg798.remembrall.detail.navigation.TaskDetailDeepLinkRouteFactory
 import com.oscarg798.remembrall.detail.ui.TaskDetailLoopInjector
 import com.oscarg798.remembrall.detail.ui.TaskDetailPage
 import com.oscarg798.remembrall.detail.ui.TaskDetailViewModel
@@ -16,10 +15,7 @@ import com.oscarg798.remembrall.detail.usecase.MarkTaskAsCompletedImpl
 import com.oscarg798.remembrall.mobiusutils.EffectConsumer
 import com.oscarg798.remembrall.mobiusutils.EffectHandlerProvider
 import com.oscarg798.remembrall.mobiusutils.LoopInjector
-import com.oscarg798.remembrall.navigation.DeeplinkRouteFactory
 import com.oscarg798.remembrall.navigation.Page
-import com.oscarg798.remembrall.navigation.Route
-import com.oscarg798.remembrall.navigationutils.DeeplinkRouteFactoryKey
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -28,9 +24,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import dagger.hilt.android.scopes.ViewModelScoped
-import dagger.hilt.components.SingletonComponent
-import dagger.multibindings.IntoMap
 import dagger.multibindings.IntoSet
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,13 +46,6 @@ internal interface TaskDetailModule {
 
     @Binds
     fun bindUIEffectConsumer(impl: UIEffectConsumer): EffectConsumer<Effect>
-
-    @Binds
-    @IntoMap
-    @DeeplinkRouteFactoryKey(Route.DETAIL)
-    fun bindTaskDetailDeepLinkRouteFactory(
-        impl: TaskDetailDeepLinkRouteFactory
-    ): DeeplinkRouteFactory
 
     companion object {
 

@@ -77,6 +77,26 @@ internal class TaskRepositoryImpl @Inject constructor(
         emitAll(taskDAO.stream(user))
     }
 
+    override fun streamTasks(
+        queries: List<TaskRepository.TaskQuery>,
+        queryOperation: TaskRepository.QueryOperation
+    ): Flow<List<Task>> = flow {
+        fetchTask(queries, queryOperation)
+        emitAll(taskDAO.streamViaQuery(queries, queryOperation))
+    }
+
+    private suspend fun fetchTask(
+        queries: List<TaskRepository.TaskQuery>,
+        queryOperation: TaskRepository.QueryOperation
+    ) = coroutineScope {
+        launch {
+            val tasks = taskDataSource.getTasks(queries, queryOperation).map {
+                it.toTask(false)
+            }
+            taskDAO.insert(tasks)
+        }
+    }
+
     private suspend fun fetchTasks(user: String) = coroutineScope {
         launch {
             taskDAO.insert(getTasks(user).toList())

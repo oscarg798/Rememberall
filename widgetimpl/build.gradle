@@ -56,6 +56,7 @@ dependencies {
     implementation libs.compose.tooling
     implementation libs.compose.runtime
     implementation libs.compose.foundation
+    implementation project(path: ':navigationutils')
 
     kapt(libs.hilt.dagger.compiler)
     implementation libs.hilt.android
@@ -65,8 +66,10 @@ dependencies {
     implementation project(":widget")
     implementation project(path: ':date')
     implementation project(path: ':rxutils')
+    implementation project(path: ':navigation')
     implementation project(path: ':mobiusutils')
     implementation project(path: ':viewmodelutils')
+    implementation project(path: ':task:navigation')
     implementation project(path: ':coroutinesutils')
     implementation project(path: ':task:taskpriorityextensions')
 }

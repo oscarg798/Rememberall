@@ -1,9 +1,19 @@
 package com.oscarg798.remembrall.profile.ui
 
 import com.oscarg798.remembrall.common.R as CommonR
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -13,6 +23,7 @@ import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
 import com.oscarg798.remembrall.navigation.Page
 import com.oscarg798.remembrall.navigation.Route
 import com.oscarg798.remembrall.profile.ProfileViewModel
+import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
 import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBar
@@ -53,16 +64,19 @@ private fun NavGraphBuilder.profileScreen() =
 
         RemembrallScaffold(
             topBar = {
-                RemembrallTopBar(
+                RemembrallToolbar(
+                    backEnabled = true,
+                    modifier = Modifier,
                     title = {
                         RemembrallTopBarTitle(stringResource(CommonR.string.profile_title))
-                    }, backButtonAction = {
-                    navigator.navigateBack()
-                }
+                    },
+                    onBackPressed = {
+                        navigator.navigateBack()
+                    }
                 )
             }
         ) {
-            RemembrallPage {
+            RemembrallPage(modifier = Modifier.padding(it))  {
                 when {
                     state.loading -> LoadingProfile()
                     state.profileInformation != null -> ProfileDetails(
@@ -81,5 +95,7 @@ private fun NavGraphBuilder.profileScreen() =
             }
         }
     }
+
+
 
 const val UserNameId = "UserGivenName"

@@ -1,5 +1,7 @@
 package com.oscarg798.remembrall.task.persistence
 
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
@@ -8,6 +10,7 @@ import com.oscarg798.remembrall.task.CalendarAttendee
 import com.oscarg798.remembrall.task.CalendarSyncInformation
 import com.oscarg798.remembrall.task.Task
 import com.oscarg798.remembrall.task.TaskPriority
+import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.task.persistence.dao.CalendarSyncInformationDAO
 import com.oscarg798.remembrall.task.persistence.dao.RoomTaskDAO
 import com.oscarg798.remembrall.task.persistence.entity.CalendarSyncInformationEntity
@@ -116,6 +119,32 @@ internal class TaskDAOImpl @Inject constructor(
     override fun stream(user: String): Flow<List<Task>> = roomTaskDAO.stream(user).flatMapLatest {
         flowOf(it.map { taskEntity -> getTaskFromTaskEntity(taskEntity) })
     }.flowOn(io)
+
+    override fun streamViaQuery(
+        queries: List<TaskRepository.TaskQuery>,
+        queryOperation: TaskRepository.QueryOperation
+    ): Flow<List<Task>> {
+        val whereClause = queries.joinToString(
+            when (queryOperation) {
+                TaskRepository.QueryOperation.And -> " AND "
+                TaskRepository.QueryOperation.Or -> " OR "
+            }
+        ) {
+            when (it) {
+                is TaskRepository.TaskQuery.DueDateAfter -> "due_date >= ${it.value}"
+                is TaskRepository.TaskQuery.DueDateBefore -> "due_date <= ${it.value}"
+                is TaskRepository.TaskQuery.UserEquals -> "owner = '${it.value}'"
+                is TaskRepository.TaskQuery.Completed -> "completed = ${it.value}"
+            }
+        }
+        val query = SimpleSQLiteQuery(
+            "select * from ${TaskEntity.TableName} where $whereClause"
+        )
+
+        return roomTaskDAO.streamViaQuery(query).flatMapLatest {
+            flowOf(it.map { taskEntity -> getTaskFromTaskEntity(taskEntity) })
+        }.flowOn(io)
+    }
 
     override suspend fun delete(id: String) {
         val exists = withContext(io) { roomTaskDAO.count(id) } > 0

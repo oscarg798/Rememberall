@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +25,8 @@ import com.oscarg798.remembrall.navigation.LocalNavigatorProvider
 import com.oscarg798.remembrall.navigation.Page
 import com.oscarg798.remembrall.navigation.Route
 import com.oscarg798.remembrall.ui.RemembrallButton
+import com.oscarg798.remembrall.ui.components.toolbar.RemembrallToolbar
+import com.oscarg798.remembrall.ui.theming.RemembrallPage
 import com.oscarg798.remembrall.ui.theming.RemembrallScaffold
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBar
 import com.oscarg798.remembrall.ui.theming.RemembrallTopBarTitle
@@ -73,25 +76,30 @@ private fun NavGraphBuilder.loginScreen() =
 
         RemembrallScaffold(
             topBar = {
-                RemembrallTopBar(
+                RemembrallToolbar(
+                    backEnabled = false,
+                    modifier = Modifier,
                     title = {
                         RemembrallTopBarTitle(stringResource(R.string.login_title))
-                    }
+                    },
                 )
             }
         ) {
-            Column(
-                Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                RemembrallButton(
-                    text = stringResource(R.string.login_title),
-                    loading = state.loading
+            RemembrallPage(modifier = Modifier.padding(it)) {
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    viewModel.onEvent(Event.SignIn)
+                    RemembrallButton(
+                        text = stringResource(R.string.login_title),
+                        loading = state.loading
+                    ) {
+                        viewModel.onEvent(Event.SignIn)
+                    }
                 }
             }
+
         }
 
         BackHandler { navigator.close() }

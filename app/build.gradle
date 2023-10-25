@@ -173,6 +173,7 @@ dependencies {
     implementation project(path: ':navigationutils')
     implementation project(path: ':common-schedule')
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':task:navigation')
     implementation project(path: ':activityprovider')
     implementation project(path: ':task:persistence')
     implementation project(path: ':activityproviderimpl')
@@ -194,6 +195,8 @@ dependencies {
 
     testImplementation libs.mockk.base
     testImplementation libs.coroutines.test
+
+    implementation project(":carttest")
 
 }
 repositories {

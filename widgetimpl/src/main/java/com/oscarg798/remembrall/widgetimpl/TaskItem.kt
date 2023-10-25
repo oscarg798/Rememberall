@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.ImageProvider
 import androidx.glance.action.clickable
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -23,17 +24,15 @@ import androidx.glance.unit.ColorProvider
 @Composable
 fun TaskItem(
     title: String,
-    owned: Boolean,
     modifier: GlanceModifier,
     description: String? = null,
     priority: String? = null,
     dueDate: String? = null,
-    onOptionsClicked: () -> Unit,
     onTaskClicked: () -> Unit
 ) {
     Column(
         modifier = modifier
-            .background(GlanceTheme.colors.surfaceVariant)
+            .background(ImageProvider(R.drawable.bg_card))
             .padding(16.dp)
             .clickable { onTaskClicked() }
     ) {
@@ -42,11 +41,15 @@ fun TaskItem(
             Spacer(modifier = GlanceModifier.height(8.dp))
         }
 
-        TaskTitle(
-            title = title,
-            owned = owned,
-            modifier = GlanceModifier.fillMaxWidth(),
-            onOptionsClicked = onOptionsClicked
+        Text(
+            text = title,
+            style = TextStyle(
+                color = GlanceTheme.colors.onSurface,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            maxLines = SingleLine,
+            modifier = GlanceModifier.defaultWeight()
         )
 
         description?.let {
@@ -96,42 +99,6 @@ private fun TaskPriority(priority: String, modifier: GlanceModifier) {
         ) {}
     }
 }
-
-@Composable
-private fun TaskTitle(
-    title: String,
-    owned: Boolean,
-    modifier: GlanceModifier,
-    onOptionsClicked: () -> Unit
-) {
-    Row(
-        modifier.padding(16.dp)
-            .background(GlanceTheme.colors.surface),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = title,
-            style = TextStyle(
-                color = GlanceTheme.colors.onSurface,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
-            ),
-            maxLines = SingleLine,
-            modifier = GlanceModifier.defaultWeight()
-        )
-
-        if (owned) {
-//            Image(
-//                provider = ImageProvider(IconsR.drawable.ic_more),
-//                contentDescription = "show card options",
-//                modifier = GlanceModifier
-//                    .size(48.dp)
-//                    .clickable(onOptionsClicked)
-//            )
-        }
-    }
-}
-
 
 private val HorizontalDividerHeight = 1.dp
 private const val SingleLine = 1

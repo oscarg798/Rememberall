@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.oscarg798.remembrall.cart'
+    compileSdk targetAndCompileVersion
+
+    defaultConfig {
+        minSdk minSdkversion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding false
+        dataBinding false
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+}
+
+dependencies {
+
+    implementation libs.compose.ui
+    implementation libs.hilt.compose
+    implementation libs.compose.icons
+    implementation libs.compose.tooling
+    implementation libs.compose.material
+    implementation libs.compose.compiler
+    implementation libs.compose.activity
+    implementation libs.compose.material3
+    implementation libs.compose.animation
+    implementation libs.compose.foundation
+    implementation libs.compose.iconsExtended
+    implementation libs.compose.runtimeLivedata
+    implementation libs.compose.constraintLayout
+
+    implementation libs.coroutines.core
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+
+    kapt(libs.hilt.dagger.compiler)
+    implementation libs.hilt.android
+
+    implementation project(path: ':ui')
+    implementation project(path: ":navigation")
+    implementation project(path: ':ui:theming')
+}

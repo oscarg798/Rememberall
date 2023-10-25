@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_title">Your Schedule from:</string>
+    <string name="widget_subtitle">%1$s to %2$s</string>
+    <string name="btn_refresh_text">Refresh</string>
+    <string name="btn_login_text">Log In</string>
+    <string name="empty_state_message">Your Week agenda seems to be empty</string>
+    <string name="widget_description">Widget to see the tasks for the next three days</string>
+    <string name="getting_session_state_placeholder">Getting Session State</string>
+    <string name="getting_agenda_placeholder">Getting Your agenda</string>
+</resources>

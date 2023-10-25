@@ -22,6 +22,8 @@ interface TaskRepository {
 
     fun streamTasks(user: String): Flow<Collection<Task>>
 
+    fun streamTasks(queries: List<TaskQuery>, queryOperation: QueryOperation): Flow<List<Task>>
+
     fun createTaskId(): String
 
     data class AddTaskParam(
@@ -33,4 +35,16 @@ interface TaskRepository {
         val description: String? = null,
         val createdAt: Long?
     )
+
+    sealed interface TaskQuery {
+        data class Completed(val value: Boolean): TaskQuery
+        data class UserEquals(val value: String) : TaskQuery
+        data class DueDateBefore(val value: Long) : TaskQuery
+        data class DueDateAfter(val value: Long) : TaskQuery
+    }
+
+    enum class QueryOperation {
+        And,
+        Or
+    }
 }

@@ -15,7 +15,7 @@ enum class Route(val path: String) {
             "${Navigator.DeepLinkUri}/$path/{$TaskIdArgument}".toUri()
         }
     },
-    HOME("home"){
+    HOME("home") {
         override val uriPattern: Uri by lazy {
             "${Navigator.DeepLinkUri}/$path".toUri()
         }
@@ -36,6 +36,11 @@ enum class Route(val path: String) {
         }
     },
     SPLASH("splash") {
+        override val uriPattern: Uri by lazy {
+            "${Navigator.DeepLinkUri}/$path".toUri()
+        }
+    },
+    CART("cart") {
         override val uriPattern: Uri by lazy {
             "${Navigator.DeepLinkUri}/$path".toUri()
         }

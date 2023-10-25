@@ -1,5 +1,6 @@
 package com.oscarg798.remembrall.taskimpl.datasource
 
+import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.taskimpl.model.TaskDto
 
 internal interface TaskDataSource {
@@ -10,7 +11,14 @@ internal interface TaskDataSource {
 
     suspend fun getTasks(user: String): Collection<TaskDto>
 
+    suspend fun getTasks(
+        queries: List<TaskRepository.TaskQuery>,
+        queryOperation: TaskRepository.QueryOperation
+    ): Collection<TaskDto>
+
     suspend fun deleteTask(id: String)
 
     suspend fun update(task: TaskDto)
+
+
 }

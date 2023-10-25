@@ -5,7 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.oscarg798.remembrall.task.persistence.entity.TaskEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -20,6 +22,9 @@ internal interface RoomTaskDAO {
 
     @Query("select * from ${TaskEntity.TableName} where id=:id")
     fun get(id: String): Flow<TaskEntity>
+
+    @RawQuery(observedEntities = [TaskEntity::class])
+    fun streamViaQuery(query: SupportSQLiteQuery): Flow<List<TaskEntity>>
 
     @Query("select * from ${TaskEntity.TableName} where owner=:user")
     fun stream(user: String): Flow<List<TaskEntity>>

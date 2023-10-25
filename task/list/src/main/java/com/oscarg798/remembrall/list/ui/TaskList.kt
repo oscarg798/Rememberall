@@ -60,7 +60,9 @@ internal fun TaskList(
                 }
 
                 val groups = entry.value
-                items(groups.itemsByDay.keys.toList(), key = { it.toString() }) { dayGroup ->
+                items(groups.itemsByDay.keys.toList(), key = {
+                    "${it.dayName}_${it.dayNumber}_${it.year}"
+                }) { dayGroup ->
                     Row(
                         Modifier.padding(
                             vertical = MaterialTheme.dimensions.Small,

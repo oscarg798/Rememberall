@@ -11,7 +11,7 @@ internal class GetSessionStateImpl @Inject constructor(
     private val session: Session
 ) : GetSessionState {
 
-    override suspend fun invoke(effect: Effect.GetSessionState): Event.OnSessionStateFound {
+    override suspend fun invoke(effect: Effect. GetSessionState): Event.OnSessionStateFound {
         return Event.OnSessionStateFound(session.getSessionState())
     }
 }

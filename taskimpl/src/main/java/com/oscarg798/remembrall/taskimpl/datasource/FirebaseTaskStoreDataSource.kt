@@ -2,10 +2,12 @@ package com.oscarg798.remembrall.taskimpl.datasource
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.oscarg798.remebrall.coroutinesutils.CoroutineContextProvider
 import com.oscarg798.remembrall.gmstaskutils.toSuspend
+import com.oscarg798.remembrall.task.TaskRepository
 import com.oscarg798.remembrall.taskimpl.model.CalendarSyncInformationDto
 import com.oscarg798.remembrall.taskimpl.model.TaskDto
 import javax.inject.Inject
@@ -35,6 +37,10 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
             }
         }
 
+        if(!taskResult.isSuccessful || taskResult.result.data == null){
+            error("There was an error getting task $id")
+        }
+
         return TaskDto(id, taskResult.result.data!!)
     }
 
@@ -58,6 +64,50 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
                     TaskDto(document.id, document.data!!)
                 }
             }.flatten()
+        }
+    }
+
+    override suspend fun getTasks(
+        queries: List<TaskRepository.TaskQuery>,
+        queryOperation: TaskRepository.QueryOperation
+    ): Collection<TaskDto> {
+        val filters = queries.map {
+            when (it) {
+                is TaskRepository.TaskQuery.DueDateAfter -> Filter.greaterThanOrEqualTo(
+                    DueDateColumnName,
+                    it.value
+                )
+
+                is TaskRepository.TaskQuery.DueDateBefore -> Filter.lessThanOrEqualTo(
+                    TaskDto.ColumnNames.DueDate,
+                    it.value
+                )
+
+                is TaskRepository.TaskQuery.UserEquals -> Filter.equalTo(
+                    UserColumnName,
+                    it.value
+                )
+
+                is TaskRepository.TaskQuery.Completed -> Filter.equalTo(
+                    TaskDto.ColumnNames.Completed,
+                    it.value
+                )
+            }
+        }
+
+        val querySnapshot = getQuerySnapshot(
+            taskCollection.where(
+                when (queryOperation) {
+                    TaskRepository.QueryOperation.And -> Filter.and(*filters.toTypedArray())
+                    TaskRepository.QueryOperation.Or -> Filter.or(*filters.toTypedArray())
+                }
+            )
+        )
+
+        return withContext(coroutinesContextProvider.computation) {
+            querySnapshot.result.documents.map { document ->
+                TaskDto(document.id, document.data!!)
+            }
         }
     }
 
@@ -131,3 +181,4 @@ internal class FirebaseTaskStoreDataSource @Inject constructor(
 
 private const val AttendeesColumnName = "attendees"
 private const val UserColumnName = "user"
+private const val DueDateColumnName = "dueDate"

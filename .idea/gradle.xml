@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/authimpl" />
             <option value="$PROJECT_DIR$/calendar" />
             <option value="$PROJECT_DIR$/calendarimpl" />
+            <option value="$PROJECT_DIR$/carttest" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common-schedule" />
             <option value="$PROJECT_DIR$/config" />
@@ -45,6 +46,7 @@
             <option value="$PROJECT_DIR$/task/descriptionformatterimpl" />
             <option value="$PROJECT_DIR$/task/detail" />
             <option value="$PROJECT_DIR$/task/list" />
+            <option value="$PROJECT_DIR$/task/navigation" />
             <option value="$PROJECT_DIR$/task/persistence" />
             <option value="$PROJECT_DIR$/task/persistenceimpl" />
             <option value="$PROJECT_DIR$/task/taskpriorityextensions" />

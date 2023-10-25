@@ -41,7 +41,8 @@ internal class GetTaskGroupedImpl @Inject constructor(
                 val itemsByDay = group.itemsByDay
                 val dayGroup = TaskGroup.DayGroup(
                     dayName = taskDate.day,
-                    dayNumber = taskDate.dayNumber
+                    dayNumber = taskDate.dayNumber,
+                    year = taskDate.year
                 )
                 groups[groupLabel] = if (itemsByDay.containsKey(dayGroup)) {
                     val currentTasks = itemsByDay[dayGroup]!!.toMutableList()

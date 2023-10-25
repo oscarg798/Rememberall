@@ -91,4 +91,5 @@ dependencies {
     implementation project(path: ':mobiusutils')
     implementation project(path: ':viewmodelutils')
     implementation project(path: ':coroutinesutils')
+    implementation project(path: ':ui:components:toolbar')
 }

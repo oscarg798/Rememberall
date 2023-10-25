@@ -1,4 +1,4 @@
-package com.oscarg798.remembrall.detail.navigation
+package com.oscarg798.remembrall.task.navigation
 
 import android.net.Uri
 import android.os.Bundle
