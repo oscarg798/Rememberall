@@ -1,14 +1,15 @@
 package com.oscarg798.remembrall.cart
 
+import androidx.annotation.DrawableRes
+
 internal data class Model(
-    val store: Store? = null,
-    val promotion: List<Promotion>? = null,
-    val cart: Map<String, CartProduct>? = null,
-    val decoratedCart: Map<String, Product>? = null,
-    val recommendedProducts: List<Product>? = null,
+    val currentText: String = "",
+    val options: List<String>? = null,
+    val hasPermissions: Boolean = true,
+    @DrawableRes val trailingIcon: Int? = null,
 ) {
 
-    fun isLoaded() = store != null && decoratedCart != null && cart != null
+    fun isLoaded() = true
 }
 
 internal data class CartProduct(
@@ -35,17 +36,12 @@ internal sealed interface Promotion {
 
 internal sealed interface Event {
 
-    data class OnStoreFound(val store: Store) : Event
-    data class OnCartFound(val cart: Map<String, CartProduct>) : Event
-    data class OnCartDecorated(val decoration: Map<String, Product>) : Event
-    data class OnRecommendedProductsFound(val recommendations: List<Product>) : Event
-    data class OnPromotionsFound(val promotions: List<Promotion>): Event
+    data class OnTextChanged(val text: String) : Event
+    data class OnFocusChanged(val focused: Boolean) : Event
+    data object OnTrailingIconClicked: Event
+    data class MutatePermissions(val hasPermissions: Boolean): Event
 }
 
 internal sealed interface Effect {
-    data object GetCart : Effect
-    data object GetStore : Effect
-    data class DecorateCart(val productsInCart: Set<String>) : Effect
-    data object GetRecommendedProducts : Effect
-    data object GetPromotions: Effect
+
 }

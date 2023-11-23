@@ -1,111 +1,97 @@
 package com.oscarg798.remembrall.cart
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oscarg798.remembrall.cart.Upcoming.Next
-import com.oscarg798.remembrall.cart.usecase.DecorateCart
-import com.oscarg798.remembrall.cart.usecase.GetCart
-import com.oscarg798.remembrall.cart.usecase.GetPromotions
-import com.oscarg798.remembrall.cart.usecase.GetRecommendedProducts
-import com.oscarg798.remembrall.cart.usecase.GetStore
+import com.oscarg798.remembrall.cart.effecthandler.EffectHandler
+import com.oscarg798.remembrall.cart.ui.PermissionChecker
+import com.oscarg798.remembrall.cart.ui.TextComponentDecorator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class CartViewModel @Inject constructor(
-    private val getCart: GetCart,
-    private val getStore: GetStore,
-    private val decorateCart: DecorateCart,
-    private val getPromotions: GetPromotions,
-    private val getRecommendedProducts: GetRecommendedProducts,
+    private val effectHandler: EffectHandler,
+    private val permissionChecker: PermissionChecker,
+    private val textComponentDecorator: TextComponentDecorator,
 ) : ViewModel() {
 
-    private val _model = MutableStateFlow(Model())
-    private val effects =
-        MutableSharedFlow<Effect>(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST)
-    private val loop = MutableStateFlow<Upcoming>(Upcoming.Effects(setOf(Effect.GetStore)))
-    private val events =
-        MutableSharedFlow<Event>(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST)
+    private val _model =
+        MutableStateFlow(Model(hasPermissions = permissionChecker.hasPermissions()))
+    private val events = MutableSharedFlow<Event>()
 
     val model = _model.asStateFlow()
+    private val mutex = Mutex()
 
     init {
-        viewModelScope.launch {
-            loop.collectLatest {
-                when (it) {
-                    is Upcoming.Effects -> dispatchEffects(it.effects)
-                    is Next -> {
-                        _model.value = it.model
-                        dispatchEffects(it.effects)
-
-                    }
-
-                    is Upcoming.NoChange -> Unit
-                }
-            }
-        }
 
         viewModelScope.launch {
-            events.collectLatest {
-                loop.emit(update(_model.value, it))
+            events.collect {
+                update(it)
             }
         }
+    }
 
-        viewModelScope.launch {
-            effects.collectLatest {
-                //Each usecase must do this but, meh
-                async(Dispatchers.IO) {
-                    when (it) {
-                        is Effect.DecorateCart -> decorateCart(it.productsInCart)
-                        Effect.GetCart -> getCart()
-                        Effect.GetStore -> getStore()
-                        Effect.GetPromotions -> getPromotions()
-                        Effect.GetRecommendedProducts -> getRecommendedProducts()
-                    }
-                }
-            }
-        }
-
-        //First effect
-        viewModelScope.launch { effects.emit(Effect.GetStore) }
+    fun onEvent(event: Event) {
+        viewModelScope.launch { events.emit(event) }
     }
 
     private suspend fun dispatchEffects(effects: Set<Effect>) {
-        effects.onEach { effect -> this.effects.emit(effect) }
+        effectHandler.invoke(effects, ::onEvent)
     }
 
-    private suspend fun update(
-        _model: Model,
-        event: Event
-    ): Upcoming = withContext(Dispatchers.IO) {
+    private suspend fun update(event: Event) = withContext(Dispatchers.IO) {
         when (event) {
-            is Event.OnCartDecorated -> Next(_model.copy(decoratedCart = event.decoration))
-            is Event.OnCartFound -> Next(
-                _model.copy(cart = event.cart),
-                setOf(Effect.DecorateCart(event.cart.keys))
-            )
+            is Event.OnTextChanged -> updateModel {
+                it.copy(
+                    currentText = event.text,
+                    trailingIcon = textComponentDecorator.getTrailingIcon(text = event.text)
+                )
+            }
 
-            is Event.OnStoreFound -> Next(
-                _model.copy(store = event.store),
-                setOf(Effect.GetCart)
-            )
+            is Event.OnFocusChanged -> Unit
+            Event.OnTrailingIconClicked -> updateModel {
+                if (model.value.trailingIcon == R.drawable.ic_clear) {
+                    it.copy(
+                        currentText = "",
+                        trailingIcon = textComponentDecorator.getTrailingIcon(text = "")
+                    )
+                } else {
+                    it
+                }
+            }
 
-            is Event.OnPromotionsFound -> Next(
-                _model.copy(promotion = event.promotions)
-            )
+            is Event.MutatePermissions -> {
+                permissionChecker.mutate(event.hasPermissions)
+                updateModel {
+                    it.copy(
+                        hasPermissions = event.hasPermissions,
+                        trailingIcon = textComponentDecorator.getTrailingIcon(text = it.currentText)
+                    )
+                }
+            }
+        }
+    }
 
-            is Event.OnRecommendedProductsFound -> Next(
-                _model.copy(recommendedProducts = event.recommendations)
-            )
+    private suspend fun updateModel(updater: (Model) -> Model) {
+        mutex.withLock {
+            _model.update { updater(it) }
         }
     }
 
